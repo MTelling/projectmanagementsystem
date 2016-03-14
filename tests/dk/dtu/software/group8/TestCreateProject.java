@@ -1,17 +1,23 @@
 package dk.dtu.software.group8;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestCreateProject {
+	PManagmentSystem pms;
+	DatabaseManager db;
+	
+	@Before
+	public void setup() {
+		pms = new PManagmentSystem();
+		db = new DatabaseManager();
+	}
 	
 	@Test
-	public void signInSuccess() {
-		PManagmentSystem pms = new PManagmentSystem();
-		DatabaseManager db = new DatabaseManager();
-		
+	public void signInSuccess() {		
 		String username = db.getEmployees()[0];
 		assertEquals(pms.getCurrentEmployee(), null);
 		assertTrue(pms.signIn(username));
@@ -20,8 +26,6 @@ public class TestCreateProject {
 	
 //	@Test
 //	public void signInNoSuchUser() {
-//		PManagmentSystem pms = new PManagmentSystem();
-//		
 //		String username = "john";
 //		assertEquals(pms.getCurrentEmployee(), null);
 //		assertFalse(pms.signIn(username));
@@ -30,11 +34,7 @@ public class TestCreateProject {
 	
 //	@Test
 //	public void createProjectSignedIn() {
-//		PManagmentSystem pms = new PManagmentSystem();
-//		DatabaseManager db = new DatabaseManager();
-//		
-//		String username = db.getEmployees()[0];
-//		pms.signIn(username);
+//		pms.signIn(db.getEmployees()[0]);
 //		
 //		asserEquals(pms.getProjects().size(), 0);
 //		pms.createProject();
@@ -43,10 +43,17 @@ public class TestCreateProject {
 	
 //	@Test
 //	public void createProjectNotSignedIn() {
-//		PManagmentSystem pms = new PManagmentSystem();
-//		
 //		asserEquals(pms.getProjects().size(), 0);
 //		pms.createProject();
 //		assertEquals(pms.getProjects().size(), 0);
+//	}
+	
+//	@Test
+//	public void testForActualProject() {
+//		pms.signIn(db.getEmployees()[0]);
+//		
+//		pms.createProject();
+//		assertThat(pms.getProjects()[0], instanceOf(Project.class));
+//		assertThat(pms.getProjects()[0].getID(), RegexMatcher.matches("^[0-9]{1,6}$"));
 //	}
 }
