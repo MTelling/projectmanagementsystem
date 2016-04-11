@@ -20,8 +20,8 @@ public class Project {
         return null;
     }
 
-    public boolean assignProjectManager(Employee employee) {
-        return false;
+    public void assignProjectManager(Employee employee) {
+        this.projectManager = employee;
     }
 
     public Calendar getEndDate() {
@@ -42,5 +42,9 @@ public class Project {
 
     public String getId() {
         return iD;
+    }
+
+    public Employee getProjectManager() {
+        return projectManager;
     }
 }

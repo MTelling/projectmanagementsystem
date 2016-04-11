@@ -3,6 +3,7 @@ package dk.dtu.software.group8;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.Calendar;
@@ -50,29 +51,36 @@ public class TestProjectManagerAssignment {
 
 //    @Test
 //    public void testIsEmployee() {
-//        String emp = db.getEmployees()[0];
-//        project.assignProjectManager(emp);
+//        String empName = db.getEmployees()[2];
+//        Employee emp = pms.getEmployeeFromName(empName);
 //
+//        project.assignProjectManager(emp);
 //        assertEquals(project.getProjectManager(), emp);
 //    }
 //
 //    @Test
 //    public void testIsNotEmployee() {
-//        String emp = "NotEmployee";
-//
-//        project.assignProjectManager(emp);
-//
-//        expectedEx.expect(InvalidProjectManagerException.class);
+//        expectedEx.expect(InvalidEmployeeException.class);
 //        expectedEx.expectMessage("No employee with that name is in the system.");
+//
+//        String empName = "ImNotAnEmployee";
+//        Employee emp = pms.getEmployeeFromName(empName);
 //    }
 //
 //    @Test
-//    public void testIsNotEmployee() {
-//        String emp = null;
+//    public void testProjectHasManager() {
+//        expectedEx.expect(AlreadyAssignedProjectManagerException.class);
+//        expectedEx.expectMessage("The project already has a Project Manager.");
+//
+//        String empName = db.getEmployees()[2];
+//        Employee emp = pms.getEmployeeFromName(empName);
 //
 //        project.assignProjectManager(emp);
+//        assertEquals(project.getProjectManager(), emp);
 //
-//        expectedEx.expect(InvalidProjectManagerException.class);
-//        expectedEx.expectMessage("Project manager can't be null.");
+//        String secondEmpName = db.getEmployees()[0];
+//        Employee secondEmp = pms.getEmployeeFromName(secondEmpName);
+//
+//        project.assignProjectManager(secondEmp);
 //    }
 }

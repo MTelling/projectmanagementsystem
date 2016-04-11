@@ -8,17 +8,8 @@ import java.util.GregorianCalendar;
  */
 public class DateServer {
 
-    private Calendar calendar;
-
-    public DateServer() {
-        this.calendar = new GregorianCalendar();
-    }
-
     public Calendar getCalendar() {
-        return calendar;
+        return new GregorianCalendar();
     }
 
-    public void setCalendar(Calendar calendar) {
-        this.calendar = calendar;
-    }
 }

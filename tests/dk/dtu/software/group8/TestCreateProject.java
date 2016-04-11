@@ -135,11 +135,6 @@ public class TestCreateProject {
         //Create the project with no dates.
         Project project = pms.createProject(null, null);
 
-        //Check that the project was null.
-        assertNull(project);
-
-        //Check that the project wasn't added.
-        assertEquals(pms.getProjects().size(), 0);
     }
 
 
