@@ -1,5 +1,6 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 
 import java.util.Calendar;
@@ -16,7 +17,7 @@ public class Project {
     public Project(DateServer dateServer,
                    Calendar startDate,
                    Calendar endDate,
-                   String iD) throws WrongDateException {
+                   String iD) throws WrongDateException, NoAccessException {
 
         this.dateServer = dateServer;
 
@@ -24,8 +25,8 @@ public class Project {
             throw new WrongDateException("Missing date(s).");
         }
 
-        setEndDate(endDate);
-        setStartDate(startDate);
+        setEndDate(endDate, null);
+        setStartDate(startDate, null);
 
         this.iD = iD;
     }
@@ -42,7 +43,12 @@ public class Project {
         return endDate;
     }
 
-    public void setEndDate(Calendar endDate) throws WrongDateException {
+
+    public void setEndDate(Calendar endDate, Employee projectManager) throws WrongDateException, NoAccessException {
+        if (this.projectManager != null && !this.projectManager.equals(projectManager)) {
+            throw new NoAccessException("Current user is not Project Manager for this project.");
+        }
+
         if (endDate.before(startDate)) {
             throw new WrongDateException("End date is before start date.");
         }
@@ -53,7 +59,11 @@ public class Project {
         return startDate;
     }
 
-    public void setStartDate(Calendar startDate) throws WrongDateException{
+    public void setStartDate(Calendar startDate, Employee projectManager) throws WrongDateException, NoAccessException {
+        if (this.projectManager != null && !this.projectManager.equals(projectManager)) {
+            throw new NoAccessException("Current user is not Project Manager for this project.");
+        }
+
         if (startDate.after(endDate)) {
             throw new WrongDateException("End date is before start date.");
         } else if (startDate.before(dateServer.getCalendar())) {

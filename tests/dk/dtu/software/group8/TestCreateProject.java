@@ -1,5 +1,6 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -44,7 +45,7 @@ public class TestCreateProject {
 
 
 	@Test //Correct start and end.
-	public void createProjectA() throws WrongDateException {
+	public void createProjectA() throws WrongDateException, NoAccessException {
         Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
         Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
 
@@ -64,7 +65,7 @@ public class TestCreateProject {
 
 
     @Test //Correct start and end.
-    public void createProjectB() throws WrongDateException{
+    public void createProjectB() throws WrongDateException, NoAccessException {
         Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
         Calendar endDate = new GregorianCalendar(2016, Calendar.MAY, 10);
 
@@ -83,7 +84,7 @@ public class TestCreateProject {
     }
 
     @Test //End date before start.
-    public void createProjectC() throws WrongDateException {
+    public void createProjectC() throws WrongDateException, NoAccessException {
         //Check correct exception
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("End date is before start date.");
@@ -97,7 +98,7 @@ public class TestCreateProject {
     }
 
     @Test //Start date in the past, correct end date
-    public void createProjectD() throws WrongDateException{
+    public void createProjectD() throws WrongDateException, NoAccessException {
         //Check correct exception
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("Date is in the past.");
@@ -111,7 +112,7 @@ public class TestCreateProject {
     }
 
     @Test //Incorrect start date, incorrect end date. (Both in past)
-    public void createProjectE() throws WrongDateException {
+    public void createProjectE() throws WrongDateException, NoAccessException {
         //Check correct exception
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("Date is in the past.");
@@ -126,7 +127,7 @@ public class TestCreateProject {
     }
 
     @Test //No dates.
-    public void createProjectF() throws WrongDateException {
+    public void createProjectF() throws WrongDateException, NoAccessException {
 
         //Check correct exception
         expectedEx.expect(WrongDateException.class);

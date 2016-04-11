@@ -1,5 +1,6 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,7 +25,7 @@ public class TestManageProject {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Before
-    public void setup() throws WrongDateException {
+    public void setup() throws WrongDateException, NoAccessException {
         pms = new PManagementSystem();
         db = new DatabaseManager();
 

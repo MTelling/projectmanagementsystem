@@ -1,6 +1,7 @@
 package dk.dtu.software.group8;
 
 
+import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class PManagementSystem {
     }
 
 
-    public Project createProject(Calendar startDate, Calendar endDate) throws WrongDateException {
+    public Project createProject(Calendar startDate, Calendar endDate) throws WrongDateException, NoAccessException {
 
         String iD = String.valueOf(getDate().get(Calendar.YEAR));
         iD = iD.substring(2,4);
