@@ -38,7 +38,7 @@ public class PManagementSystem {
 
 	public boolean signIn(String name) {
         //Check if user is actually an employee.
-        if (Arrays.stream(db.getEmployees()).filter(b -> b.equals(name)).count() > 0) {
+        if (Arrays.stream(db.getEmployees()).anyMatch(e -> e.equals(name))) {
             this.currentEmployee = new Employee(name);
             return true;
         }
