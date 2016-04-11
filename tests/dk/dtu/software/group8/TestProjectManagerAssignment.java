@@ -59,7 +59,7 @@ public class TestProjectManagerAssignment {
 //    }
 //
 //    @Test
-//    public void testIsNotEmployee() {
+//    public void testIsNotEmployee() throws InvalidEmployeeException {
 //        expectedEx.expect(InvalidEmployeeException.class);
 //        expectedEx.expectMessage("No employee with that name is in the system.");
 //
@@ -68,7 +68,7 @@ public class TestProjectManagerAssignment {
 //    }
 //
 //    @Test
-//    public void testProjectHasManager() {
+//    public void testProjectHasManager() throws AlreadyAssignedProjectManagerException{
 //        expectedEx.expect(AlreadyAssignedProjectManagerException.class);
 //        expectedEx.expectMessage("The project already has a Project Manager.");
 //

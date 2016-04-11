@@ -2,7 +2,7 @@ package dk.dtu.software.group8;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by Morten on 11/04/16.
