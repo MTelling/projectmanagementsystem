@@ -44,10 +44,8 @@ public class Project {
     }
 
 
-    public void setEndDate(Calendar endDate, Employee projectManager) throws WrongDateException, NoAccessException {
-        if (this.projectManager != null && !this.projectManager.equals(projectManager)) {
-            throw new NoAccessException("Current user is not Project Manager for this project.");
-        }
+    public void setEndDate(Calendar endDate, Employee employee) throws WrongDateException, NoAccessException {
+        checkIfEmployeeIsProjectManager(employee);
 
         if (endDate.before(startDate)) {
             throw new WrongDateException("End date is before start date.");
@@ -59,10 +57,8 @@ public class Project {
         return startDate;
     }
 
-    public void setStartDate(Calendar startDate, Employee projectManager) throws WrongDateException, NoAccessException {
-        if (this.projectManager != null && !this.projectManager.equals(projectManager)) {
-            throw new NoAccessException("Current user is not Project Manager for this project.");
-        }
+    public void setStartDate(Calendar startDate, Employee employee) throws WrongDateException, NoAccessException {
+        checkIfEmployeeIsProjectManager(employee);
 
         if (startDate.after(endDate)) {
             throw new WrongDateException("End date is before start date.");
@@ -82,5 +78,11 @@ public class Project {
 
     public Calendar getDate() {
         return dateServer.getCalendar();
+    }
+
+    private void checkIfEmployeeIsProjectManager(Employee emp) throws NoAccessException {
+        if (this.projectManager != null && !this.projectManager.equals(emp)) {
+            throw new NoAccessException("Current user is not Project Manager for this project.");
+        }
     }
 }
