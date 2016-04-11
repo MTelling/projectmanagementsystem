@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 
 public class TestManageProject extends TestCreateProject {
 
-    //TODO: This class should inherit from TestCreateProject.
+    //TODO: This class should inherit from TestCreateProject..
     PManagementSystem pms;
     DatabaseManager db;
     Project project;
