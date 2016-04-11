@@ -91,7 +91,7 @@ public class TestCreateProject {
 //
 //        //Check correct exception
 //        expectedEx.expect(WrongDateException.class);
-//        expectedEx.expectMessage("End date is before start date");
+//        expectedEx.expectMessage("End date is before start date.");
 //    }
 //
 //    @Test //Start date in the past, correct end date
@@ -104,7 +104,7 @@ public class TestCreateProject {
 //
 //        //Check correct exception
 //        expectedEx.expect(WrongDateException.class);
-//        expectedEx.expectMessage("Start date is in the past");
+//        expectedEx.expectMessage("Date is in the past.");
 //    }
 //
 //    @Test //Incorrect start date, incorrect end date. (Both in past)
@@ -117,7 +117,7 @@ public class TestCreateProject {
 //
 //        //Check correct exception
 //        expectedEx.expect(WrongDateException.class);
-//        expectedEx.expectMessage("Both start and end date are in the past.");
+//        expectedEx.expectMessage("Date is in the past.");
 //    }
 //
 //    @Test //No dates.
@@ -128,7 +128,7 @@ public class TestCreateProject {
 //
 //        //Check correct exception
 //        expectedEx.expect(WrongDateException.class);
-//        expectedEx.expectMessage("No dates were given.");
+//        expectedEx.expectMessage("Missing date(s).");
 //
 //        //Check that the project was null.
 //        assertNull(project);
