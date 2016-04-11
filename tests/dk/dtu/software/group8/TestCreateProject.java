@@ -78,7 +78,7 @@ public class TestCreateProject {
         assertEquals(project.getStartDate(), startDate);
         assertEquals(project.getEndDate(), endDate);
 
-      assertThat(pms.getProjects().get(0), instanceOf(Project.class));
+        assertThat(pms.getProjects().get(0), instanceOf(Project.class));
 		assertThat(pms.getProjects().get(0).getId(), RegexMatcher.matches("^[0-9]{1,6}$"));
     }
 

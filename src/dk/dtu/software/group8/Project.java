@@ -1,5 +1,7 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.WrongDateException;
+
 import java.util.Calendar;
 
 public class Project {
@@ -9,10 +11,22 @@ public class Project {
     private Calendar startDate;
     private Calendar endDate;
     private Employee projectManager;
+    private DateServer dateServer;
 
-    public Project(Calendar startDate, Calendar endDate, String iD) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public Project(DateServer dateServer,
+                   Calendar startDate,
+                   Calendar endDate,
+                   String iD) throws WrongDateException {
+
+        this.dateServer = dateServer;
+
+        if(startDate == null || endDate == null) {
+            throw new WrongDateException("Missing date(s).");
+        }
+
+        setEndDate(endDate);
+        setStartDate(startDate);
+
         this.iD = iD;
     }
 
@@ -28,7 +42,10 @@ public class Project {
         return endDate;
     }
 
-    public void setEndDate(Calendar endDate) {
+    public void setEndDate(Calendar endDate) throws WrongDateException {
+        if (endDate.before(startDate)) {
+            throw new WrongDateException("End date is before start date.");
+        }
         this.endDate = endDate;
     }
 
@@ -36,7 +53,12 @@ public class Project {
         return startDate;
     }
 
-    public void setStartDate(Calendar startDate) {
+    public void setStartDate(Calendar startDate) throws WrongDateException{
+        if (startDate.after(endDate)) {
+            throw new WrongDateException("End date is before start date.");
+        } else if (startDate.before(dateServer.getCalendar())) {
+            throw new WrongDateException("Date is in the past.");
+        }
         this.startDate = startDate;
     }
 
@@ -46,5 +68,9 @@ public class Project {
 
     public Employee getProjectManager() {
         return projectManager;
+    }
+
+    public Calendar getDate() {
+        return dateServer.getCalendar();
     }
 }

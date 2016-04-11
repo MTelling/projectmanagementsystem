@@ -22,20 +22,13 @@ public class PManagementSystem {
     }
 
 
-    public Project createProject(Calendar startTime, Calendar endTime) throws WrongDateException {
-        if(startTime == null || endTime == null) {
-            throw new WrongDateException("Missing date(s).");
-        } else if(startTime.after(endTime)) {
-            throw new WrongDateException("End date is before start date.");
-        } else if(startTime.before(getDate())) {
-            throw new WrongDateException("Date is in the past.");
-        }
+    public Project createProject(Calendar startDate, Calendar endDate) throws WrongDateException {
 
         String iD = String.valueOf(getDate().get(Calendar.YEAR));
         iD = iD.substring(2,4);
         iD += projects.size();
 
-        Project newProject = new Project(startTime, endTime, iD);
+        Project newProject = new Project(dateServer, startDate, endDate, iD);
 
         projects.add(newProject);
 
