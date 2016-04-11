@@ -49,7 +49,7 @@ public class TestManageProject {
         Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
         project = pms.createProject(startDate, endDate);
 
-        //Assign current employee as project manager.
+        //Assign current employee as project manager..
         project.assignProjectManager(new Employee(emp));
 
         assertEquals(pms.getProjects().size(), 1);
