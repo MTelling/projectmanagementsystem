@@ -42,22 +42,22 @@ public class TestCreateProject {
 	}
 
 
-//
-//	@Test //Correct start and end.
-//	public void createProjectA() {
-//        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-//        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
-//
-//        //Create the project
-//		Project project = pms.createProject(startDate, endDate);
-//
-//        //Check that the project was added.
-//		assertEquals(pms.getProjects().size(), 1);
-//
-//        //Test that date is set correct.
-//        assertEquals(project.getStartDate(), startDate);
-//        assertEquals(project.getEndDate(), endDate);
-//	}
+
+	@Test //Correct start and end.
+	public void createProjectA() {
+        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
+        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
+
+        //Create the project
+		Project project = pms.createProject(startDate, endDate);
+
+        //Check that the project was added.
+		assertEquals(pms.getProjects().size(), 1);
+
+        //Test that date is set correct.
+        assertEquals(project.getStartDate(), startDate);
+        assertEquals(project.getEndDate(), endDate);
+	}
 
 //
 //    @Test //Correct start and end.
