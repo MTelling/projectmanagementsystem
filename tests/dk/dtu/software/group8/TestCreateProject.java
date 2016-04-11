@@ -36,6 +36,7 @@ public class TestCreateProject {
         assertTrue(pms.userLoggedIn());
 
         //Check the project base is empty.
+        //TODO: could we do this smarter?
         assertEquals(pms.getProjects().size(), 0);
 	}
 
