@@ -86,4 +86,22 @@ public class TestChangeProjectDates extends TestManageProject{
 //        Project project = pms.createProject(null, null);
 //    }
 
+
+//    @Test
+//    public void testNotManager() {
+//        expectedEx.expect(NoAccessException.class);
+//        expectedEx.expectMessage("Current user is not Project Manager for this project.");
+//
+//        //Sign in as employee who is not PM.
+//        pms.signIn(db.getEmployees()[2]);
+//
+//        //Try to change the date anyway.
+//        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
+//        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
+//
+//        project.setStartDate(startDate);
+//        project.setEndDate(endDate);
+//    }
+
+
 }

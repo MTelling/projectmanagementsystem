@@ -76,8 +76,8 @@ public class TestChangeProjectName extends TestManageProject{
 //    @Test //User is not project manager.
 //    public void testChangeNameG() {
 //        expectedEx.expect(NoAccessException.class);
-//        expectedEx.expectMessage("Only the assigned project manager can change the project name.");
-//
+//        expectedEx.expectMessage("Current user is not Project Manager for this project.");
+
 //        //Set the current employee to one who is not
 //        pms.signIn(db.getEmployees()[1]);
 //        assertEquals(pms.getCurrentEmployee().getName(), db.getEmployees()[1]);
