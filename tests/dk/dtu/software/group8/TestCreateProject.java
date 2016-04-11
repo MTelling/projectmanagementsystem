@@ -1,35 +1,52 @@
 package dk.dtu.software.group8;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class TestCreateProject {
 	PManagementSystem pms;
 	DatabaseManager db;
-	//DateServer dateServer;
 
-//    @Rule
-//    public ExpectedException expectedEx = ExpectedException.none();
-//
-//	@Before
-//	public void setup() {
-//		pms = new PManagementSystem();
-//		db = new DatabaseManager();
-//		dateServer = new DateServer();
-//
-//        //TODO: Current day should be mocked to the ninth of may.
-//
-//        //TODO: Should login a user.
-//
-//        //Check the project base is empty.
-//        pms.signIn(db.getEmployees()[0]);
-//        assertEquals(pms.getProjects().size(), 0);
-//	}
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
+
+	@Before
+	public void setup() {
+		pms = new PManagementSystem();
+		db = new DatabaseManager();
+
+        //Set current date to the may 9th 2016.
+        DateServer mockDateServer = mock(DateServer.class);
+        pms.setDateServer(mockDateServer);
+
+        Calendar cal = new GregorianCalendar(2016, Calendar.MAY,9);
+        when(pms.getDate()).thenReturn(cal);
+
+        //Login a user
+        pms.signIn(db.getEmployees()[0]);
+        assertTrue(pms.userLoggedIn());
+
+        //Check the project base is empty.
+        assertEquals(pms.getProjects().size(), 0);
+	}
+
 
 
 //	@Test //Correct start and end.
 //	public void createProjectA() {
-//        Calendar startDate = dateServer.getDate();
+//        Calendar startDate = pms.getDate();
 //        startDate.set(2016, Calendar.MAY, 10);
 //
-//        Calendar endDate = dateServer.getDate();
+//        Calendar endDate = pms.getDate();
 //        endDate.set(2016, Calendar.JUNE, 10);
 //
 //        //Create the project
@@ -46,10 +63,10 @@ public class TestCreateProject {
 
 //    @Test //Correct start and end.
 //    public void createProjectB() {
-//        Calendar startDate = dateServer.getDate();
+//        Calendar startDate = pms.getDate();
 //        startDate.set(2016, Calendar.MAY, 10);
 //
-//        Calendar endDate = dateServer.getDate();
+//        Calendar endDate = pms.getDate();
 //        endDate.set(2016, Calendar.MAY, 10);
 //
 //        //Create the project
@@ -65,10 +82,10 @@ public class TestCreateProject {
 
 //    @Test //End date before start.
 //    public void createProjectC() {
-//        Calendar startDate = dateServer.getDate();
+//        Calendar startDate = pms.getDate();
 //        startDate.set(2016, Calendar.MAY, 10);
 //
-//        Calendar endDate = dateServer.getDate();
+//        Calendar endDate = pms.getDate();
 //        endDate.set(2016, Calendar.MAY, 3);
 //
 //        //Create the project
@@ -87,10 +104,10 @@ public class TestCreateProject {
 
 //    @Test //Start date in the past, correct end date
 //    public void createProjectD() {
-//        Calendar startDate = dateServer.getDate();
+//        Calendar startDate = pms.getDate();
 //        startDate.set(2016, Calendar.APRIL, 25);
 //
-//        Calendar endDate = dateServer.getDate();
+//        Calendar endDate = pms.getDate();
 //        endDate.set(2016, Calendar.MAY, 10);
 //
 //        //Create the project
@@ -109,10 +126,10 @@ public class TestCreateProject {
 
 //    @Test //Incorrect start date, incorrect end date. (Both in past)
 //    public void createProjectE() {
-//        Calendar startDate = dateServer.getDate();
+//        Calendar startDate = pms.getDate();
 //        startDate.set(2016, Calendar.APRIL, 25);
 //
-//        Calendar endDate = dateServer.getDate();
+//        Calendar endDate = pms.getDate();
 //        endDate.set(2016, Calendar.APRIL, 30);
 //
 //        //Create the project
