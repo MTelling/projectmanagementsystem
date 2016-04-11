@@ -20,15 +20,24 @@ public class PManagementSystem {
     }
 
 
-    public Project createProject(Calendar start, Calendar end) {
-        if(start.after(end)) {
+    public Project createProject(Calendar startTime, Calendar endTime) {
+        if(startTime == null || endTime == null) {
+            throw new WrongDateException("Missing date(s).");
+        } else if(startTime.after(endTime)) {
             throw new WrongDateException("End date is before start date.");
+        } else if(startTime.before(getDate())) {
+            throw new WrongDateException("Date is in the past.");
         }
-        if(start.before(getDate()) && end.before(getDate())) {
-            throw new WrongDateException("Both start and end date are in the past.");
-        } else if(start.before(getDate())) {
-            throw new WrongDateException("Start date is in the past.");
-        }
+
+        String iD = String.valueOf(getDate().get(Calendar.YEAR));
+        iD = iD.substring(2,4);
+        iD += project.length;
+
+        Project newProject = new Project(startTime, endTime, iD);
+
+        projects.add(newProject);
+
+        return newProject;
 
     }
 
