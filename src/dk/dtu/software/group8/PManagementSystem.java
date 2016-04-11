@@ -19,6 +19,19 @@ public class PManagementSystem {
         projects = new LinkedList<>();
     }
 
+
+    public Project createProject(Calendar start, Calendar end) {
+        if(start.after(end)) {
+            throw new WrongDateException("End date is before start date.");
+        }
+        if(start.before(getDate()) && end.before(getDate())) {
+            throw new WrongDateException("Both start and end date are in the past.");
+        } else if(start.before(getDate())) {
+            throw new WrongDateException("Start date is in the past.");
+        }
+
+    }
+
     public Employee getCurrentEmployee() {
 		return this.currentEmployee;
 	}
