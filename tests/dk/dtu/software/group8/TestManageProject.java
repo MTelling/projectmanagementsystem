@@ -50,7 +50,7 @@ public class TestManageProject {
         project = pms.createProject(startDate, endDate);
 
         //Assign current employee as project manager..
-        project.assignProjectManager(new Employee(emp));
+        project.assignProjectManager(pms.getCurrentEmployee());
 
         assertEquals(pms.getProjects().size(), 1);
     }
