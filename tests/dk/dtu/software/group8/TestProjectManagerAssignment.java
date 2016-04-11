@@ -3,7 +3,6 @@ package dk.dtu.software.group8;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.Calendar;
@@ -59,7 +58,7 @@ public class TestProjectManagerAssignment {
 //    }
 //
 //    @Test
-//    public void testIsNotEmployee() {
+//    public void testIsNotEmployee() throws InvalidEmployeeException {
 //        expectedEx.expect(InvalidEmployeeException.class);
 //        expectedEx.expectMessage("No employee with that name is in the system.");
 //
@@ -68,7 +67,7 @@ public class TestProjectManagerAssignment {
 //    }
 //
 //    @Test
-//    public void testProjectHasManager() {
+//    public void testProjectHasManager() throws AlreadyAssignedProjectManagerException{
 //        expectedEx.expect(AlreadyAssignedProjectManagerException.class);
 //        expectedEx.expectMessage("The project already has a Project Manager.");
 //

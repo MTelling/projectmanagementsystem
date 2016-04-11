@@ -41,8 +41,7 @@ public class TestManageProject {
         assertTrue(pms.userLoggedIn());
 
         //Check the project base is empty.
-        //TODO: could we do this smarter?
-        assertEquals(pms.getProjects().size(), 0);
+        assertTrue(pms.getProjects().isEmpty());
 
         //Create a project
         Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
@@ -52,7 +51,8 @@ public class TestManageProject {
         //Assign current employee as project manager..
         project.assignProjectManager(pms.getCurrentEmployee());
 
-        assertEquals(pms.getProjects().size(), 1);
+        //Check that project is really added
+        assertTrue(pms.getProjects().contains(project));
     }
 
 
