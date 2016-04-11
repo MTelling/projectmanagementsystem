@@ -1,5 +1,6 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
@@ -14,17 +15,16 @@ import static org.mockito.Mockito.when;
 
 public class TestManageProject {
 
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
     //TODO: This class should inherit from TestCreateProject..
     PManagementSystem pms;
     DatabaseManager db;
     Project project;
     String emp;
 
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
-
     @Before
-    public void setup() {
+    public void setup() throws WrongDateException {
         pms = new PManagementSystem();
         db = new DatabaseManager();
 
@@ -50,7 +50,7 @@ public class TestManageProject {
         project = pms.createProject(startDate, endDate);
 
         //Assign employee as project manager.
-        project.setProjectManager(emp);
+        //project.setProjectManager(emp);
 
         assertEquals(pms.getProjects().size(), 1);
     }

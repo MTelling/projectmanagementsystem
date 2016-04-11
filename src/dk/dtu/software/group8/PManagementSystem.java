@@ -1,6 +1,8 @@
 package dk.dtu.software.group8;
 
 
+import dk.dtu.software.group8.Exceptions.WrongDateException;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -20,7 +22,7 @@ public class PManagementSystem {
     }
 
 
-    public Project createProject(Calendar startTime, Calendar endTime) {
+    public Project createProject(Calendar startTime, Calendar endTime) throws WrongDateException {
         if(startTime == null || endTime == null) {
             throw new WrongDateException("Missing date(s).");
         } else if(startTime.after(endTime)) {
@@ -31,7 +33,7 @@ public class PManagementSystem {
 
         String iD = String.valueOf(getDate().get(Calendar.YEAR));
         iD = iD.substring(2,4);
-        iD += project.length;
+        iD += projects.size();
 
         Project newProject = new Project(startTime, endTime, iD);
 
@@ -64,11 +66,7 @@ public class PManagementSystem {
     }
 
     public boolean userLoggedIn() {
-        if (currentEmployee != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentEmployee != null;
     }
 
     public List<Project> getProjects() {
