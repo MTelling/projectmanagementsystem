@@ -18,6 +18,7 @@ public class TestManageProject {
     PManagementSystem pms;
     DatabaseManager db;
     Project project;
+    String emp;
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -35,7 +36,8 @@ public class TestManageProject {
         when(pms.getDate()).thenReturn(cal);
 
         //Login a user
-        pms.signIn(db.getEmployees()[0]);
+        emp = db.getEmployees()[0];
+        pms.signIn(emp);
         assertTrue(pms.userLoggedIn());
 
         //Check the project base is empty.
@@ -47,7 +49,9 @@ public class TestManageProject {
         Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
         project = pms.createProject(startDate, endDate);
 
-        //TODO: We need to add a project manager here. and there should be tests for that before?
+        //Assign employee as project manager.
+        project.setProjectManager(emp);
+
         assertEquals(pms.getProjects().size(), 1);
     }
 
@@ -104,6 +108,7 @@ public class TestManageProject {
 //        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
 //        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
 //        Project secondProject = pms.createProject(startDate, endDate);
+//        secondProject.setProjectManager(emp);
 //
 //        secondProject.setName(name);
 //
@@ -113,7 +118,15 @@ public class TestManageProject {
 //
 //    @Test //User is not project manager.
 //    public void testChangeNameG() {
-//        //TODO: How should we do this?
+//        //Create a second project.
+//        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
+//        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
+//        Project secondProject = pms.createProject(startDate, endDate);
+//
+//        secondProject.setName(name);
+//
+//        expectedEx.expect(NoAccessException.class);
+//        expectedEx.expectMessage("Only the assigned project manager can change the project name.");
 //    }
 //
 //    @Test //Test for too long name

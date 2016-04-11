@@ -10,7 +10,7 @@ public class PManagementSystem {
 
     private DatabaseManager db;
     private DateServer dateServer;
-	private Employee currentEmployee = null;
+	private Employee currentEmployee;
     private List<Project> projects;
 
     public PManagementSystem() {
