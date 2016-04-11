@@ -1,6 +1,6 @@
 package dk.dtu.software.group8;
 
-public class PManagmentSystem {
+public class PManagementSystem {
 	
 	private Employee currentEmployee = null;
 	
