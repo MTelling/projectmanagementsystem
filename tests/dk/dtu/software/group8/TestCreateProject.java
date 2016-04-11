@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings("unused")
 public class TestCreateProject {
 	PManagementSystem pms;
 	DatabaseManager db;
@@ -57,7 +58,7 @@ public class TestCreateProject {
 //        assertEquals(project.getStartDate(), startDate);
 //        assertEquals(project.getEndDate(), endDate);
 //	}
-//
+
 //
 //    @Test //Correct start and end.
 //    public void createProjectB() {
