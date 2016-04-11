@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TestManageProject extends TestCreateProject {
+public class TestManageProject {
 
     //TODO: This class should inherit from TestCreateProject..
     PManagementSystem pms;
@@ -111,7 +111,7 @@ public class TestManageProject extends TestCreateProject {
 //        expectedEx.expectMessage("Name is already assigned to another project.");
 //    }
 //
-//    @Test //User is not admin.
+//    @Test //User is not project manager.
 //    public void testChangeNameG() {
 //        //TODO: How should we do this?
 //    }

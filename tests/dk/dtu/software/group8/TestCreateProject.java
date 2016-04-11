@@ -57,6 +57,9 @@ public class TestCreateProject {
 //        //Test that date is set correct.
 //        assertEquals(project.getStartDate(), startDate);
 //        assertEquals(project.getEndDate(), endDate);
+
+//        assertThat(pms.getProjects()[0], instanceOf(Project.class));
+//		assertThat(pms.getProjects()[0].getID(), RegexMatcher.matches("^[0-9]{1,6}$"));
 //	}
 
 //
@@ -74,6 +77,9 @@ public class TestCreateProject {
 //        //Test that date is set correct.
 //        assertEquals(project.getStartDate(), startDate);
 //        assertEquals(project.getEndDate(), endDate);
+
+//      assertThat(pms.getProjects()[0], instanceOf(Project.class));
+//		assertThat(pms.getProjects()[0].getID(), RegexMatcher.matches("^[0-9]{1,6}$"));
 //    }
 //
 //    @Test //End date before start.
@@ -151,14 +157,4 @@ public class TestCreateProject {
 //    }
 
 
-
-    //TODO: These are not described in our test:
-//	@Test
-//	public void testForActualProject() {
-//		pms.signIn(db.getEmployees()[0]);
-//
-//		pms.createProject();
-//		assertThat(pms.getProjects()[0], instanceOf(Project.class));
-//		assertThat(pms.getProjects()[0].getID(), RegexMatcher.matches("^[0-9]{1,6}$"));
-//	}
 }
