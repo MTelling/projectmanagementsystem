@@ -23,7 +23,7 @@ public class TestCreateProject {
 
         //TODO: Current day should be mocked to the ninth of may.
 
-        //Should login a user.
+        //TODO: Should login a user.
 
         //Check the project base is empty.
         pms.signIn(db.getEmployees()[0]);
@@ -155,7 +155,7 @@ public class TestCreateProject {
 
 
 
-    //These are not described in our test:
+    //TODO: These are not described in our test:
 //	@Test
 //	public void testForActualProject() {
 //		pms.signIn(db.getEmployees()[0]);
