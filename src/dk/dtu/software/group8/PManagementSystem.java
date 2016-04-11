@@ -10,13 +10,35 @@ public class PManagementSystem {
 
     private DatabaseManager db;
     private DateServer dateServer;
-	private Employee currentEmployee = null;
+	private Employee currentEmployee;
     private List<Project> projects;
 
     public PManagementSystem() {
         dateServer = new DateServer();
         db = new DatabaseManager();
         projects = new LinkedList<>();
+    }
+
+
+    public Project createProject(Calendar startTime, Calendar endTime) {
+        if(startTime == null || endTime == null) {
+            throw new WrongDateException("Missing date(s).");
+        } else if(startTime.after(endTime)) {
+            throw new WrongDateException("End date is before start date.");
+        } else if(startTime.before(getDate())) {
+            throw new WrongDateException("Date is in the past.");
+        }
+
+        String iD = String.valueOf(getDate().get(Calendar.YEAR));
+        iD = iD.substring(2,4);
+        iD += project.length;
+
+        Project newProject = new Project(startTime, endTime, iD);
+
+        projects.add(newProject);
+
+        return newProject;
+
     }
 
     public Employee getCurrentEmployee() {

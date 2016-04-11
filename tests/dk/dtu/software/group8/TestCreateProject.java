@@ -23,7 +23,6 @@ public class TestCreateProject {
 	@Before
 	public void setup() {
 		pms = new PManagementSystem();
-		db = new DatabaseManager();
 
         //Set current date to the may 9th 2016.
         DateServer mockDateServer = mock(DateServer.class);
@@ -42,22 +41,25 @@ public class TestCreateProject {
 	}
 
 
+//
+//	@Test //Correct start and end.
+//	public void createProjectA() {
+//        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
+//        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
+//
+//        //Create the project
+//		Project project = pms.createProject(startDate, endDate);
+//
+//        //Check that the project was added.
+//		assertEquals(pms.getProjects().size(), 1);
+//
+//        //Test that date is set correct.
+//        assertEquals(project.getStartDate(), startDate);
+//        assertEquals(project.getEndDate(), endDate);
 
-	@Test //Correct start and end.
-	public void createProjectA() {
-        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
-
-        //Create the project
-		Project project = pms.createProject(startDate, endDate);
-
-        //Check that the project was added.
-		assertEquals(pms.getProjects().size(), 1);
-
-        //Test that date is set correct.
-        assertEquals(project.getStartDate(), startDate);
-        assertEquals(project.getEndDate(), endDate);
-	}
+//        assertThat(pms.getProjects()[0], instanceOf(Project.class));
+//		assertThat(pms.getProjects()[0].getID(), RegexMatcher.matches("^[0-9]{1,6}$"));
+//	}
 
 //
 //    @Test //Correct start and end.
@@ -74,6 +76,9 @@ public class TestCreateProject {
 //        //Test that date is set correct.
 //        assertEquals(project.getStartDate(), startDate);
 //        assertEquals(project.getEndDate(), endDate);
+
+//      assertThat(pms.getProjects()[0], instanceOf(Project.class));
+//		assertThat(pms.getProjects()[0].getID(), RegexMatcher.matches("^[0-9]{1,6}$"));
 //    }
 //
 //    @Test //End date before start.
@@ -86,13 +91,7 @@ public class TestCreateProject {
 //
 //        //Check correct exception
 //        expectedEx.expect(WrongDateException.class);
-//        expectedEx.expectMessage("End date is before start date");
-//
-//        //Check that the project was null.
-//        assertNull(project);
-//
-//        //Check that the project wasn't added.
-//        assertEquals(pms.getProjects().size(), 0);
+//        expectedEx.expectMessage("End date is before start date.");
 //    }
 //
 //    @Test //Start date in the past, correct end date
@@ -105,13 +104,7 @@ public class TestCreateProject {
 //
 //        //Check correct exception
 //        expectedEx.expect(WrongDateException.class);
-//        expectedEx.expectMessage("Start date is in the past");
-//
-//        //Check that the project was null.
-//        assertNull(project);
-//
-//        //Check that the project wasn't added.
-//        assertEquals(pms.getProjects().size(), 0);
+//        expectedEx.expectMessage("Date is in the past.");
 //    }
 //
 //    @Test //Incorrect start date, incorrect end date. (Both in past)
@@ -124,13 +117,7 @@ public class TestCreateProject {
 //
 //        //Check correct exception
 //        expectedEx.expect(WrongDateException.class);
-//        expectedEx.expectMessage("Both start and end date are in the past.");
-//
-//        //Check that the project was null.
-//        assertNull(project);
-//
-//        //Check that the project wasn't added.
-//        assertEquals(pms.getProjects().size(), 0);
+//        expectedEx.expectMessage("Date is in the past.");
 //    }
 //
 //    @Test //No dates.
@@ -141,7 +128,7 @@ public class TestCreateProject {
 //
 //        //Check correct exception
 //        expectedEx.expect(WrongDateException.class);
-//        expectedEx.expectMessage("No dates were given.");
+//        expectedEx.expectMessage("Missing date(s).");
 //
 //        //Check that the project was null.
 //        assertNull(project);
@@ -151,14 +138,4 @@ public class TestCreateProject {
 //    }
 
 
-
-    //TODO: These are not described in our test:
-//	@Test
-//	public void testForActualProject() {
-//		pms.signIn(db.getEmployees()[0]);
-//
-//		pms.createProject();
-//		assertThat(pms.getProjects()[0], instanceOf(Project.class));
-//		assertThat(pms.getProjects()[0].getID(), RegexMatcher.matches("^[0-9]{1,6}$"));
-//	}
 }
