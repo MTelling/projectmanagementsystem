@@ -25,7 +25,8 @@ public class TestEndActivity extends TestManageProject {
 //        //Sign in as employee who is not PM.
 //        pms.signIn(db.getEmployees()[2]);
 //
-//        project.end();
+//        //Test Again. Now without project manager signed in.
+//        testEndProject();
 //    }
 //
 
