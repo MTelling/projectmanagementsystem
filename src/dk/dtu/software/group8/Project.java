@@ -39,6 +39,11 @@ public class Project {
         this.iD = iD;
     }
 
+    //TODO: In the class diagram, this method returns a boolean. Should it?
+    public void end() {
+        this.endDate = Calendar.getInstance();
+    }
+
     public String extractReport() {
         return null;
     }
