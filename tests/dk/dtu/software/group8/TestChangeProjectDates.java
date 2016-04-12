@@ -9,10 +9,6 @@ import java.util.GregorianCalendar;
 
 import static org.junit.Assert.*;
 
-
-/**
- * Created by Morten on 11/04/16.
- */
 public class TestChangeProjectDates extends TestManageProject{
 
 
@@ -27,7 +23,6 @@ public class TestChangeProjectDates extends TestManageProject{
         assertEquals(project.getStartDate(), startDate);
         assertEquals(project.getEndDate(), endDate);
     }
-
 
     @Test
     public void testCorrectStartAndSameEnd() throws WrongDateException, NoAccessException{
@@ -87,7 +82,6 @@ public class TestChangeProjectDates extends TestManageProject{
         Project project = pms.createProject(null, null);
     }
 
-
     @Test
     public void testNotManager() throws WrongDateException, NoAccessException {
         expectedEx.expect(NoAccessException.class);
@@ -103,6 +97,5 @@ public class TestChangeProjectDates extends TestManageProject{
         project.setStartDate(startDate, pms.getCurrentEmployee());
         project.setEndDate(endDate, pms.getCurrentEmployee());
     }
-
 
 }

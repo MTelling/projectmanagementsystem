@@ -22,19 +22,18 @@ public class PManagementSystem {
         projects = new LinkedList<>();
     }
 
-
     public Project createProject(Calendar startDate, Calendar endDate) throws WrongDateException, NoAccessException {
 
-        String iD = String.valueOf(getDate().get(Calendar.YEAR));
-        iD = iD.substring(2,4);
-        iD += projects.size();
+        String iD = String.valueOf(getDate().get(Calendar.YEAR)); //Get current year
+        iD = iD.substring(2,4); //Keep only last 2 digits of year.
+
+        iD += String.format("%04d", projects.size()); //Add a running 4-digit number equal to number of projects.
 
         Project newProject = new Project(dateServer, startDate, endDate, iD);
 
         projects.add(newProject);
 
         return newProject;
-
     }
 
     public Employee getCurrentEmployee() {

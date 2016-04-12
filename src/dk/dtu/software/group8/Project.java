@@ -3,6 +3,7 @@ package dk.dtu.software.group8;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 
+import javax.naming.InvalidNameException;
 import java.util.Calendar;
 
 public class Project {
@@ -85,4 +86,18 @@ public class Project {
             throw new NoAccessException("Current user is not Project Manager for this project.");
         }
     }
+
+    public void setName(String name) throws InvalidNameException {
+        if(name == null) {
+            throw new InvalidNameException("Name cannot be null.");
+        } else if (name != name.replaceAll("[^\\w\\s\\-_æøåÆØÅ]", "")) {
+            throw new InvalidNameException("Special characters are not allowed in name.");
+        } else if (name.length() > 30) {
+            throw new InvalidNameException("Name can only be 30 characters long.");
+        } else {
+                this.name = name;
+        }
+    }
+
+    public String getName() { return this.name; }
 }
