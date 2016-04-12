@@ -1,10 +1,14 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
+import org.junit.runner.Description;
 
 import javax.naming.InvalidNameException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Project {
 
@@ -14,17 +18,20 @@ public class Project {
     private Calendar endDate;
     private Employee projectManager;
     private DateServer dateServer;
+    private List<Activity> activities;
 
     public Project(DateServer dateServer,
                    Calendar startDate,
                    Calendar endDate,
                    String iD) throws WrongDateException, NoAccessException {
 
-        this.dateServer = dateServer;
-
         if(startDate == null || endDate == null) {
             throw new WrongDateException("Missing date(s).");
         }
+
+        this.activities = new ArrayList<>();
+
+        this.dateServer = dateServer;
 
         setEndDate(endDate, null);
         setStartDate(startDate, null);
@@ -100,4 +107,14 @@ public class Project {
     }
 
     public String getName() { return this.name; }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public Activity createActivity(String type, int startWeek, int endWeek, int approximatedHours) throws IncorrectAttributeException {
+        Activity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours);
+        this.activities.add(newActivity);
+        return newActivity;
+    }
 }
