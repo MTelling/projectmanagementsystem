@@ -18,6 +18,7 @@ public class ProjectActivity extends  Activity {
 
     //TODO: What if endWeek is week 2, year 2017 and startWeek is week 47, year 2016. How do we check this?
     public ProjectActivity(String activityType,int startWeek,int endWeek,int approximatedHours) throws IncorrectAttributeException {
+        //TODO: Should we check for activity types? Can't they be everything?
         if(!LEGAL_TYPES.contains(activityType)) {
             throw new IncorrectAttributeException("The supplied activity type is not a correct activity type.");
         } else if (endWeek - startWeek < 0 ||

@@ -89,10 +89,6 @@ public class Project {
         return projectManager;
     }
 
-    public Calendar getDate() {
-        return dateServer.getCalendar();
-    }
-
     private void checkIfEmployeeIsProjectManager(Employee emp) throws NoAccessException {
         if (this.projectManager != null && !this.projectManager.equals(emp)) {
             throw new NoAccessException("Current user is not Project Manager for this project.");
