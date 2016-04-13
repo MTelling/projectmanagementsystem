@@ -32,4 +32,5 @@ public abstract class Activity {
     public int getEndWeek() {
         return endTime.get(Calendar.WEEK_OF_YEAR);
     }
+
 }

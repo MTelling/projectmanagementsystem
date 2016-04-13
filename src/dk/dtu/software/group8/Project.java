@@ -18,7 +18,7 @@ public class Project {
     private Calendar endDate;
     private Employee projectManager;
     private DateServer dateServer;
-    private List<Activity> activities;
+    private List<ProjectActivity> activities;
 
     public Project(DateServer dateServer,
                    Calendar startDate,
@@ -109,12 +109,12 @@ public class Project {
 
     public String getName() { return this.name; }
 
-    public List<Activity> getActivities() {
+    public List<ProjectActivity> getActivities() {
         return activities;
     }
 
-    public Activity createActivity(String type, int startWeek, int endWeek, int approximatedHours) throws IncorrectAttributeException {
-        Activity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours);
+    public ProjectActivity createActivity(String type, int startWeek, int endWeek, int approximatedHours) throws IncorrectAttributeException {
+        ProjectActivity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours);
         this.activities.add(newActivity);
         return newActivity;
     }

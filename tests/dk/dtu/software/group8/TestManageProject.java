@@ -29,7 +29,7 @@ public class TestManageProject {
         pms = new PManagementSystem();
         db = new DatabaseManager();
 
-        //Set current date to the may 9th 2016.
+        //Set current date to may 9th 2016.
         DateServer mockDateServer = mock(DateServer.class);
         pms.setDateServer(mockDateServer);
 

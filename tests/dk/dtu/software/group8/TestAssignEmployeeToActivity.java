@@ -1,34 +1,41 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-/**
- * Created by Morten on 11/04/16.
- */
+import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+
 public class TestAssignEmployeeToActivity extends TestManageProject {
 
-//    Activity activity;
-//
-//    @Before
-//    public void setupActivity() {
-//        activity = project.createActivity("Implementation", 37,42,42);
-//
-//        assertThat(activity, is(not(null)));
-//    }
-//
-//    @Test //Correct username, employee is available
-//    public void testA() {
-//        activity.addEmployee(pms.getCurrentEmployee());
-//
-//        assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
-//    }
-//
+    //TODO: Activity activity does not work with ProjectActivity-specific methods, even though it is initialized as such.
+    // Activity activity
+    ProjectActivity activity;
+
+    @Before
+    public void setupActivity() throws IncorrectAttributeException {
+        activity = project.createActivity("Implementation", 37,42,42);
+
+
+
+        //TODO: For some reason, this fails. assertNotNull(activity) works well.
+      //  assertThat(activity, is(not(null)));
+
+        assertNotNull(activity);
+    }
+
+    @Test //Correct username, employee is available
+    public void testA() {
+        activity.addEmployee(pms.getCurrentEmployee());
+
+        assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
+    }
+
 //    @Test //Correct username, employee unavailable
-//    public void testB() throws TooManyActivitiesException{
+//    public void testB() throws TooManyActivitiesException {
 //        expectedEx.expect(TooManyActivitiesException.class);
 //        expectedEx.expectMessage("Employee is assigned to too many activities in given period.");
 //

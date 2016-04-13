@@ -4,10 +4,7 @@ import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
 import jdk.internal.dynalink.linker.LinkerServices;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ProjectActivity extends  Activity {
 
@@ -15,6 +12,8 @@ public class ProjectActivity extends  Activity {
 
     //TODO: This should not be hardcoded here.
     private static final Set<String> LEGAL_TYPES = new HashSet<String>(Arrays.asList("Implementation"));
+
+    private List<Employee> assignedEmployees;
 
     //TODO: What if endWeek is week 2, year 2017 and startWeek is week 47, year 2016. How do we check this?
     public ProjectActivity(String activityType,int startWeek,int endWeek,int approximatedHours) throws IncorrectAttributeException {
@@ -39,9 +38,23 @@ public class ProjectActivity extends  Activity {
         this.startTime = startTime;
         this.endTime = endTime;
         this.approximatedHours = approximatedHours;
+
+        assignedEmployees = new ArrayList<Employee>();
     }
 
     public int getApproximatedHours() {
         return this.approximatedHours;
+    }
+
+    public void addEmployee(Employee employee) {
+        //TODO: if(employee is employed) {
+        assignedEmployees.add(employee);
+        //} else {
+            //throw new RedAlertException("You are not employed here, you freeloader!");
+        //}
+    }
+
+    public List<Employee> getEmployees() {
+        return this.assignedEmployees;
     }
 }

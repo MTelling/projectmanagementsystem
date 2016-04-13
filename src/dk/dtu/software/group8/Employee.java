@@ -1,5 +1,7 @@
 package dk.dtu.software.group8;
 
+import java.util.List;
+
 public class Employee {
 	
 	private String name;
