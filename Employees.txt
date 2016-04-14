@@ -1,0 +1,5 @@
+huba;Hubert;Baumeister
+toli;Tobias;Lindstrøm
+mrte;Morten;Telling
+mapa;Marcus;Pagh
+loju;Louise;Justesen
