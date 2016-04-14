@@ -1,7 +1,6 @@
 package dk.dtu.software.group8;
 
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
-import jdk.internal.dynalink.linker.LinkerServices;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

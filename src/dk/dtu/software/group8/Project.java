@@ -1,9 +1,9 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
-import org.junit.runner.Description;
 
 import javax.naming.InvalidNameException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class Project {
     private Calendar endDate;
     private Employee projectManager;
     private DateServer dateServer;
-    private List<ProjectActivity> activities;
+    private List<Activity> activities;
 
     public Project(DateServer dateServer,
                    Calendar startDate,
@@ -41,15 +41,19 @@ public class Project {
 
     //TODO: In the class diagram, this method returns a boolean. Should it?
     public void end() {
-        this.endDate = Calendar.getInstance();
+        this.endDate = dateServer.getCalendar();
     }
 
     public String extractReport() {
         return null;
     }
 
-    public void assignProjectManager(Employee employee) {
-        this.projectManager = employee;
+    public void assignProjectManager(Employee employee) throws AlreadyAssignedProjectManagerException {
+        if (this.projectManager == null) {
+            this.projectManager = employee;
+        } else {
+            throw new AlreadyAssignedProjectManagerException("The project already has a Project Manager.");
+        }
     }
 
     public Calendar getEndDate() {
@@ -109,7 +113,7 @@ public class Project {
 
     public String getName() { return this.name; }
 
-    public List<ProjectActivity> getActivities() {
+    public List<Activity> getActivities() {
         return activities;
     }
 

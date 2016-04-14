@@ -11,8 +11,6 @@ import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
 
 public class TestAssignEmployeeToActivity extends TestManageProject {
 
-    //TODO: Activity activity does not work with ProjectActivity-specific methods, even though it is initialized as such.
-    // Activity activity
     ProjectActivity activity;
 
     @Before

@@ -1,6 +1,7 @@
 package dk.dtu.software.group8;
 
 
+import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 
@@ -39,6 +40,14 @@ public class PManagementSystem {
     public Employee getCurrentEmployee() {
 		return this.currentEmployee;
 	}
+
+    public Employee getEmployeeFromName(String name) throws InvalidEmployeeException {
+        if (Arrays.stream(db.getEmployees()).anyMatch(e -> e.equals(name))) {
+            return new Employee(name);
+        } else {
+            throw new InvalidEmployeeException("No employee with that name is in the system.");
+        }
+    }
 
 	public boolean signIn(String name) {
         //Check if user is actually an employee.
