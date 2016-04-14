@@ -2,6 +2,7 @@ package dk.dtu.software.group8;
 
 import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,24 +22,24 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     }
 
     @Test //Correct username, employee is available
-    public void testA() throws NoAccessException{
+    public void testA() throws NoAccessException, TooManyActivitiesException{
         project.addEmployeeToActivity(activity, pms.getCurrentEmployee());
 
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
 
-//    @Test //Correct username, employee unavailable
-//    public void testB() throws TooManyActivitiesException {
-//        expectedEx.expect(TooManyActivitiesException.class);
-//        expectedEx.expectMessage("Employee is assigned to too many activities in given period.");
-//
-//        //Try to add the employee to 20 activities.
-//        for (int i = 0; i < 21; i++) {
-//            activity = project.createActivity("Implementation", 37,42,42);
-//            activity.addEmployee(pms.getCurrentEmployee());
-//        }
-//
-//    }
+    @Test //Correct username, employee unavailable
+    public void testB() throws TooManyActivitiesException, NoAccessException, IncorrectAttributeException {
+        expectedEx.expect(TooManyActivitiesException.class);
+        expectedEx.expectMessage("Employee is assigned to too many activities in given period.");
+
+        //Try to add the employee to 20 activities.
+        for (int i = 0; i < 21; i++) {
+            activity = project.createActivity("Implementation", 37,42,42, pms.getCurrentEmployee());
+            activity.addEmployee(pms.getCurrentEmployee());
+        }
+
+    }
 //
 //    //TODO: Should we really have this test? We have exactly the same in TestEndActivity.(Prob. others).
     @Test //Incorrect username
@@ -47,16 +48,16 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         expectedEx.expectMessage("No employee with that name is in the system.");
 
         String empName = "ImNotAnEmployee";
-        Employee emp = pms.getEmployeeFromName(empName);
+        Employee emp = pms.getEmployeeFromId(empName);
     }
 
     @Test //Not project manager, but otherwise correct.
-    public void testD() throws NoAccessException {
+    public void testD() throws NoAccessException, TooManyActivitiesException {
         expectedEx.expect(NoAccessException.class);
         expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
         //Sign in as employee who is not PM.
-        pms.signIn(db.getEmployees()[2]);
+        pms.signIn(db.getEmployees().get(2).getId());
 
         //Run test A again.
         testA();

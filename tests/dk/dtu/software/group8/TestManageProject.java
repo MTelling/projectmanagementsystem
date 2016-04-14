@@ -20,7 +20,7 @@ public class TestManageProject {
     PManagementSystem pms;
     DatabaseManager db;
     Project project;
-    String emp;
+    Employee emp;
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -38,8 +38,8 @@ public class TestManageProject {
         when(pms.getDate()).thenReturn(cal);
 
         //Login a user
-        emp = db.getEmployees()[0];
-        pms.signIn(emp);
+        emp = db.getEmployees().get(0);
+        pms.signIn(emp.getId());
         assertTrue(pms.userLoggedIn());
 
         //Check the project base is empty.

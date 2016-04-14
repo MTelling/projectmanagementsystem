@@ -18,17 +18,17 @@ public class TestSignIn {
 
     @Test
     public void signInSuccess() {
-        String username = db.getEmployees()[0];
+        String iD = db.getEmployees().get(0).getId();
         assertEquals(pms.getCurrentEmployee(), null);
-        assertTrue(pms.signIn(username));
-        assertEquals(pms.getCurrentEmployee().getName(), username);
+        assertTrue(pms.signIn(iD));
+        assertEquals(pms.getCurrentEmployee().getId(), iD);
     }
 
     @Test
     public void signInNoSuchUser() {
-        String username = "john";
+        String iD = "john";
         assertEquals(pms.getCurrentEmployee(), null);
-        assertFalse(pms.signIn(username));
+        assertFalse(pms.signIn(iD));
         assertEquals(pms.getCurrentEmployee(), null);
     }
 }

@@ -1,9 +1,6 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
-import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
+import dk.dtu.software.group8.Exceptions.*;
 
 import javax.naming.InvalidNameException;
 import java.util.ArrayList;
@@ -130,7 +127,7 @@ public class Project {
         return newActivity;
     }
 
-    public void addEmployeeToActivity(ProjectActivity activity, Employee currentEmployee) throws NoAccessException{
+    public void addEmployeeToActivity(ProjectActivity activity, Employee currentEmployee) throws NoAccessException, TooManyActivitiesException{
         checkIfEmployeeIsProjectManager(currentEmployee);
 
         activity.addEmployee(currentEmployee);

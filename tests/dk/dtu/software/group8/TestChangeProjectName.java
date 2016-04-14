@@ -61,8 +61,8 @@ public class TestChangeProjectName extends TestManageProject{
 //        expectedEx.expectMessage("Name is already assigned to another project.");
 //
 //        String name = "Test";
-//        project.setName(name);
-//        assertEquals(project.getName(), name);
+//        project.setId(name);
+//        assertEquals(project.getId(), name);
 //
 //        //Create a second project.
 //        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
@@ -70,7 +70,7 @@ public class TestChangeProjectName extends TestManageProject{
 //        Project secondProject = pms.createProject(startDate, endDate);
 //        secondProject.setProjectManager(emp);
 //
-//        secondProject.setName(name);
+//        secondProject.setId(name);
 //    }
 //
 
@@ -82,10 +82,10 @@ public class TestChangeProjectName extends TestManageProject{
 //
 //        //Set the current employee to one who is not
 //        pms.signIn(db.getEmployees()[1]);
-//        assertEquals(pms.getCurrentEmployee().getName(), db.getEmployees()[1]);
+//        assertEquals(pms.getCurrentEmployee().getId(), db.getEmployees()[1]);
 //
 //        //Try to change project name.
-//        project.setName("Test");
+//        project.setId("Test");
 //    }
 //
     @Test //Test for too long name

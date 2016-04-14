@@ -34,7 +34,7 @@ public class TestCreateProject {
         when(pms.getDate()).thenReturn(cal);
 
         //Login a user
-        pms.signIn(db.getEmployees()[0]);
+        pms.signIn(db.getEmployees().get(0).getId());
         assertTrue(pms.userLoggedIn());
 
         //Check the project base is empty.
