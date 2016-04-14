@@ -1,28 +1,30 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
-import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
+import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
 
 public class TestProjectManagerAssignment {
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
-    PManagementSystem pms;
+	
+	PManagementSystem pms;
     DatabaseManager db;
     Project project;
+	
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
 
     @Before
     public void setup() throws WrongDateException, NoAccessException {
@@ -33,22 +35,22 @@ public class TestProjectManagerAssignment {
         DateServer mockDateServer = mock(DateServer.class);
         pms.setDateServer(mockDateServer);
 
-        Calendar cal = new GregorianCalendar(2016, Calendar.MAY,9);
-        when(pms.getDate()).thenReturn(cal);
+        LocalDate date = LocalDate.parse("2016-05-09");
+        when(pms.getDate()).thenReturn(date);
 
         //Login a user
         pms.signIn(db.getEmployees()[0]);
-        assertTrue(pms.userLoggedIn());
+        assertThat(pms.userLoggedIn(), is(true));
 
         //Check the project base is empty.
-        assertTrue(pms.getProjects().isEmpty());
+        assertThat(pms.getProjects().isEmpty(), is(true));
 
         //Create a project
-        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-06-10");
         project = pms.createProject(startDate, endDate);
 
-        assertEquals(pms.getProjects().size(), 1);
+        assertThat(pms.getProjects().size(), is(1));
     }
 
     @Test
@@ -57,16 +59,17 @@ public class TestProjectManagerAssignment {
         Employee emp = pms.getEmployeeFromName(empName);
 
         project.assignProjectManager(emp);
-        assertEquals(project.getProjectManager(), emp);
+        assertThat(project.getProjectManager(), is(emp));
     }
 
     @Test
-    public void testIsNotEmployee() throws InvalidEmployeeException {
+    public void testIsNotEmployee() throws InvalidEmployeeException, AlreadyAssignedProjectManagerException {
         expectedEx.expect(InvalidEmployeeException.class);
         expectedEx.expectMessage("No employee with that name is in the system.");
 
         String empName = "ImNotAnEmployee";
         Employee emp = pms.getEmployeeFromName(empName);
+        project.assignProjectManager(emp);
     }
 
     @Test
@@ -78,7 +81,7 @@ public class TestProjectManagerAssignment {
         Employee emp = pms.getEmployeeFromName(empName);
 
         project.assignProjectManager(emp);
-        assertEquals(project.getProjectManager(), emp);
+        assertThat(project.getProjectManager(), is(emp));
 
         String secondEmpName = db.getEmployees()[0];
         Employee secondEmp = pms.getEmployeeFromName(secondEmpName);

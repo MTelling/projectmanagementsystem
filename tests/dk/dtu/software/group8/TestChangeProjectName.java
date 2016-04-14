@@ -1,10 +1,11 @@
 package dk.dtu.software.group8;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import javax.naming.InvalidNameException;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class TestChangeProjectName extends TestManageProject{
 
@@ -13,7 +14,7 @@ public class TestChangeProjectName extends TestManageProject{
         String name = "Anders";
 
         project.setName(name);
-        assertEquals(project.getName(), name);
+        assertThat(project.getName(), is(name));
     }
 
     @Test //Test for Integer
@@ -21,7 +22,7 @@ public class TestChangeProjectName extends TestManageProject{
         String name = "42";
 
         project.setName(name);
-        assertEquals(project.getName(), name);
+        assertThat(project.getName(), is(name));
     }
 
     @Test //Test for float/special char.

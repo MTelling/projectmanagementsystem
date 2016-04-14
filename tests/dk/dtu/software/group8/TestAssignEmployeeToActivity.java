@@ -16,7 +16,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
 
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException{
-        activity = project.createActivity("Implementation", 37,42,42, pms.getCurrentEmployee());
+        activity = project.createActivity("Implementation", 37,42,42);
         assertThat(activity, is(not(nullValue())));
     }
 
@@ -48,6 +48,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
 
         String empName = "ImNotAnEmployee";
         Employee emp = pms.getEmployeeFromName(empName);
+        assertThat(emp, is(nullValue()));
     }
 
     @Test //Not project manager, but otherwise correct.

@@ -37,6 +37,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 		int approximatedHours = 42;
 
 		Activity projectActivity = new ProjectActivity(activityType, startWeek, endWeek, approximatedHours);
+		assertThat(projectActivity, is(nullValue()));
 	}
 
 	@Test
@@ -50,6 +51,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 		int approximatedHours = 42;
 
 		Activity projectActivity = new ProjectActivity(activityType, startWeek, endWeek, approximatedHours);
+		assertThat(projectActivity, is(nullValue()));
 	}
 
 	@Test
@@ -63,6 +65,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 		int approximatedHours = -42;
 
 		Activity projectActivity = new ProjectActivity(activityType, startWeek, endWeek, approximatedHours);
+		assertThat(projectActivity, is(nullValue()));
 	}
 
 	@Test
@@ -72,7 +75,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 
 		int numOfActivities = project.getActivities().size();
 
-		Activity projectActivity = project.createActivity("Implementation", 37, 42, 42, pms.getCurrentEmployee());
+		Activity projectActivity = project.createActivity("Implementation", 37, 42, 42);
 
 		assertThat(projectActivity, instanceOf(ProjectActivity.class));
 		assertThat(project.getActivities().size(), is(numOfActivities + 1));
@@ -87,6 +90,6 @@ public class TestCreateProjectActivity extends TestManageProject {
 		//Sign in as employee who is not PM.
 		pms.signIn(db.getEmployees()[2]);
 
-		project.createActivity("Implementation", 37, 42, 42, pms.getCurrentEmployee());
+		project.createActivity("Implementation", 37, 42, 42);
 	}
 }

@@ -1,104 +1,38 @@
 package dk.dtu.software.group8;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.naming.InvalidNameException;
+
 import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 
-import javax.naming.InvalidNameException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 public class Project {
 
-    private String iD;
-    private String name;
-    private Calendar startDate;
-    private Calendar endDate;
+    private String id, name;
+    private LocalDate startDate, endDate;
     private Employee projectManager;
     private DateServer dateServer;
     private List<Activity> activities;
 
-    public Project(DateServer dateServer,
-                   Calendar startDate,
-                   Calendar endDate,
-                   String iD) throws WrongDateException, NoAccessException {
-
+    public Project(String id, LocalDate startDate, LocalDate endDate, DateServer dateServer) throws WrongDateException, NoAccessException {
         if(startDate == null || endDate == null) {
             throw new WrongDateException("Missing date(s).");
         }
 
-        this.activities = new ArrayList<>();
-
+        this.id = id;
+        
+        this.activities = new ArrayList<Activity>();
         this.dateServer = dateServer;
-
-        setEndDate(endDate, null);
-        setStartDate(startDate, null);
-
-        this.iD = iD;
+        
+        setStartDate(startDate);
+        setEndDate(endDate);
     }
-
-    //TODO: In the class diagram, this method returns a boolean. Should it?
-    public void end() {
-        this.endDate = dateServer.getCalendar();
-    }
-
-    public String extractReport() {
-        return null;
-    }
-
-    public void assignProjectManager(Employee employee) throws AlreadyAssignedProjectManagerException {
-        if (this.projectManager == null) {
-            this.projectManager = employee;
-        } else {
-            throw new AlreadyAssignedProjectManagerException("The project already has a Project Manager.");
-        }
-    }
-
-    public Calendar getEndDate() {
-        return endDate;
-    }
-
-
-    public void setEndDate(Calendar endDate, Employee employee) throws WrongDateException, NoAccessException {
-        checkIfEmployeeIsProjectManager(employee);
-
-        if (endDate.before(startDate)) {
-            throw new WrongDateException("End date is before start date.");
-        }
-        this.endDate = endDate;
-    }
-
-    public Calendar getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Calendar startDate, Employee employee) throws WrongDateException, NoAccessException {
-        checkIfEmployeeIsProjectManager(employee);
-
-        if (startDate.after(endDate)) {
-            throw new WrongDateException("End date is before start date.");
-        } else if (startDate.before(dateServer.getCalendar())) {
-            throw new WrongDateException("Date is in the past.");
-        }
-        this.startDate = startDate;
-    }
-
-    public String getId() {
-        return iD;
-    }
-
-    public Employee getProjectManager() {
-        return projectManager;
-    }
-
-    private void checkIfEmployeeIsProjectManager(Employee emp) throws NoAccessException {
-        if (this.projectManager != null && !this.projectManager.equals(emp)) {
-            throw new NoAccessException("Current user is not Project Manager for this project.");
-        }
-    }
-
+    
     public void setName(String name) throws InvalidNameException {
         if(name == null) {
             throw new InvalidNameException("Name cannot be null.");
@@ -111,28 +45,67 @@ public class Project {
         }
     }
 
-    public String getName() { return this.name; }
-
-    public List<Activity> getActivities() {
-        return activities;
+    public void assignProjectManager(Employee employee) throws AlreadyAssignedProjectManagerException {
+        if (this.projectManager == null) {
+            this.projectManager = employee;
+        } else {
+            throw new AlreadyAssignedProjectManagerException("The project already has a Project Manager.");
+        }
     }
-
-    public ProjectActivity createActivity(String type,
-                                          int startWeek,
-                                          int endWeek,
-                                          int approximatedHours,
-                                          Employee currentEmployee)
-            throws IncorrectAttributeException, NoAccessException {
-        checkIfEmployeeIsProjectManager(currentEmployee);
+    
+    public void setStartDate(LocalDate startDate) throws WrongDateException {
+        if (startDate.isBefore(dateServer.getDate())) {
+            throw new WrongDateException("Date is in the past.");
+        }
+        this.startDate = startDate;
+    }
+    
+    public void setEndDate(LocalDate endDate) throws WrongDateException {
+        if (endDate.isBefore(startDate)) {
+            throw new WrongDateException("End date is before start date.");
+        }
+        this.endDate = endDate;
+    }
+    
+    public ProjectActivity createActivity(String type, int startWeek, int endWeek, int approximatedHours) throws IncorrectAttributeException {
 
         ProjectActivity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours);
         this.activities.add(newActivity);
         return newActivity;
     }
 
-    public void addEmployeeToActivity(ProjectActivity activity, Employee currentEmployee) throws NoAccessException{
-        checkIfEmployeeIsProjectManager(currentEmployee);
-
-        activity.addEmployee(currentEmployee);
+    public void addEmployeeToActivity(ProjectActivity activity, Employee employee) {
+        activity.addEmployee(employee);
     }
+
+    public String getId() {
+        return id;
+    }
+    
+    public Employee getProjectManager() {
+        return projectManager;
+    }
+    
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public String getName() { return this.name; }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public String extractReport() {
+        return null;
+    }
+    
+    public void end() {
+        this.endDate = dateServer.getDate();
+    }
+
 }

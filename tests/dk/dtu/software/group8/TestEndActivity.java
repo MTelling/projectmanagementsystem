@@ -1,11 +1,9 @@
 package dk.dtu.software.group8;
 
-import org.junit.Test;
-
-import java.util.Calendar;
-
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+
+import org.junit.Test;
 
 public class TestEndActivity extends TestManageProject {
 
@@ -13,16 +11,7 @@ public class TestEndActivity extends TestManageProject {
     public void testEndProject() {
         project.end();
 
-        // This does not work, because it compares down to seconds.
-//        assertThat(project.getEndDate(), is(pms.getDate()));
-
-        //TODO: Should this only check week number?
-        assertEquals(project.getEndDate().ERA , pms.getDate().ERA);
-        assertEquals(project.getEndDate().YEAR , pms.getDate().YEAR);
-        assertEquals(project.getEndDate().MONTH , pms.getDate().MONTH);
-        assertEquals(project.getEndDate().DAY_OF_YEAR , pms.getDate().DAY_OF_YEAR);
-
-
+        assertThat(project.getEndDate(), is(pms.getDate()));
     }
 
     //TODO: Project does not know current user. Project.end() can therefore be called by anyone.

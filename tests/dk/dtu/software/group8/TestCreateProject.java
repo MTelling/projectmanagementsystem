@@ -1,26 +1,29 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-@SuppressWarnings("unused")
 public class TestCreateProject {
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
+	
 	PManagementSystem pms;
 	DatabaseManager db = new DatabaseManager();
+	
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
 
 	@Before
 	public void setup() {
@@ -30,34 +33,33 @@ public class TestCreateProject {
         DateServer mockDateServer = mock(DateServer.class);
         pms.setDateServer(mockDateServer);
 
-        Calendar cal = new GregorianCalendar(2016, Calendar.MAY,9);
-        when(pms.getDate()).thenReturn(cal);
-
+        LocalDate date = LocalDate.parse("2016-05-09");
+        when(pms.getDate()).thenReturn(date);
+        
         //Login a user
         pms.signIn(db.getEmployees()[0]);
-        assertTrue(pms.userLoggedIn());
+        assertThat(pms.userLoggedIn(), is(true));
 
         //Check the project base is empty.
-        //TODO: could we do this smarter?
-        assertEquals(pms.getProjects().size(), 0);
+        assertThat(pms.getProjects().isEmpty(), is(true));
 	}
 
 
 
 	@Test //Correct start and end.
 	public void createProjectA() throws WrongDateException, NoAccessException {
-        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
-
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-06-10");
+        
         //Create the project
 		Project project = pms.createProject(startDate, endDate);
 
         //Check that the project was added.
-		assertEquals(pms.getProjects().size(), 1);
+		assertThat(pms.getProjects().size(), is(1));
 
         //Test that date is set correct.
-        assertEquals(project.getStartDate(), startDate);
-        assertEquals(project.getEndDate(), endDate);
+        assertThat(project.getStartDate(), is(startDate));
+        assertThat(project.getEndDate(), is(endDate));
 
         assertThat(pms.getProjects().get(0), instanceOf(Project.class));
 		assertThat(pms.getProjects().get(0).getId(), RegexMatcher.matches("^[0-9]{1,6}$"));
@@ -66,18 +68,18 @@ public class TestCreateProject {
 
     @Test //Correct start and end.
     public void createProjectB() throws WrongDateException, NoAccessException {
-        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.MAY, 10);
+    	LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-06-10");
 
         //Create the project
         Project project = pms.createProject(startDate, endDate);
 
         //Check that the project was added.
-        assertEquals(pms.getProjects().size(), 1);
+        assertThat(pms.getProjects().size(), is(1));
 
         //Test that date is set correct.
-        assertEquals(project.getStartDate(), startDate);
-        assertEquals(project.getEndDate(), endDate);
+        assertThat(project.getStartDate(), is(startDate));
+        assertThat(project.getEndDate(), is(endDate));
 
         assertThat(pms.getProjects().get(0), instanceOf(Project.class));
 		assertThat(pms.getProjects().get(0).getId(), RegexMatcher.matches("^[0-9]{1,6}$"));
@@ -89,12 +91,12 @@ public class TestCreateProject {
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("End date is before start date.");
 
-        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.MAY, 3);
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-05-03");
 
         //Create the project
         Project project = pms.createProject(startDate, endDate);
-
+        assertThat(project, is(nullValue()));
     }
 
     @Test //Start date in the past, correct end date
@@ -103,12 +105,12 @@ public class TestCreateProject {
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("Date is in the past.");
 
-        Calendar startDate = new GregorianCalendar(2016, Calendar.APRIL, 25);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.MAY, 10);
+        LocalDate startDate = LocalDate.parse("2016-04-25");
+        LocalDate endDate = LocalDate.parse("2016-05-10");
 
         //Create the project
         Project project = pms.createProject(startDate, endDate);
-
+        assertThat(project, is(nullValue()));
     }
 
     @Test //Incorrect start date, incorrect end date. (Both in past)
@@ -116,14 +118,13 @@ public class TestCreateProject {
         //Check correct exception
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("Date is in the past.");
-
-        Calendar startDate = new GregorianCalendar(2016, Calendar.APRIL, 25);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.APRIL, 30);
+        
+        LocalDate startDate = LocalDate.parse("2016-04-25");
+        LocalDate endDate = LocalDate.parse("2016-04-30");
 
         //Create the project
         Project project = pms.createProject(startDate, endDate);
-
-
+        assertThat(project, is(nullValue()));
     }
 
     @Test //No dates.
@@ -135,8 +136,6 @@ public class TestCreateProject {
 
         //Create the project with no dates.
         Project project = pms.createProject(null, null);
-
+        assertThat(project, is(nullValue()));
     }
-
-
 }

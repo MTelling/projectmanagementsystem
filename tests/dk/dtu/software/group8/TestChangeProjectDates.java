@@ -1,39 +1,41 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+
+import java.time.LocalDate;
+
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import static org.junit.Assert.*;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
 
 public class TestChangeProjectDates extends TestManageProject{
 
 
     @Test
     public void testCorrectStartAndEnd() throws WrongDateException, NoAccessException{
-        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
+    	LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-06-10");
 
-        project.setStartDate(startDate, pms.getCurrentEmployee());
-        project.setEndDate(endDate, pms.getCurrentEmployee());
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
 
-        assertEquals(project.getStartDate(), startDate);
-        assertEquals(project.getEndDate(), endDate);
+        assertThat(project.getStartDate(), is(startDate));
+        assertThat(project.getEndDate(), is(endDate));
     }
 
     @Test
     public void testCorrectStartAndSameEnd() throws WrongDateException, NoAccessException{
-        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.MAY, 10);
+    	LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-05-10");
 
-        project.setStartDate(startDate, pms.getCurrentEmployee());
-        project.setEndDate(endDate, pms.getCurrentEmployee());
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
 
-        assertEquals(project.getStartDate(), startDate);
-        assertEquals(project.getEndDate(), endDate);
+        assertThat(project.getStartDate(), is(startDate));
+        assertThat(project.getEndDate(), is(endDate));
     }
 
     @Test
@@ -41,11 +43,11 @@ public class TestChangeProjectDates extends TestManageProject{
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("End date is before start date.");
 
-        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.MAY, 3);
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-05-03");
 
-        project.setStartDate(startDate, pms.getCurrentEmployee());
-        project.setEndDate(endDate, pms.getCurrentEmployee());
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
     }
 
     @Test
@@ -53,11 +55,11 @@ public class TestChangeProjectDates extends TestManageProject{
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("Date is in the past.");
 
-        Calendar startDate = new GregorianCalendar(2016, Calendar.APRIL, 25);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.MAY, 10);
+        LocalDate startDate = LocalDate.parse("2016-04-25");
+        LocalDate endDate = LocalDate.parse("2016-05-10");
 
-        project.setStartDate(startDate, pms.getCurrentEmployee());
-        project.setEndDate(endDate, pms.getCurrentEmployee());
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
     }
 
     @Test
@@ -65,11 +67,11 @@ public class TestChangeProjectDates extends TestManageProject{
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("Date is in the past.");
 
-        Calendar startDate = new GregorianCalendar(2016, Calendar.APRIL, 25);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.APRIL, 30);
+        LocalDate startDate = LocalDate.parse("2016-04-25");
+        LocalDate endDate = LocalDate.parse("2016-04-30");
 
-        project.setStartDate(startDate, pms.getCurrentEmployee());
-        project.setEndDate(endDate, pms.getCurrentEmployee());
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
     }
 
     @Test
@@ -80,6 +82,7 @@ public class TestChangeProjectDates extends TestManageProject{
 
         //Create the project with no dates.
         Project project = pms.createProject(null, null);
+        assertThat(project, is(nullValue()));
     }
 
     @Test
@@ -91,11 +94,11 @@ public class TestChangeProjectDates extends TestManageProject{
         pms.signIn(db.getEmployees()[2]);
 
         //Try to change the date anyway.
-        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-06-10");
 
-        project.setStartDate(startDate, pms.getCurrentEmployee());
-        project.setEndDate(endDate, pms.getCurrentEmployee());
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
     }
 
 }

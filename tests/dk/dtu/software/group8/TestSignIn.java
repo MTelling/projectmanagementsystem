@@ -3,7 +3,8 @@ package dk.dtu.software.group8;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 public class TestSignIn {
 
@@ -19,16 +20,18 @@ public class TestSignIn {
     @Test
     public void signInSuccess() {
         String username = db.getEmployees()[0];
-        assertEquals(pms.getCurrentEmployee(), null);
-        assertTrue(pms.signIn(username));
-        assertEquals(pms.getCurrentEmployee().getName(), username);
+        
+        assertThat(pms.getCurrentEmployee(), is(nullValue()));
+        assertThat(pms.signIn(username), is(true));
+        assertThat(pms.getCurrentEmployee().getName(), is(username));
     }
 
     @Test
     public void signInNoSuchUser() {
         String username = "john";
-        assertEquals(pms.getCurrentEmployee(), null);
-        assertFalse(pms.signIn(username));
-        assertEquals(pms.getCurrentEmployee(), null);
+        
+        assertThat(pms.getCurrentEmployee(), is(nullValue()));
+        assertThat(pms.signIn(username), is(false));
+        assertThat(pms.getCurrentEmployee(), is(nullValue()));
     }
 }

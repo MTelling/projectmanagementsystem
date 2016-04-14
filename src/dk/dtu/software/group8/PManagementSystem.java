@@ -1,14 +1,14 @@
 package dk.dtu.software.group8;
 
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
-
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
 
 public class PManagementSystem {
 
@@ -23,14 +23,11 @@ public class PManagementSystem {
         projects = new LinkedList<>();
     }
 
-    public Project createProject(Calendar startDate, Calendar endDate) throws WrongDateException, NoAccessException {
-
-        String iD = String.valueOf(getDate().get(Calendar.YEAR)); //Get current year
-        iD = iD.substring(2,4); //Keep only last 2 digits of year.
-
-        iD += String.format("%04d", projects.size()); //Add a running 4-digit number equal to number of projects.
-
-        Project newProject = new Project(dateServer, startDate, endDate, iD);
+    public Project createProject(LocalDate startDate, LocalDate endDate) throws WrongDateException, NoAccessException {
+        String id = String.valueOf(getDate().getYear()).substring(2, 4); //Get current year and only last two digits
+        id += String.format("%04d", projects.size()); //Add a running 4-digit number equal to number of projects.
+        
+        Project newProject = new Project(id, startDate, endDate, dateServer);
 
         projects.add(newProject);
 
@@ -59,8 +56,8 @@ public class PManagementSystem {
 		return false;
 	}
 
-    public Calendar getDate() {
-        return dateServer.getCalendar();
+    public LocalDate getDate() {
+        return dateServer.getDate();
     }
 
     public void setDateServer(DateServer dateServer) {
