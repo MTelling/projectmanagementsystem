@@ -1,6 +1,7 @@
 package dk.dtu.software.group8;
 
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
@@ -65,27 +66,27 @@ public class TestCreateProjectActivity extends TestManageProject {
 	}
 
 	@Test
-	public void testCreateProjectActivity() throws IncorrectAttributeException{
+	public void testCreateProjectActivity() throws IncorrectAttributeException, NoAccessException{
 		assertThat(project.getProjectManager(), is(pms.getCurrentEmployee()));
 		assertThat(project.getActivities().isEmpty(), is(true));
 
 		int numOfActivities = project.getActivities().size();
 
-		Activity projectActivity = project.createActivity("Implementation", 37, 42, 42);
+		Activity projectActivity = project.createActivity("Implementation", 37, 42, 42, pms.getCurrentEmployee());
 
 		assertThat(projectActivity, instanceOf(ProjectActivity.class));
 		assertThat(project.getActivities().size(), is(numOfActivities + 1));
 	}
 
 	//TODO: Project doesn't have access to current user.
-//	@Test
-//	public void testCreateProjectActivityNotManager() throws IncorrectAttributeException {
-//		expectedEx.expect(NoAccessException.class);
-//		expectedEx.expectMessage("Current user is not Project Manager for this project.");
-//
-//		//Sign in as employee who is not PM.
-//		pms.signIn(db.getEmployees()[2]);
-//		
-//		project.createActivity("Implementation", 37, 42, 42);
-//	}
+	@Test
+	public void testCreateProjectActivityNotManager() throws IncorrectAttributeException, NoAccessException {
+		expectedEx.expect(NoAccessException.class);
+		expectedEx.expectMessage("Current user is not Project Manager for this project.");
+
+		//Sign in as employee who is not PM.
+		pms.signIn(db.getEmployees()[2]);
+
+		project.createActivity("Implementation", 37, 42, 42, pms.getCurrentEmployee());
+	}
 }

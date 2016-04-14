@@ -117,9 +117,22 @@ public class Project {
         return activities;
     }
 
-    public ProjectActivity createActivity(String type, int startWeek, int endWeek, int approximatedHours) throws IncorrectAttributeException {
+    public ProjectActivity createActivity(String type,
+                                          int startWeek,
+                                          int endWeek,
+                                          int approximatedHours,
+                                          Employee currentEmployee)
+            throws IncorrectAttributeException, NoAccessException {
+        checkIfEmployeeIsProjectManager(currentEmployee);
+
         ProjectActivity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours);
         this.activities.add(newActivity);
         return newActivity;
+    }
+
+    public void addEmployeeToActivity(ProjectActivity activity, Employee currentEmployee) throws NoAccessException{
+        checkIfEmployeeIsProjectManager(currentEmployee);
+
+        activity.addEmployee(currentEmployee);
     }
 }

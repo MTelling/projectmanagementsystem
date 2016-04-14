@@ -1,6 +1,7 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
+import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,20 +15,14 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     ProjectActivity activity;
 
     @Before
-    public void setupActivity() throws IncorrectAttributeException {
-        activity = project.createActivity("Implementation", 37,42,42);
-
-
-
-        //TODO: For some reason, this fails. assertNotNull(activity) works well.
-      //  assertThat(activity, is(not(null)));
-
-        assertNotNull(activity);
+    public void setupActivity() throws IncorrectAttributeException, NoAccessException{
+        activity = project.createActivity("Implementation", 37,42,42, pms.getCurrentEmployee());
+        assertThat(activity, is(not(nullValue())));
     }
 
     @Test //Correct username, employee is available
-    public void testA() {
-        activity.addEmployee(pms.getCurrentEmployee());
+    public void testA() throws NoAccessException{
+        project.addEmployeeToActivity(activity, pms.getCurrentEmployee());
 
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
@@ -46,25 +41,25 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
 //    }
 //
 //    //TODO: Should we really have this test? We have exactly the same in TestEndActivity.(Prob. others).
-//    @Test //Incorrect username
-//    public void testC() {
-//        expectedEx.expect(InvalidEmployeeException.class);
-//        expectedEx.expectMessage("No employee with that name is in the system.");
-//
-//        String empName = "ImNotAnEmployee";
-//        Employee emp = pms.getEmployeeFromName(empName);
-//    }
-//
-//    @Test //Not project manager, but otherwise correct.
-//    public void testD() {
-//        expectedEx.expect(NoAccessException.class);
-//        expectedEx.expectMessage("Current user is not Project Manager for this project.");
-//
-//        //Sign in as employee who is not PM.
-//        pms.signIn(db.getEmployees()[2]);
-//
-//        //Run test A again.
-//        testA();
-//    }
+    @Test //Incorrect username
+    public void testC() throws InvalidEmployeeException {
+        expectedEx.expect(InvalidEmployeeException.class);
+        expectedEx.expectMessage("No employee with that name is in the system.");
+
+        String empName = "ImNotAnEmployee";
+        Employee emp = pms.getEmployeeFromName(empName);
+    }
+
+    @Test //Not project manager, but otherwise correct.
+    public void testD() throws NoAccessException {
+        expectedEx.expect(NoAccessException.class);
+        expectedEx.expectMessage("Current user is not Project Manager for this project.");
+
+        //Sign in as employee who is not PM.
+        pms.signIn(db.getEmployees()[2]);
+
+        //Run test A again.
+        testA();
+    }
 
 }
