@@ -52,16 +52,16 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         Employee emp = pms.getEmployeeFromId(empName);
     }
 
-    @Test //Not project manager, but otherwise correct.
-    public void testD() throws NoAccessException, TooManyActivitiesException {
-        expectedEx.expect(NoAccessException.class);
-        expectedEx.expectMessage("Current user is not Project Manager for this project.");
-
-        //Sign in as employee who is not PM.
-        pms.signIn(db.getEmployees().get(2).getId());
-
-        //Run test A again.
-        testA();
-    }
+//    @Test //Not project manager, but otherwise correct.
+//    public void testD() throws NoAccessException, TooManyActivitiesException {
+//        expectedEx.expect(NoAccessException.class);
+//        expectedEx.expectMessage("Current user is not Project Manager for this project.");
+//
+//        //Sign in as employee who is not PM.
+//        pms.signIn(db.getEmployees().get(2).getId());
+//
+//        //Run test A again.
+//        testA();
+//    }
 
 }

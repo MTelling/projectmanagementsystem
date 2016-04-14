@@ -85,20 +85,20 @@ public class TestChangeProjectDates extends TestManageProject{
         assertThat(project, is(nullValue()));
     }
 
-    @Test
-    public void testNotManager() throws WrongDateException, NoAccessException {
-        expectedEx.expect(NoAccessException.class);
-        expectedEx.expectMessage("Current user is not Project Manager for this project.");
-
-        //Sign in as employee who is not PM.
-        pms.signIn(db.getEmployees().get(2).getId());
-
-        //Try to change the date anyway.
-        LocalDate startDate = LocalDate.parse("2016-05-10");
-        LocalDate endDate = LocalDate.parse("2016-06-10");
-
-        project.setStartDate(startDate);
-        project.setEndDate(endDate);
-    }
+//    @Test
+//    public void testNotManager() throws WrongDateException, NoAccessException {
+//        expectedEx.expect(NoAccessException.class);
+//        expectedEx.expectMessage("Current user is not Project Manager for this project.");
+//
+//        //Sign in as employee who is not PM.
+//        pms.signIn(db.getEmployees().get(2).getId());
+//
+//        //Try to change the date anyway.
+//        LocalDate startDate = LocalDate.parse("2016-05-10");
+//        LocalDate endDate = LocalDate.parse("2016-06-10");
+//
+//        project.setStartDate(startDate);
+//        project.setEndDate(endDate);
+//    }
 
 }
