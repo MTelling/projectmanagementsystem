@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
@@ -19,7 +20,9 @@ public class PManagementSystem {
 
     public PManagementSystem() {
         dateServer = new DateServer();
+
         db = new DatabaseManager();
+
         projects = new LinkedList<>();
     }
 
@@ -38,23 +41,29 @@ public class PManagementSystem {
 		return this.currentEmployee;
 	}
 
-    public Employee getEmployeeFromName(String name) throws InvalidEmployeeException {
-        if (Arrays.stream(db.getEmployees()).anyMatch(e -> e.equals(name))) {
-            return new Employee(name);
+    public Employee getEmployeeFromId(String iD) throws InvalidEmployeeException {
+        Optional<Employee> emp = db.getEmployees().stream().filter(e -> e.getId().equals(iD)).findFirst();
+
+        if (emp.isPresent()) {
+            return emp.get();
         } else {
             throw new InvalidEmployeeException("No employee with that name is in the system.");
         }
     }
 
-	public boolean signIn(String name) {
-        //Check if user is actually an employee.
-        if (Arrays.stream(db.getEmployees()).anyMatch(e -> e.equals(name))) {
-            this.currentEmployee = new Employee(name);
+    public boolean signIn(String iD) {
+        //TODO: This could be done smarter with the help of getEmployeeFromId. We should look on that. It should probably just throw the same exception.
+
+        Optional<Employee> emp = db.getEmployees().stream().filter(e -> e.getId().equals(iD)).findFirst();
+
+        if (emp.isPresent()) {
+            this.currentEmployee = emp.get();
             return true;
+        } else {
+            return false;
         }
 
-		return false;
-	}
+    }
 
     public LocalDate getDate() {
         return dateServer.getDate();

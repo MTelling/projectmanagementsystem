@@ -91,7 +91,7 @@ public class TestChangeProjectDates extends TestManageProject{
         expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
         //Sign in as employee who is not PM.
-        pms.signIn(db.getEmployees()[2]);
+        pms.signIn(db.getEmployees().get(2).getId());
 
         //Try to change the date anyway.
         LocalDate startDate = LocalDate.parse("2016-05-10");

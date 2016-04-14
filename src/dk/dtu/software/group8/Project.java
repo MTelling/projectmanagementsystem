@@ -1,15 +1,14 @@
 package dk.dtu.software.group8;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import dk.dtu.software.group8.Exceptions.*;
+
 import javax.naming.InvalidNameException;
 
-import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
-import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
 
 public class Project {
 
@@ -74,7 +73,7 @@ public class Project {
         return newActivity;
     }
 
-    public void addEmployeeToActivity(ProjectActivity activity, Employee employee) {
+    public void addEmployeeToActivity(ProjectActivity activity, Employee employee) throws TooManyActivitiesException {
         activity.addEmployee(employee);
     }
 
@@ -103,9 +102,11 @@ public class Project {
     public String extractReport() {
         return null;
     }
-    
+
     public void end() {
         this.endDate = dateServer.getDate();
     }
+
+
 
 }

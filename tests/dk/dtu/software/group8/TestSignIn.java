@@ -19,19 +19,20 @@ public class TestSignIn {
 
     @Test
     public void signInSuccess() {
-        String username = db.getEmployees()[0];
+        String iD = db.getEmployees().get(0).getId();
         
         assertThat(pms.getCurrentEmployee(), is(nullValue()));
-        assertThat(pms.signIn(username), is(true));
-        assertThat(pms.getCurrentEmployee().getName(), is(username));
+        assertThat(pms.signIn(iD), is(true));
+        assertThat(pms.getCurrentEmployee().getId(), is(iD));
     }
 
     @Test
     public void signInNoSuchUser() {
-        String username = "john";
+        String iD = "john";
         
         assertThat(pms.getCurrentEmployee(), is(nullValue()));
-        assertThat(pms.signIn(username), is(false));
+        assertThat(pms.signIn(iD), is(false));
         assertThat(pms.getCurrentEmployee(), is(nullValue()));
+
     }
 }

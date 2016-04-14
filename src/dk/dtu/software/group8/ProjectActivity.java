@@ -1,6 +1,7 @@
 package dk.dtu.software.group8;
 
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -45,9 +46,13 @@ public class ProjectActivity extends  Activity {
         return this.approximatedHours;
     }
 
-    public void addEmployee(Employee employee) {
-        //TODO: if(employee is employed) {
+    public void addEmployee(Employee employee) throws TooManyActivitiesException {
         assignedEmployees.add(employee);
+
+        employee.assignToActivity(this);
+
+
+        //TODO: if(employee is employed) { / should we really test this? It's done when choosing an employee.
         //} else {
             //throw new RedAlertException("You are not employed here, you freeloader!");
         //}

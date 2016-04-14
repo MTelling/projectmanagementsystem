@@ -2,6 +2,7 @@ package dk.dtu.software.group8;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -39,8 +40,9 @@ public class TestProjectManagerAssignment {
         when(pms.getDate()).thenReturn(date);
 
         //Login a user
-        pms.signIn(db.getEmployees()[0]);
-        assertThat(pms.userLoggedIn(), is(true));
+        pms.signIn(db.getEmployees().get(0).getId());
+        assertTrue(pms.userLoggedIn());
+
 
         //Check the project base is empty.
         assertThat(pms.getProjects().isEmpty(), is(true));
@@ -55,8 +57,8 @@ public class TestProjectManagerAssignment {
 
     @Test
     public void testIsEmployee() throws InvalidEmployeeException, AlreadyAssignedProjectManagerException {
-        String empName = db.getEmployees()[2];
-        Employee emp = pms.getEmployeeFromName(empName);
+        String empId = db.getEmployees().get(2).getId();
+        Employee emp = pms.getEmployeeFromId(empId);
 
         project.assignProjectManager(emp);
         assertThat(project.getProjectManager(), is(emp));
@@ -68,8 +70,10 @@ public class TestProjectManagerAssignment {
         expectedEx.expectMessage("No employee with that name is in the system.");
 
         String empName = "ImNotAnEmployee";
-        Employee emp = pms.getEmployeeFromName(empName);
+
+        Employee emp = pms.getEmployeeFromId(empName);
         project.assignProjectManager(emp);
+
     }
 
     @Test
@@ -77,14 +81,14 @@ public class TestProjectManagerAssignment {
         expectedEx.expect(AlreadyAssignedProjectManagerException.class);
         expectedEx.expectMessage("The project already has a Project Manager.");
 
-        String empName = db.getEmployees()[2];
-        Employee emp = pms.getEmployeeFromName(empName);
+        String empId = db.getEmployees().get(2).getId();
+        Employee emp = pms.getEmployeeFromId(empId);
 
         project.assignProjectManager(emp);
         assertThat(project.getProjectManager(), is(emp));
 
-        String secondEmpName = db.getEmployees()[0];
-        Employee secondEmp = pms.getEmployeeFromName(secondEmpName);
+        String secondEmpId = db.getEmployees().get(0).getId();
+        Employee secondEmp = pms.getEmployeeFromId(secondEmpId);
 
         project.assignProjectManager(secondEmp);
     }

@@ -2,6 +2,7 @@ package dk.dtu.software.group8;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -20,7 +21,7 @@ public class TestManageProject {
     PManagementSystem pms;
     DatabaseManager db;
     Project project;
-    String emp;
+    Employee emp;
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -38,9 +39,10 @@ public class TestManageProject {
         when(pms.getDate()).thenReturn(date);
 
         //Login a user
-        emp = db.getEmployees()[0];
-        pms.signIn(emp);
-        assertThat(pms.userLoggedIn(), is(true));
+
+        emp = db.getEmployees().get(0);
+        pms.signIn(emp.getId());
+        assertTrue(pms.userLoggedIn());
 
         //Check the project base is empty.
         assertThat(pms.getProjects().isEmpty(), is(true));
