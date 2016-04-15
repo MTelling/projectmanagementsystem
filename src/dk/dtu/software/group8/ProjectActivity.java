@@ -1,27 +1,22 @@
 package dk.dtu.software.group8;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
 import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
-
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 public class ProjectActivity extends  Activity {
 
     private int approximatedHours;
 
-    //TODO: This should not be hardcoded here.
-    private static final Set<String> LEGAL_TYPES = new HashSet<String>(Arrays.asList("Implementation"));
-
     private List<Employee> assignedEmployees;
 
-    //TODO: What if endWeek is week 2, year 2017 and startWeek is week 47, year 2016. How do we check this?
-    public ProjectActivity(String activityType,int startWeek,int endWeek,int approximatedHours) throws IncorrectAttributeException {
-        //TODO: Should we check for activity types? Can't they be everything?
-        if(!LEGAL_TYPES.contains(activityType)) {
+    public ProjectActivity(String activityType, LocalDate startDate, LocalDate endDate, int approximatedHours) throws IncorrectAttributeException {
+        if(activityType.matches("[a-zA-Z]{3,}")) {
             throw new IncorrectAttributeException("The supplied activity type is not a correct activity type.");
-        } else if (endWeek - startWeek < 0 ||
-                Integer.parseInt(new SimpleDateFormat("w").format(new java.util.Date())) > startWeek) {
+        } else if (startDate.isBefore(LocalDate.now()) || endDate.isBefore(startDate)) {
             String message = "The supplied time period is not a legal time period (Start before now or end before start).";
             throw new IncorrectAttributeException(message);
         } else if (approximatedHours < 1) {
@@ -30,13 +25,9 @@ public class ProjectActivity extends  Activity {
 
         this.activityType = activityType;
 
-        Calendar startTime = Calendar.getInstance();
-        startTime.set(Calendar.WEEK_OF_YEAR, startWeek);
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(Calendar.WEEK_OF_YEAR, endWeek);
+        startTime.adjustInto(startDate);
+        endTime.adjustInto(endDate);
 
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.approximatedHours = approximatedHours;
 
         assignedEmployees = new ArrayList<Employee>();
@@ -48,14 +39,7 @@ public class ProjectActivity extends  Activity {
 
     public void addEmployee(Employee employee) throws TooManyActivitiesException {
         assignedEmployees.add(employee);
-
         employee.assignToActivity(this);
-
-
-        //TODO: if(employee is employed) { / should we really test this? It's done when choosing an employee.
-        //} else {
-            //throw new RedAlertException("You are not employed here, you freeloader!");
-        //}
     }
 
     public List<Employee> getEmployees() {

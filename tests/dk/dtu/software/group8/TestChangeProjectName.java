@@ -7,52 +7,54 @@ import javax.naming.InvalidNameException;
 
 import org.junit.Test;
 
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+
 public class TestChangeProjectName extends TestManageProject{
 
     @Test //Test for string
-    public void testChangeNameA() throws InvalidNameException {
+    public void testChangeNameA() throws InvalidNameException, NoAccessException {
         String name = "Anders";
 
-        project.setName(name);
+        pms.changeNameOfProject(project, name);
         assertThat(project.getName(), is(name));
     }
 
     @Test //Test for Integer
-    public void testChangeNameB() throws InvalidNameException {
+    public void testChangeNameB() throws InvalidNameException, NoAccessException {
         String name = "42";
 
-        project.setName(name);
+        pms.changeNameOfProject(project, name);
         assertThat(project.getName(), is(name));
     }
 
     @Test //Test for float/special char.
-    public void testChangeNameC() throws InvalidNameException {
+    public void testChangeNameC() throws InvalidNameException, NoAccessException {
         expectedEx.expect(InvalidNameException.class);
         expectedEx.expectMessage("Special characters are not allowed in name.");
 
         String name = "101.2";
 
-        project.setName(name);
+        pms.changeNameOfProject(project, name);
     }
 
     @Test //Test for special char.
-    public void testChangeNameD() throws InvalidNameException {
+    public void testChangeNameD() throws InvalidNameException, NoAccessException {
         expectedEx.expect(InvalidNameException.class);
         expectedEx.expectMessage("Special characters are not allowed in name.");
 
         String name = "Anders' ide";
 
-        project.setName(name);
+        pms.changeNameOfProject(project, name);
     }
 
     @Test //Test for null
-    public void testChangeNameE() throws InvalidNameException {
+    public void testChangeNameE() throws InvalidNameException, NoAccessException {
         expectedEx.expect(InvalidNameException.class);
         expectedEx.expectMessage("Name cannot be null.");
 
         String name = null;
 
-        project.setName(name);
+        pms.changeNameOfProject(project, name);
     }
 
     //TODO: The project itself does not know other projects names. We must do this through PManagementSystem
@@ -62,16 +64,16 @@ public class TestChangeProjectName extends TestManageProject{
 //        expectedEx.expectMessage("Name is already assigned to another project.");
 //
 //        String name = "Test";
-//        project.setId(name);
+//        pms.changeNameOfProject(project, name);
 //        assertEquals(project.getId(), name);
 //
 //        //Create a second project.
 //        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
 //        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
 //        Project secondProject = pms.createProject(startDate, endDate);
-//        secondProject.setProjectManager(emp);
+//        pms.assignManagerToProject(secondProject, emp);
 //
-//        secondProject.setId(name);
+//        pms.changeNameOfProject(project, name);
 //    }
 //
 
@@ -86,16 +88,16 @@ public class TestChangeProjectName extends TestManageProject{
 //        assertEquals(pms.getCurrentEmployee().getId(), db.getEmployees()[1]);
 //
 //        //Try to change project name.
-//        project.setId("Test");
+//        pms.changeNameOfProject(project, "Test");
 //    }
 //
     @Test //Test for too long name
-    public void testChangeNameH() throws InvalidNameException {
+    public void testChangeNameH() throws InvalidNameException, NoAccessException {
         expectedEx.expect(InvalidNameException.class);
         expectedEx.expectMessage("Name can only be 30 characters long.");
 
         String name = "MortenTellingTobiasLindstrømLouiseJustesenMarcusPagh ";
 
-        project.setName(name);
+        pms.changeNameOfProject(project, name);
     }
 }

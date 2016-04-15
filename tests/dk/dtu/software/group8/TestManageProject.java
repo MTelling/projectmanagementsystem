@@ -52,11 +52,11 @@ public class TestManageProject {
         LocalDate endDate = LocalDate.parse("2016-06-10");
         project = pms.createProject(startDate, endDate);
 
-        //Assign current employee as project manager..
-        project.assignProjectManager(pms.getCurrentEmployee());
-
         //Check that project is really added
         assertThat(pms.getProjects(), hasItems(project));
+        
+        //Assign current employee as project manager..
+        pms.assignManagerToProject(project);
     }
 
 

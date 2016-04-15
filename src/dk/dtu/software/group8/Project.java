@@ -40,16 +40,12 @@ public class Project {
         } else if (name.length() > 30) {
             throw new InvalidNameException("Name can only be 30 characters long.");
         } else {
-                this.name = name;
+        	this.name = name;
         }
     }
 
-    public void assignProjectManager(Employee employee) throws AlreadyAssignedProjectManagerException {
-        if (this.projectManager == null) {
-            this.projectManager = employee;
-        } else {
-            throw new AlreadyAssignedProjectManagerException("The project already has a Project Manager.");
-        }
+    public void assignProjectManager(Employee employee) {
+    	this.projectManager = employee;
     }
     
     public void setStartDate(LocalDate startDate) throws WrongDateException {
@@ -66,9 +62,8 @@ public class Project {
         this.endDate = endDate;
     }
     
-    public ProjectActivity createActivity(String type, int startWeek, int endWeek, int approximatedHours) throws IncorrectAttributeException {
-
-        ProjectActivity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours);
+    public ProjectActivity createActivity(String type, LocalDate startDate, LocalDate endDate, int approximatedHours) throws IncorrectAttributeException {
+        ProjectActivity newActivity = new ProjectActivity(type, startDate, endDate, approximatedHours);
         this.activities.add(newActivity);
         return newActivity;
     }

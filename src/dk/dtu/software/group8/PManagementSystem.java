@@ -1,12 +1,17 @@
 package dk.dtu.software.group8;
 
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.time.temporal.ChronoField;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.naming.InvalidNameException;
+
+import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
+import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
 import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
@@ -36,7 +41,65 @@ public class PManagementSystem {
 
         return newProject;
     }
-
+    
+    public void assignManagerToProject(Project project) throws AlreadyAssignedProjectManagerException{
+    	if(project.getProjectManager() != null) {
+    		throw new AlreadyAssignedProjectManagerException("The project already has a Project Manager.");
+    	}
+    	
+    	project.assignProjectManager(this.currentEmployee);
+    }
+    
+    public boolean changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
+    	if(this.manageProject(project))  {
+    		project.setName(name);
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    public boolean manageProjectDates(Project project, LocalDate startDate, LocalDate endDate) throws NoAccessException, WrongDateException {
+    	if(this.manageProject(project)) {
+	    	if(startDate != null)
+	    		project.setStartDate(startDate);
+	    	
+	    	if(endDate != null)
+	    		project.setEndDate(endDate);
+	    	return true;
+	    } else {
+	    	return false;
+	    }
+    }
+    
+    public ProjectActivity createActivityForProject(Project project, String activityType, int startWeek, int endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
+    	if(this.manageProject(project)) {
+    		LocalDate startDate = LocalDate.now().with(ChronoField.ALIGNED_WEEK_OF_YEAR, startWeek).with(DayOfWeek.MONDAY);
+    		LocalDate endDate = LocalDate.now().with(ChronoField.ALIGNED_WEEK_OF_YEAR, endWeek).with(DayOfWeek.MONDAY);
+    		
+    		return project.createActivity(activityType, startDate, endDate, approximatedHours);
+    	} else {
+    		return null;
+    	}
+    }
+    
+    public boolean endProject(Project project) throws NoAccessException {
+    	if(this.manageProject(project)) {
+    		project.end();
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    public boolean manageProject(Project project) throws NoAccessException {
+    	if(project.getProjectManager() == null || !project.getProjectManager().equals(this.currentEmployee)) {
+    		throw new NoAccessException("Current user is not Project Manager for this project.");
+    	}
+    	
+    	return true;
+    }
+    
     public Employee getCurrentEmployee() {
 		return this.currentEmployee;
 	}

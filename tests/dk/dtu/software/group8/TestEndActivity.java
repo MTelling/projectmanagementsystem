@@ -5,28 +5,28 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+
 public class TestEndActivity extends TestManageProject {
 
     @Test
-    public void testEndProject() {
-        project.end();
-
+    public void testEndProject() throws NoAccessException {
+        pms.endProject(project);
         assertThat(project.getEndDate(), is(pms.getDate()));
     }
 
-    //TODO: Project does not know current user. Project.end() can therefore be called by anyone.
-//    @Test
-//    public void testEndProjectNotManager() {
-//        expectedEx.expect(NoAccessException.class);
-//        expectedEx.expectMessage("Current user is not Project Manager for this project.");
-//
-//        //Sign in as employee who is not PM.
-//        pms.signIn(db.getEmployees()[2]);
-//
-//        //Test Again. Now without project manager signed in.
-//        testEndProject();
-//    }
-//
+    
+    @Test
+    public void testEndProjectNotManager() throws NoAccessException {
+        expectedEx.expect(NoAccessException.class);
+        expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
+        //Sign in as employee who is not PM.
+        String empId = db.getEmployees().get(2).getId();
+        pms.signIn(empId);
+        
+        //Test Again. Now without project manager signed in.
+        testEndProject();
+    }
 
 }

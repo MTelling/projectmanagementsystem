@@ -60,20 +60,8 @@ public class TestProjectManagerAssignment {
         String empId = db.getEmployees().get(2).getId();
         Employee emp = pms.getEmployeeFromId(empId);
 
-        project.assignProjectManager(emp);
+        pms.assignManagerToProject(project);
         assertThat(project.getProjectManager(), is(emp));
-    }
-
-    @Test
-    public void testIsNotEmployee() throws InvalidEmployeeException, AlreadyAssignedProjectManagerException {
-        expectedEx.expect(InvalidEmployeeException.class);
-        expectedEx.expectMessage("No employee with that name is in the system.");
-
-        String empName = "ImNotAnEmployee";
-
-        Employee emp = pms.getEmployeeFromId(empName);
-        project.assignProjectManager(emp);
-
     }
 
     @Test
@@ -81,15 +69,14 @@ public class TestProjectManagerAssignment {
         expectedEx.expect(AlreadyAssignedProjectManagerException.class);
         expectedEx.expectMessage("The project already has a Project Manager.");
 
-        String empId = db.getEmployees().get(2).getId();
+        String empId = db.getEmployees().get(0).getId();
         Employee emp = pms.getEmployeeFromId(empId);
 
-        project.assignProjectManager(emp);
+        pms.assignManagerToProject(project);
         assertThat(project.getProjectManager(), is(emp));
 
-        String secondEmpId = db.getEmployees().get(0).getId();
-        Employee secondEmp = pms.getEmployeeFromId(secondEmpId);
-
-        project.assignProjectManager(secondEmp);
+        String secondEmpId = db.getEmployees().get(2).getId();
+        pms.signIn(secondEmpId);
+        pms.assignManagerToProject(project);
     }
 }

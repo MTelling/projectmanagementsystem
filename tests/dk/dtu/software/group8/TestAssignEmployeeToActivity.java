@@ -1,15 +1,22 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
 
 public class TestAssignEmployeeToActivity extends TestManageProject {
 
@@ -17,7 +24,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
 
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException{
-        activity = project.createActivity("Implementation", 37,42,42);
+        activity = pms.createActivityForProject(project, "Implementation", 37, 42, 42);
         assertThat(activity, is(not(nullValue())));
     }
 
@@ -35,7 +42,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
 
         //Try to add the employee to 20 activities.
         for (int i = 0; i < 21; i++) {
-            activity = project.createActivity("Implementation", 37,42,42);
+        	activity = pms.createActivityForProject(project, "Implementation", 37, 42, 42);
             activity.addEmployee(pms.getCurrentEmployee());
         }
 

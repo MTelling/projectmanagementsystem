@@ -19,8 +19,7 @@ public class TestChangeProjectDates extends TestManageProject{
     	LocalDate startDate = LocalDate.parse("2016-05-10");
         LocalDate endDate = LocalDate.parse("2016-06-10");
 
-        project.setStartDate(startDate);
-        project.setEndDate(endDate);
+        pms.manageProjectDates(project, startDate, endDate);
 
         assertThat(project.getStartDate(), is(startDate));
         assertThat(project.getEndDate(), is(endDate));
@@ -31,8 +30,7 @@ public class TestChangeProjectDates extends TestManageProject{
     	LocalDate startDate = LocalDate.parse("2016-05-10");
         LocalDate endDate = LocalDate.parse("2016-05-10");
 
-        project.setStartDate(startDate);
-        project.setEndDate(endDate);
+        pms.manageProjectDates(project, startDate, endDate);
 
         assertThat(project.getStartDate(), is(startDate));
         assertThat(project.getEndDate(), is(endDate));
@@ -46,8 +44,7 @@ public class TestChangeProjectDates extends TestManageProject{
         LocalDate startDate = LocalDate.parse("2016-05-10");
         LocalDate endDate = LocalDate.parse("2016-05-03");
 
-        project.setStartDate(startDate);
-        project.setEndDate(endDate);
+        pms.manageProjectDates(project, startDate, endDate);
     }
 
     @Test
@@ -58,8 +55,7 @@ public class TestChangeProjectDates extends TestManageProject{
         LocalDate startDate = LocalDate.parse("2016-04-25");
         LocalDate endDate = LocalDate.parse("2016-05-10");
 
-        project.setStartDate(startDate);
-        project.setEndDate(endDate);
+        pms.manageProjectDates(project, startDate, endDate);
     }
 
     @Test
@@ -70,8 +66,7 @@ public class TestChangeProjectDates extends TestManageProject{
         LocalDate startDate = LocalDate.parse("2016-04-25");
         LocalDate endDate = LocalDate.parse("2016-04-30");
 
-        project.setStartDate(startDate);
-        project.setEndDate(endDate);
+        pms.manageProjectDates(project, startDate, endDate);
     }
 
     @Test
@@ -97,8 +92,7 @@ public class TestChangeProjectDates extends TestManageProject{
 //        LocalDate startDate = LocalDate.parse("2016-05-10");
 //        LocalDate endDate = LocalDate.parse("2016-06-10");
 //
-//        project.setStartDate(startDate);
-//        project.setEndDate(endDate);
+//        pms.manageProjectDates(startDate, endDate);
 //    }
 
 }
