@@ -72,12 +72,10 @@ public class PManagementSystem {
 	    }
     }
     
-    public ProjectActivity createActivityForProject(Project project, String activityType, int startWeek, int endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
+    public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
     	if(this.manageProject(project)) {
-    		LocalDate startDate = LocalDate.now().with(ChronoField.ALIGNED_WEEK_OF_YEAR, startWeek).with(DayOfWeek.MONDAY);
-    		LocalDate endDate = LocalDate.now().with(ChronoField.ALIGNED_WEEK_OF_YEAR, endWeek).with(DayOfWeek.MONDAY);
-    		
-    		return project.createActivity(activityType, startDate, endDate, approximatedHours);
+
+    		return project.createActivity(activityType, startWeek, endWeek, approximatedHours);
     	} else {
     		return null;
     	}

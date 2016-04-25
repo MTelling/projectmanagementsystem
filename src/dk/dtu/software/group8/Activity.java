@@ -7,13 +7,13 @@ import java.util.Locale;
 public abstract class Activity {
 
     protected String activityType;
-    protected LocalDate startTime, endTime;
+    protected YearWeek startTime, endTime;
 
     public void end() {
-        this.endTime = LocalDate.now();
+        this.endTime = YearWeek.fromDate(LocalDate.now());
     }
 
-    public boolean isTimePeriodInActivityDuration(LocalDate date) {
+    public boolean isTimePeriodInActivityDuration(YearWeek date) {
         return date.isAfter(startTime) && date.isBefore(endTime);
     }
 
@@ -21,12 +21,12 @@ public abstract class Activity {
        return this.activityType;
     }
 
-    public int getStartWeek() {
-        return startTime.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
+    public YearWeek getStartWeek() {
+        return startTime;
     }
 
-    public int getEndWeek() {
-    	return endTime.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
+    public YearWeek getEndWeek() {
+        return endTime;
     }
 
 }

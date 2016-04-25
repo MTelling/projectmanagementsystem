@@ -57,7 +57,7 @@ public class TestProjectManagerAssignment {
 
     @Test
     public void testIsEmployee() throws InvalidEmployeeException, AlreadyAssignedProjectManagerException {
-        String empId = db.getEmployees().get(2).getId();
+        String empId = db.getEmployees().get(0).getId();
         Employee emp = pms.getEmployeeFromId(empId);
 
         pms.assignManagerToProject(project);

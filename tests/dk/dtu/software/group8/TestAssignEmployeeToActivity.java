@@ -21,10 +21,12 @@ import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
 public class TestAssignEmployeeToActivity extends TestManageProject {
 
     ProjectActivity activity;
+    YearWeek week37 = new YearWeek(2016, 37);
+    YearWeek week42 = new YearWeek(2016, 42);
 
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException{
-        activity = pms.createActivityForProject(project, "Implementation", 37, 42, 42);
+        activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
         assertThat(activity, is(not(nullValue())));
     }
 
@@ -42,7 +44,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
 
         //Try to add the employee to 20 activities.
         for (int i = 0; i < 21; i++) {
-        	activity = pms.createActivityForProject(project, "Implementation", 37, 42, 42);
+        	activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
             activity.addEmployee(pms.getCurrentEmployee());
         }
 
