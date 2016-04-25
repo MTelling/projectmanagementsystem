@@ -14,7 +14,7 @@ public class ProjectActivity extends  Activity {
     private List<Employee> assignedEmployees;
 
     public ProjectActivity(String activityType, LocalDate startDate, LocalDate endDate, int approximatedHours) throws IncorrectAttributeException {
-        if(activityType.matches("[a-zA-Z]{3,}")) {
+        if(!activityType.matches("[a-zA-Z]{3,}")) {
             throw new IncorrectAttributeException("The supplied activity type is not a correct activity type.");
         } else if (startDate.isBefore(LocalDate.now()) || endDate.isBefore(startDate)) {
             String message = "The supplied time period is not a legal time period (Start before now or end before start).";
