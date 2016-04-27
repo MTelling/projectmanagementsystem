@@ -36,6 +36,9 @@ public class LoginStage extends Stage {
 
         Scene scene = new Scene(loginPane(), WIDTH, HEIGHT);
 
+        scene.getStylesheets().add(this.getClass().getResource("layout.css").toExternalForm());
+
+
         //Set the stage.
         this.setTitle("Project Management System - Log In");
 
@@ -49,25 +52,25 @@ public class LoginStage extends Stage {
     private GridPane loginPane() {
         GridPane loginPane = new GridPane();
 
+        loginPane.getStyleClass().add("LoginPane");
         //Style the login pane.
         loginPane.setAlignment(Pos.CENTER);
-        loginPane.setHgap(10);
-        loginPane.setVgap(10);
-        loginPane.setPadding(new Insets(15,10,15,10));
 
         //Create all elements needed.
         Text welcomeText = new Text("Welcome to the Project Management System");
-        welcomeText.setFont(Font.font("Verdana", 15));
+        welcomeText.getStyleClass().add("WelcomeText");
+
         Label userNameLabel = new Label("Id:");
         wrongLoginLabel = new Label("That is not a valid id.");
-        wrongLoginLabel.setTextFill(Color.RED);
+        wrongLoginLabel.getStyleClass().add("WrongLoginLabel");
+
         wrongLoginLabel.setVisible(false);
         userNameInput = new TextField();
         Button loginBtn = new Button("Login");
-
         //We want the button to be to the outer right.
         //To do this we need to put it in a hbox first.
-        HBox hbox = new HBox(10);
+        HBox hbox = new HBox();
+        hbox.getStyleClass().add("HBoxForLoginBtn");
         hbox.setAlignment(Pos.BASELINE_RIGHT);
         hbox.getChildren().add(wrongLoginLabel);
         hbox.getChildren().add(loginBtn);

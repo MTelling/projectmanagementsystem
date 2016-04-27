@@ -47,6 +47,9 @@ public class PrimaryStage extends Stage{
         //Make the scene.
         Scene scene = new Scene(root, WIDTH, HEIGHT);
 
+        //Connect scene to stylesheet
+        scene.getStylesheets().add(this.getClass().getResource("layout.css").toExternalForm());
+
         //Stage settings.
         this.setTitle("Project Management System");
         this.setScene(scene);
