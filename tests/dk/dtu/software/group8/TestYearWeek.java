@@ -55,4 +55,20 @@ public class TestYearWeek {
         assertThat(second.isBefore(first), is(true));
     }
 
+    @Test
+    public void testIsEqualSuccess() {
+        YearWeek first = new YearWeek(2016, 37);
+        YearWeek second = new YearWeek(2016, 37);
+
+        assertThat(first.isEqual(second), is(true));
+    }
+
+    @Test
+    public void testIsEqualFailure() {
+        YearWeek first = new YearWeek(2016, 37);
+        YearWeek second = new YearWeek(2016, 42);
+
+        assertThat(first.isEqual(second), is(false));
+    }
+
 }

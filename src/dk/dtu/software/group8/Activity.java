@@ -1,5 +1,7 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.WrongDateException;
+
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
@@ -17,6 +19,10 @@ public abstract class Activity {
         return date.isAfter(startTime) && date.isBefore(endTime);
     }
 
+    public void setStartWeek(YearWeek week) { this.startTime = week; }
+
+    public void setEndWeek(YearWeek week) { this.endTime = week; }
+
     public String getActivityType() {
        return this.activityType;
     }
@@ -25,8 +31,6 @@ public abstract class Activity {
         return startTime;
     }
 
-    public YearWeek getEndWeek() {
-        return endTime;
-    }
+    public YearWeek getEndWeek() { return endTime; }
 
 }

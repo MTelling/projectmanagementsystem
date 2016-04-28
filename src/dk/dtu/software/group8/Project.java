@@ -15,18 +15,12 @@ public class Project {
     private String id, name;
     private LocalDate startDate, endDate;
     private Employee projectManager;
-    private DateServer dateServer;
     private List<Activity> activities;
 
-    public Project(String id, LocalDate startDate, LocalDate endDate, DateServer dateServer) throws WrongDateException, NoAccessException {
-        if(startDate == null || endDate == null) {
-            throw new WrongDateException("Missing date(s).");
-        }
-
+    public Project(String id, LocalDate startDate, LocalDate endDate) throws WrongDateException, NoAccessException {
         this.id = id;
         
         this.activities = new ArrayList<Activity>();
-        this.dateServer = dateServer;
         
         setStartDate(startDate);
         setEndDate(endDate);
@@ -48,19 +42,9 @@ public class Project {
     	this.projectManager = employee;
     }
     
-    public void setStartDate(LocalDate startDate) throws WrongDateException {
-        if (startDate.isBefore(dateServer.getDate())) {
-            throw new WrongDateException("Date is in the past.");
-        }
-        this.startDate = startDate;
-    }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
     
-    public void setEndDate(LocalDate endDate) throws WrongDateException {
-        if (endDate.isBefore(startDate)) {
-            throw new WrongDateException("End date is before start date.");
-        }
-        this.endDate = endDate;
-    }
+    public void setEndDate(LocalDate endDate) throws WrongDateException { this.endDate = endDate; }
     
     public ProjectActivity createActivity(String type, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws IncorrectAttributeException {
         ProjectActivity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours);
@@ -97,11 +81,5 @@ public class Project {
     public String extractReport() {
         return null;
     }
-
-    public void end() {
-        this.endDate = dateServer.getDate();
-    }
-
-
 
 }

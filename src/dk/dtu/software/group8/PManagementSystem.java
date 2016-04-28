@@ -32,10 +32,18 @@ public class PManagementSystem {
     }
 
     public Project createProject(LocalDate startDate, LocalDate endDate) throws WrongDateException, NoAccessException {
+        if(startDate == null || endDate == null) {
+            throw new WrongDateException("Missing date(s)!");
+        } else if(startDate.isBefore(dateServer.getDate())) {
+            throw new WrongDateException("Start Date is not allowed to be in the past!");
+        } else if(endDate.isBefore(startDate)) {
+            throw new WrongDateException("End Date is not allowed to be before Start Date!");
+        }
+
         String id = String.valueOf(getDate().getYear()).substring(2, 4); //Get current year and only last two digits
         id += String.format("%04d", projects.size()); //Add a running 4-digit number equal to number of projects.
         
-        Project newProject = new Project(id, startDate, endDate, dateServer);
+        Project newProject = new Project(id, startDate, endDate);
 
         projects.add(newProject);
 
@@ -61,11 +69,17 @@ public class PManagementSystem {
     
     public boolean manageProjectDates(Project project, LocalDate startDate, LocalDate endDate) throws NoAccessException, WrongDateException {
     	if(this.manageProject(project)) {
-	    	if(startDate != null)
-	    		project.setStartDate(startDate);
+	    	if(startDate != null && startDate.isAfter(dateServer.getDate())) {
+                project.setStartDate(startDate);
+            } else {
+                throw new WrongDateException("Start Date is not allowed to be in the past!");
+            }
 	    	
-	    	if(endDate != null)
-	    		project.setEndDate(endDate);
+	    	if(endDate != null && (endDate.isEqual(startDate) || endDate.isAfter(startDate))) {
+                project.setEndDate(endDate);
+            } else {
+                throw new WrongDateException("End Date is not allowed to be before Start Date!");
+            }
 	    	return true;
 	    } else {
 	    	return false;
@@ -83,11 +97,36 @@ public class PManagementSystem {
     
     public boolean endProject(Project project) throws NoAccessException {
     	if(this.manageProject(project)) {
-    		project.end();
+            try {
+                project.setEndDate(dateServer.getDate());
+            } catch (Exception e) { }
     		return true;
     	} else {
     		return false;
     	}
+    }
+
+    public boolean manageActivityDates(Project project, Activity activity, YearWeek startWeek, YearWeek endWeek) throws IncorrectAttributeException, NoAccessException, WrongDateException {
+        if(this.manageProject(project)) {
+            if(!project.getActivities().contains(activity)) {
+                throw new IncorrectAttributeException("Invalid Activity: Project does not contain supplied activity!");
+            } else {
+                if(startWeek != null && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
+                    activity.setStartWeek(startWeek);
+                } else {
+                    throw new WrongDateException("Start Week is not allowed to be in the past!");
+                }
+
+                if(endWeek != null && (endWeek.isEqual(startWeek) || endWeek.isAfter(startWeek))) {
+                    activity.setEndWeek(endWeek);
+                } else {
+                    throw new WrongDateException("End Week is not allowed to be before Start Week!");
+                }
+
+                return true;
+            }
+        }
+        return false;
     }
     
     public boolean manageProject(Project project) throws NoAccessException {

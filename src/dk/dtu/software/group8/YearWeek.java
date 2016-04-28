@@ -16,15 +16,14 @@ public class YearWeek {
     public boolean isAfter(YearWeek other) {
        if(this.getYear() > other.getYear())
            return true;
-        else if(this.getWeek() > other.getWeek() && this.getYear() == other.getYear())
-           return true;
-        else
-           return false;
+        else return this.getWeek() > other.getWeek() && this.getYear() == other.getYear();
     }
 
     public boolean isBefore(YearWeek other) {
         return !isAfter(other);
     }
+
+    public boolean isEqual(YearWeek other) { return this.getYear() == other.getYear() && this.getWeek() == other.getWeek(); }
 
     public static YearWeek fromDate(LocalDate date) {
         int weekNumber = date.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
