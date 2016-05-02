@@ -1,6 +1,9 @@
 package dk.dtu.software.group8;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
@@ -23,10 +26,21 @@ public class YearWeek {
         return !isAfter(other);
     }
 
-    public boolean isEqual(YearWeek other) { return this.getYear() == other.getYear() && this.getWeek() == other.getWeek(); }
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof YearWeek ) {
+            return this.getYear() == ((YearWeek)obj).getYear() && this.getWeek() == ((YearWeek)obj).getWeek();
+        }
+        return false;
+    }
+
+
+    public LocalDate toLocalDate() {
+        return LocalDate.of(this.getYear(), 1, 1).with(ChronoField.ALIGNED_WEEK_OF_YEAR, this.week + 1).with(DayOfWeek.MONDAY);
+    }
 
     public static YearWeek fromDate(LocalDate date) {
-        int weekNumber = date.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
+        int weekNumber = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
         return new YearWeek(date.getYear(), weekNumber);
     }
 

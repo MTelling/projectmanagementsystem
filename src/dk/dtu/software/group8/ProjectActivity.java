@@ -13,10 +13,10 @@ public class ProjectActivity extends  Activity {
 
     private List<Employee> assignedEmployees;
 
-    public ProjectActivity(String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws IncorrectAttributeException {
+    public ProjectActivity(String activityType, LocalDate startDate, LocalDate endDate, int approximatedHours) throws IncorrectAttributeException {
         if(!activityType.matches("[a-zA-Z ]{3,}")) {
             throw new IncorrectAttributeException("The supplied activity type is not a correct activity type.");
-        } else if (startWeek.isBefore(YearWeek.fromDate(LocalDate.now())) || endWeek.isBefore(startWeek)) {
+        } else if (startDate.isBefore(LocalDate.now()) || endDate.isBefore(startDate)) {
             String message = "The supplied time period is not a legal time period (Start before now or end before start).";
             throw new IncorrectAttributeException(message);
         } else if (approximatedHours < 1) {
@@ -25,21 +25,24 @@ public class ProjectActivity extends  Activity {
 
         this.activityType = activityType;
 
-        this.startTime = startWeek;
-        this.endTime = endWeek;
+        this.startTime = startDate;
+        this.endTime = endDate;
 
         this.approximatedHours = approximatedHours;
 
-        assignedEmployees = new ArrayList<Employee>();
+        this.assignedEmployees = new ArrayList<Employee>();
     }
 
     public int getApproximatedHours() {
         return this.approximatedHours;
     }
 
-    public void addEmployee(Employee employee) throws TooManyActivitiesException {
-        assignedEmployees.add(employee);
-        employee.assignToActivity(this);
+    public boolean addEmployee(Employee employee) throws TooManyActivitiesException {
+        if(employee.assignToActivity(this)) {
+            assignedEmployees.add(employee);
+            return true;
+        }
+        return false;
     }
 
     public List<Employee> getEmployees() {

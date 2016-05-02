@@ -10,11 +10,7 @@ import java.util.Optional;
 
 import javax.naming.InvalidNameException;
 
-import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
-import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
-import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
+import dk.dtu.software.group8.Exceptions.*;
 
 public class PManagementSystem {
 
@@ -57,6 +53,14 @@ public class PManagementSystem {
     	
     	project.assignProjectManager(this.currentEmployee);
     }
+
+    public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee) throws NoAccessException, TooManyActivitiesException {
+        if(this.manageProject(project)) {
+            return project.addEmployeeToActivity(activity, employee);
+        } else {
+            return false;
+        }
+    }
     
     public boolean changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
     	if(this.manageProject(project))  {
@@ -88,8 +92,7 @@ public class PManagementSystem {
     
     public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
     	if(this.manageProject(project)) {
-
-    		return project.createActivity(activityType, startWeek, endWeek, approximatedHours);
+    		return project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate(), approximatedHours);
     	} else {
     		return null;
     	}
@@ -112,13 +115,13 @@ public class PManagementSystem {
                 throw new IncorrectAttributeException("Invalid Activity: Project does not contain supplied activity!");
             } else {
                 if(startWeek != null && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
-                    activity.setStartWeek(startWeek);
+                    activity.setStartDate(startWeek.toLocalDate());
                 } else {
                     throw new WrongDateException("Start Week is not allowed to be in the past!");
                 }
 
-                if(endWeek != null && (endWeek.isEqual(startWeek) || endWeek.isAfter(startWeek))) {
-                    activity.setEndWeek(endWeek);
+                if(endWeek != null && (endWeek.equals(startWeek) || endWeek.isAfter(startWeek))) {
+                    activity.setEndDate(endWeek.toLocalDate());
                 } else {
                     throw new WrongDateException("End Week is not allowed to be before Start Week!");
                 }
@@ -135,6 +138,10 @@ public class PManagementSystem {
     	}
     	
     	return true;
+    }
+
+    public PersonalActivity createPersonalActivityForEmployee(String activityType, LocalDate startDate, LocalDate endDate, Employee emp) throws WrongDateException, IncorrectAttributeException {
+        return emp.createPersonalActivity(activityType, startDate, endDate);
     }
     
     public Employee getCurrentEmployee() {
