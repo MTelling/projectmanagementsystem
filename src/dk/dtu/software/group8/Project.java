@@ -52,8 +52,8 @@ public class Project {
         return newActivity;
     }
 
-    public void addEmployeeToActivity(ProjectActivity activity, Employee employee) throws TooManyActivitiesException {
-        activity.addEmployee(employee);
+    public boolean addEmployeeToActivity(ProjectActivity activity, Employee employee) throws TooManyActivitiesException {
+        return activity.addEmployee(employee);
     }
 
     public String getId() {

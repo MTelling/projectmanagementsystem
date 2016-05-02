@@ -10,11 +10,7 @@ import java.util.Optional;
 
 import javax.naming.InvalidNameException;
 
-import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
-import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
-import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
+import dk.dtu.software.group8.Exceptions.*;
 
 public class PManagementSystem {
 
@@ -165,6 +161,13 @@ public class PManagementSystem {
 
     }
 
+    public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee) throws NoAccessException, TooManyActivitiesException {
+        if(this.manageProject(project)) {
+            return project.addEmployeeToActivity(activity, employee);
+        }
+        return false;
+    }
+
     public LocalDate getDate() {
         return dateServer.getDate();
     }
@@ -179,5 +182,13 @@ public class PManagementSystem {
 
     public List<Project> getProjects() {
         return projects;
+    }
+
+    public void registerWorkHours(ProjectActivity activity, int minutes, LocalDate day) throws TooManyHoursException, NegativeHoursException, NoAccessException, WrongDateException {
+        if(day.isAfter(this.getDate())) {
+            throw new WrongDateException("You can not register work hours in the future.");
+        } else {
+            this.getCurrentEmployee().registerWorkHours(activity, minutes, day);
+        }
     }
 }
