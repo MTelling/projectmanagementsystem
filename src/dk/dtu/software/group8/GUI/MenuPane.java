@@ -22,7 +22,6 @@ public class MenuPane extends VBox {
         menuButtons = new ArrayList<>();
         menuButtons.add(new MenuButton("Overview", "overview_icon.png"));
         menuButtons.add(new MenuButton("Projects", "projects_icon.png"));
-        menuButtons.add(new MenuButton("Activities", "activities_icon.png"));
         menuButtons.add(new MenuButton("Register Hours", "timeregister_icon.png"));
 
         //Overview should by active by default:

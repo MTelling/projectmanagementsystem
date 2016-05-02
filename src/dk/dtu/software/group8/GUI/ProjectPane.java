@@ -41,7 +41,7 @@ public class ProjectPane extends BorderPane {
         exitBtn.setOnMouseClicked(e -> close());
 
         //Create Title bar
-        titlePane = new TitlePane("N/A");
+        titlePane = new TitlePane("N/A", TitleFontSize.LARGE);
 
         manageProjectPane = new ManageProjectPane();
         createActivityPane = new CreateActivityPane();

@@ -10,10 +10,15 @@ public class TitlePane extends StackPane {
 
     private Text title;
 
-    public TitlePane(String text) {
+    public TitlePane(String text, TitleFontSize titleFontSize) {
         this.getStyleClass().add("TitlePane");
         title = new Text(text);
-        title.getStyleClass().add("TitlePaneText");
+        if (titleFontSize == TitleFontSize.LARGE) {
+            title.getStyleClass().add("TitlePaneLargeText");
+        } else if (titleFontSize == TitleFontSize.MEDIUM) {
+            title.getStyleClass().add("TitlePaneMediumText");
+        }
+
         this.getChildren().add(title);
     }
 

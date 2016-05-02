@@ -21,7 +21,6 @@ public class PrimaryStage extends Stage{
     private ProjectsPane projectsPane;
     private ProjectPane projectPane;
     private RegisterHoursPane registerHoursPane;
-    private ActivitiesPane activitiesPane;
 
 
     public PrimaryStage(PManagementSystem pms) {
@@ -40,9 +39,13 @@ public class PrimaryStage extends Stage{
         overviewPane = new OverviewPane(pms);
         projectPane = new ProjectPane(pms);
         projectsPane = new ProjectsPane(this, projectPane);
+        registerHoursPane = new RegisterHoursPane(pms);
 
 
-        mainPane.getChildren().addAll(projectPane, projectsPane, overviewPane);
+        mainPane.getChildren().addAll(projectPane,
+                registerHoursPane,
+                projectsPane,
+                overviewPane);
 
         //mainPane.getChildren().addAll(registerHoursPane, activitiesPane, projectsPane, overviewPane);
 
@@ -58,25 +61,18 @@ public class PrimaryStage extends Stage{
         //Stage settings.
         this.setTitle("Project Management System");
         this.setScene(scene);
-        this.setResizable(false);
         this.centerOnScreen();
         this.sizeToScene();
     }
 
 
     public void present(String sceneId) {
-        System.out.println("Got here with: " + sceneId);
-        if (sceneId.equals("Activities")) {
-            activitiesPane.toFront();
-        } else if (sceneId.equals("Projects")) {
-            System.out.println("Now presenting the projects");
+        if (sceneId.equals("Projects")) {
             projectsPane.toFront();
         } else if (sceneId.equals("Register Hours")){
             registerHoursPane.toFront();
         } else if (sceneId.equals("Overview")) {
             overviewPane.toFront();
-        } else if (sceneId.equals("Project")) {
-            projectPane.toFront();
         }
     }
 }

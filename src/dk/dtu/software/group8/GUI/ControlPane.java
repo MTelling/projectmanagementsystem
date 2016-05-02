@@ -21,7 +21,6 @@ public abstract class ControlPane extends VBox {
         BorderPane borderPane = new BorderPane();
         this.getStyleClass().add("ControlPane");
 
-        titlePane = new TitlePane(titleText);
 
         controlsGrid = new GridPane();
         controlsGrid.setAlignment(Pos.CENTER);
@@ -32,6 +31,7 @@ public abstract class ControlPane extends VBox {
         btnPane.getStyleClass().add("BtnPane");
         btnPane.setAlignment(Pos.CENTER);
 
+        titlePane = new TitlePane(titleText, TitleFontSize.MEDIUM);
         borderPane.setTop(titlePane);
         borderPane.setCenter(controlsGrid);
         borderPane.setBottom(btnPane);

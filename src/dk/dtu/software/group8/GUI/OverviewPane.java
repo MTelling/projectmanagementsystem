@@ -28,7 +28,7 @@ public class OverviewPane extends BorderPane {
 
         this.pms = pms;
 
-        StackPane titlePane = new TitlePane("Welcome " + pms.getCurrentEmployee().getFirstName());
+        StackPane titlePane = new TitlePane("Welcome " + pms.getCurrentEmployee().getFirstName(), TitleFontSize.LARGE);
 
         EmployeeActivitiesOverview employeeActivitiesOverview = new EmployeeActivitiesOverview(pms);
         EmployeeOverview employeeOverview = new EmployeeOverview(pms);

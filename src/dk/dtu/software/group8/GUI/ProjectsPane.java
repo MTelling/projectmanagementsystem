@@ -26,7 +26,7 @@ public class ProjectsPane extends BorderPane {
 
         this.getStyleClass().add("ProjectsPane");
 
-        StackPane titlePane = new TitlePane("Projects");
+        StackPane titlePane = new TitlePane("Projects", TitleFontSize.LARGE);
         ///////////////TEST//////////////////////////
         List<Test> testList = new ArrayList<>();
         for (int i = 1; i < 40; i++) {

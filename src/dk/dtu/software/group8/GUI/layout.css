@@ -94,19 +94,36 @@ GENERAL
 --------------------------------------------------------------------------------------*/
 
 .TitlePane {
-     -fx-padding: 5;
+    -fx-padding: 5;
 }
 
-.TitlePaneText {
-     -fx-font-size: 16;
+.TitlePaneLargeText {
+    -fx-font-size: 24;
 }
 
-.OverviewPane, .ProjectsPane, .TitlePane, .list-view {
+.TitlePaneMediumText {
+    -fx-font-size: 16;
+}
+
+
+
+/* Set focus color for all panes and etc. to transparent */
+.OverviewPane,
+.ProjectsPane,
+.ProjectPane,
+.TitlePane,
+.list-view,
+.RegisterHoursPane {
     -fx-focus-color: transparent;
 }
 
-.OverviewPane, .ProjectsPane {
+/* Set the background color for all panes */
+.OverviewPane,
+.ProjectsPane,
+.RegisterHoursPane,
+.ProjectPane {
     -fx-background-color: #f4f4f4;
+    -fx-padding: 5;
 }
 /* ------------------------------------------------------------------------------------
 Projects Pane
@@ -137,10 +154,6 @@ Manage Item Pane
 Manage Project Pane
 --------------------------------------------------------------------------------------*/
 
-.ProjectPane {
-    -fx-background-color: #f4f4f4;
-}
-
 .ExitBtnPane {
     -fx-padding: 7;
 }
@@ -155,4 +168,16 @@ Control Pane
 .ControlPaneGrid {
     -fx-vgap: 10;
     -fx-hgap: 10;
+}
+
+/* ------------------------------------------------------------------------------------
+Register Hours Pane
+--------------------------------------------------------------------------------------*/
+
+.Container {
+    -fx-spacing: 10;
+}
+
+.Container .label {
+    -fx-font-size: 18;
 }

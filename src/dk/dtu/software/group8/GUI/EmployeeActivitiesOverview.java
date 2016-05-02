@@ -23,7 +23,7 @@ public class EmployeeActivitiesOverview extends BorderPane {
     public EmployeeActivitiesOverview(PManagementSystem pms) {
         this.pms = pms;
 
-        StackPane titlePane = new TitlePane("Current activities");
+        StackPane titlePane = new TitlePane("Current activities", TitleFontSize.MEDIUM);
 
         createTable();
         setCenter(table);

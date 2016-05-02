@@ -1,6 +1,9 @@
 package dk.dtu.software.group8.GUI;
 
-import javafx.scene.control.*;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.DatePicker;
 
 /**
  * Created by Morten on 02/05/16.

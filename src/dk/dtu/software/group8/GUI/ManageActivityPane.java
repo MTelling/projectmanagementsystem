@@ -27,7 +27,7 @@ public class ManageActivityPane extends ControlPane {
         DatePicker endDatePicker = new DatePicker();
 
 
-        //Add everything to the grid
+        //Add everything to the grid.
         controlsGrid.add(typeLbl, 0,0);
         controlsGrid.add(typeField, 1,0);
         controlsGrid.add(expectedHoursLbl, 0, 1);
