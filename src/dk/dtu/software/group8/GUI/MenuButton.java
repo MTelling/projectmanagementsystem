@@ -33,7 +33,6 @@ public class MenuButton extends VBox {
 
     }
 
-
     private void addHoverEffect() {
         this.setOnMouseEntered(e -> {
             if (!this.getId().equals("active")) {

@@ -58,9 +58,6 @@ public class PrimaryStage extends Stage{
         this.sizeToScene();
     }
 
-    public void update() {
-        //TODO: This can raise a NullPointerException. Should we catch? It shouldn't be a problem if login works.
-    }
 
     public void present(String sceneId) {
         System.out.println("Got here with: " + sceneId);

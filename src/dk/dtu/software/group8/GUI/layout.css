@@ -4,7 +4,7 @@ MENU
 --------------------------------------------------------------------------------------*/
 
 .MenuPane {
-    -fx-background-color: D4D4D4;
+    -fx-background-color: rgb(87,185,236);
     -fx-spacing: 60;
 }
 
@@ -42,6 +42,57 @@ LOGIN
 
 
 /* ------------------------------------------------------------------------------------
-GENERAL
+OVERVIEW PANE
+--------------------------------------------------------------------------------------*/
+.OverviewPane {
+    -fx-focus-color: transparent;
+}
+
+.OverviewTitlePane {
+    -fx-padding: 10, 10, 10, 10;
+}
+
+.OverviewTitle {
+    -fx-font-size: 20;
+}
+
+
+/* ------------------------------------------------------------------------------------
+EMPLOYEE ACTIVITIES OVERVIEW
 --------------------------------------------------------------------------------------*/
 
+.EmployeeActivitiesOverviewTitle {
+    -fx-font-size: 16;
+}
+
+.EmployeeActivitiesOverviewTitlePane {
+    -fx-padding: 5;
+}
+
+/*This part removes the ability to scroll left/right */
+.table-view *.scroll-bar:horizontal *.increment-button,
+.table-view *.scroll-bar:horizontal *.decrement-button {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.table-view *.scroll-bar:horizontal *.increment-arrow,
+.table-view *.scroll-bar:horizontal *.decrement-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-shape: null;
+}
+
+/* ------------------------------------------------------------------------------------
+EMPLOYEE OVERVIEW
+--------------------------------------------------------------------------------------*/
+
+.EmployeeOverview {
+    -fx-vgap: 10;
+    -fx-hgap: 20;
+    -fx-padding: 10,10,10,10;
+}

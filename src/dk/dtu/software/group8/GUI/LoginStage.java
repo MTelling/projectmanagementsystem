@@ -1,6 +1,7 @@
 package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.PManagementSystem;
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,22 +23,21 @@ import javafx.stage.Stage;
 public class LoginStage extends Stage {
 
     private PManagementSystem pms;
-    private PrimaryStage primaryStage;
+    private Driver driver;
 
     private TextField userNameInput;
     private Label wrongLoginLabel;
 
-    public LoginStage(PManagementSystem pms, PrimaryStage primaryStage) {
+    public LoginStage(Driver driver, PManagementSystem pms) {
         final int HEIGHT = 150;
         final int WIDTH = 400;
 
         this.pms = pms;
-        this.primaryStage = primaryStage;
+        this.driver = driver;
 
         Scene scene = new Scene(loginPane(), WIDTH, HEIGHT);
 
         scene.getStylesheets().add(this.getClass().getResource("layout.css").toExternalForm());
-
 
         //Set the stage.
         this.setTitle("Project Management System - Log In");
@@ -92,19 +92,22 @@ public class LoginStage extends Stage {
     private void login(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
             login();
+        } else {
+            wrongLoginLabel.setVisible(false);
         }
     }
 
     private void login() {
         if (pms.signIn(userNameInput.getText())) {
-            //If the user is allowed in, show the primary stage and close the login stage.
 
-            primaryStage.update();
-            primaryStage.show();
+            //If the user is allowed in, tell the driver to start the primary stage and close the login stage.
+            driver.startPrimaryStage();
             this.close();
 
         } else { //The username wasn't valid - show message.
+
             wrongLoginLabel.setVisible(true);
+
         }
     }
 }

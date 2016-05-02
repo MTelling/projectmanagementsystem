@@ -25,14 +25,18 @@ public class Driver extends Application {
         //Create an instance of the pms
         this.pms = new PManagementSystem();
 
-        //Create the primary stage for later
-        primaryStage = new PrimaryStage(pms);
-
         //Create the login stage
-        loginStage = new LoginStage(pms, primaryStage);
+        loginStage = new LoginStage(this, pms);
 
         //To start just show the loginstage.
         loginStage.show();
+    }
+
+    public void startPrimaryStage() {
+        //Create the primary stage for later
+        primaryStage = new PrimaryStage(pms);
+
+        primaryStage.show();
     }
 
 
