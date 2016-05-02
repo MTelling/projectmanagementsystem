@@ -9,7 +9,7 @@ public class RegisterHoursPane extends BorderPane {
 
 
     public RegisterHoursPane() {
-
+        //
 
     }
 }
