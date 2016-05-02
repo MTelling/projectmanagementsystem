@@ -2,9 +2,6 @@ package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**

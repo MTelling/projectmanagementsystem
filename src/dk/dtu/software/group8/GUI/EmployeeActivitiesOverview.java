@@ -23,11 +23,7 @@ public class EmployeeActivitiesOverview extends BorderPane {
     public EmployeeActivitiesOverview(PManagementSystem pms) {
         this.pms = pms;
 
-        StackPane titlePane = new StackPane();
-        titlePane.getStyleClass().add("EmployeeActivitiesOverviewTitlePane");
-        Text title = new Text("Current Activities");
-        title.getStyleClass().add("EmployeeActivitiesOverviewTitle");
-        titlePane.getChildren().add(title);
+        StackPane titlePane = new TitlePane("Current activities");
 
         createTable();
         setCenter(table);
@@ -104,6 +100,10 @@ class Test {
         this.startDate = startDate;
         this.endDate = endDate;
         this.originProject = originProject;
+    }
+
+    public String toString() {
+        return name + " (" + startDate + " - " + endDate + ") " + originProject;
     }
 
 }

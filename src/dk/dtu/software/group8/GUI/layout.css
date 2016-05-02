@@ -45,7 +45,6 @@ LOGIN
 OVERVIEW PANE
 --------------------------------------------------------------------------------------*/
 .OverviewPane {
-    -fx-focus-color: transparent;
 }
 
 .OverviewTitlePane {
@@ -61,13 +60,6 @@ OVERVIEW PANE
 EMPLOYEE ACTIVITIES OVERVIEW
 --------------------------------------------------------------------------------------*/
 
-.EmployeeActivitiesOverviewTitle {
-    -fx-font-size: 16;
-}
-
-.EmployeeActivitiesOverviewTitlePane {
-    -fx-padding: 5;
-}
 
 /*This part removes the ability to scroll left/right */
 .table-view *.scroll-bar:horizontal *.increment-button,
@@ -95,4 +87,72 @@ EMPLOYEE OVERVIEW
     -fx-vgap: 10;
     -fx-hgap: 20;
     -fx-padding: 10,10,10,10;
+}
+
+/* ------------------------------------------------------------------------------------
+GENERAL
+--------------------------------------------------------------------------------------*/
+
+.TitlePane {
+     -fx-padding: 5;
+}
+
+.TitlePaneText {
+     -fx-font-size: 16;
+}
+
+.OverviewPane, .ProjectsPane, .TitlePane, .list-view {
+    -fx-focus-color: transparent;
+}
+
+.OverviewPane, .ProjectsPane {
+    -fx-background-color: #f4f4f4;
+}
+/* ------------------------------------------------------------------------------------
+Projects Pane
+--------------------------------------------------------------------------------------*/
+
+.ProjectsPane {
+}
+
+/* ------------------------------------------------------------------------------------
+Manage Item Pane
+--------------------------------------------------------------------------------------*/
+.ManageProjectPane {
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+    -fx-padding: 5;
+}
+
+.ManageProjectPane .label {
+    -fx-font-size: 16;
+}
+
+.BtnPane {
+    -fx-padding: 10;
+    -fx-spacing: 20;
+}
+
+/* ------------------------------------------------------------------------------------
+Manage Project Pane
+--------------------------------------------------------------------------------------*/
+
+.ProjectPane {
+    -fx-background-color: #f4f4f4;
+}
+
+.ExitBtnPane {
+    -fx-padding: 7;
+}
+
+/* ------------------------------------------------------------------------------------
+Control Pane
+--------------------------------------------------------------------------------------*/
+.ControlPane {
+    -fx-padding: 5;
+}
+
+.ControlPaneGrid {
+    -fx-vgap: 10;
+    -fx-hgap: 10;
 }

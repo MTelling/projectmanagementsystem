@@ -1,5 +1,6 @@
 package dk.dtu.software.group8.GUI;
 
+import dk.dtu.software.group8.GUI.*;
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -18,6 +19,7 @@ public class PrimaryStage extends Stage{
 
     private OverviewPane overviewPane;
     private ProjectsPane projectsPane;
+    private ProjectPane projectPane;
     private RegisterHoursPane registerHoursPane;
     private ActivitiesPane activitiesPane;
 
@@ -36,8 +38,11 @@ public class PrimaryStage extends Stage{
         mainPane = new StackPane();
 
         overviewPane = new OverviewPane(pms);
+        projectPane = new ProjectPane(pms);
+        projectsPane = new ProjectsPane(this, projectPane);
 
-        mainPane.getChildren().add(overviewPane);
+
+        mainPane.getChildren().addAll(projectPane, projectsPane, overviewPane);
 
         //mainPane.getChildren().addAll(registerHoursPane, activitiesPane, projectsPane, overviewPane);
 
@@ -64,11 +69,14 @@ public class PrimaryStage extends Stage{
         if (sceneId.equals("Activities")) {
             activitiesPane.toFront();
         } else if (sceneId.equals("Projects")) {
+            System.out.println("Now presenting the projects");
             projectsPane.toFront();
         } else if (sceneId.equals("Register Hours")){
             registerHoursPane.toFront();
         } else if (sceneId.equals("Overview")) {
             overviewPane.toFront();
+        } else if (sceneId.equals("Project")) {
+            projectPane.toFront();
         }
     }
 }
