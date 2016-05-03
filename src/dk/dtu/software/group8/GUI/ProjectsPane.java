@@ -12,22 +12,19 @@ import javafx.scene.layout.StackPane;
 /**
  * Created by Morten on 25/04/16.
  */
-public class ProjectsPane extends BorderPane {
+public class ProjectsPane extends StandardPane {
 
     private ProjectPane projectPane;
-    private PManagementSystem pms;
     private ListView projectListView;
 
     public ProjectsPane(ProjectPane projectPane, PManagementSystem pms) {
+        super(pms, false);
+
+        titlePane.setText("Projects");
 
         this.projectPane = projectPane;
-        this.pms = pms;
 
         projectPane.setProjectsPane(this);
-
-        this.getStyleClass().add("ProjectsPane");
-
-        StackPane titlePane = new TitlePane("Projects", TitleFontSize.LARGE);
 
         projectListView = new ListView();
         ObservableList<Project> obsProjects = FXCollections.observableList(pms.getProjects());
@@ -36,9 +33,10 @@ public class ProjectsPane extends BorderPane {
 
         CreateProjectPane createProjectPane = new CreateProjectPane(pms, this);
 
-        this.setTop(titlePane);
-        this.setCenter(projectListView);
-        this.setRight(createProjectPane);
+
+        //Add all elements to the pane.
+        rightContainer.getChildren().add(createProjectPane);
+        addNewExpandingChildToCenterContainer(projectListView);
 
     }
 
@@ -53,4 +51,8 @@ public class ProjectsPane extends BorderPane {
         }
     }
 
+    @Override
+    protected void close() {
+        this.toBack();
+    }
 }

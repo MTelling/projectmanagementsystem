@@ -5,59 +5,41 @@ import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 /**
  * Created by Morten on 02/05/16.
  */
-public class ActivityPane extends BorderPane {
+public class ActivityPane extends StandardPane {
 
-    private VBox rightContainer;
-    private TitlePane titlePane;
-    private ListView<Employee> assignedEmpListView;
-    private PManagementSystem pms;
     private Activity activity;
     private ProjectPane projectPane;
     private ComboBox<Employee> employeeComboBox;
+    private ListView<Employee> assignedEmpListView;
+    private ObservableList<Employee> obsAssignedEmpList;
+    private boolean setupRight;
 
     //TODO: Change this when an activity has it's own project
     private Project project;
 
+
     public ActivityPane(PManagementSystem pms) {
-
-        this.pms = pms;
-        this.getStyleClass().add("ActivityPane");
-
-
-        //Set window properties.
-        titlePane = new TitlePane("N/A", TitleFontSize.LARGE);
+        super(pms, true);
+        setupRight = false;
 
         assignedEmpListView = new ListView<Employee>();
 
-        //Create the exit button
-        StackPane exitBtnPane = new StackPane();
-        exitBtnPane.getStyleClass().add("ExitBtnPane");
-        Button exitBtn = new Button("Go Back");
-        exitBtnPane.getChildren().add(exitBtn);
-        //Connect exit button to controls
-        exitBtn.setOnMouseClicked(e -> close());
 
-        //Put everything on this pane.
-        this.setTop(titlePane);
-        this.setCenter(assignedEmpListView);
-        this.setBottom(exitBtnPane);
+        addTitleToCenterContainer("Employees");
+        addNewExpandingChildToCenterContainer(assignedEmpListView);
 
     }
 
-    private void close() {
+    @Override
+    protected void close() {
         projectPane.refresh();
         this.toBack();
     }
@@ -66,10 +48,6 @@ public class ActivityPane extends BorderPane {
         //This is the pane that can manage the activity.
         ManageActivityPane manageActivityPane = new ManageActivityPane(pms, activity);
 
-        //This part adds the ability to add an employee.
-        rightContainer = new VBox();
-        rightContainer.getStyleClass().add("ActivityRightContainer");
-        rightContainer.setAlignment(Pos.TOP_CENTER);
         TitlePane addEmployeeTitle = new TitlePane("Add employee to activity", TitleFontSize.MEDIUM);
         employeeComboBox = new ComboBox<>();
         ObservableList<Employee> obsAvailableEmployees = FXCollections.observableList(pms.getEmployees());
@@ -80,7 +58,6 @@ public class ActivityPane extends BorderPane {
 
         //Add the ability to add an employee to the right.
         rightContainer.getChildren().addAll(manageActivityPane, addEmployeeTitle, employeeComboBox, addEmployeeBtn);
-        this.setRight(rightContainer);
     }
 
     private void addEmployeeToActivity() {
@@ -90,12 +67,9 @@ public class ActivityPane extends BorderPane {
         try {
 
             pms.addEmployeeToActivity(project, (ProjectActivity) activity, emp);
-            assignedEmpListView.refresh();
+            refresh();
 
-        } catch (NoAccessException e) {
-            Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
-            error.showAndWait();
-        } catch (TooManyActivitiesException e) {
+        } catch (NoAccessException | TooManyActivitiesException e) {
             Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
             error.showAndWait();
         }
@@ -106,11 +80,12 @@ public class ActivityPane extends BorderPane {
         this.activity = activity;
 
         //If the manage activity pane isn't on, set it on.
-        if (this.getRight() == null) {
+        if (!setupRight) {
             setupRightContainer();
+            setupRight = true;
         }
 
-        ObservableList<Employee> obsAssignedEmpList
+        obsAssignedEmpList
                 = FXCollections.observableList(((ProjectActivity) activity).getEmployees());
 
         assignedEmpListView.setItems(obsAssignedEmpList);
@@ -121,6 +96,10 @@ public class ActivityPane extends BorderPane {
     }
 
     public void refresh() {
+        //TODO: Do this smarter!
+        obsAssignedEmpList = FXCollections.observableList(((ProjectActivity) activity).getEmployees());
+        assignedEmpListView.setItems(obsAssignedEmpList);
+
         assignedEmpListView.refresh();
     }
 

@@ -76,6 +76,7 @@ public class PrimaryStage extends Stage{
         } else if (sceneId.equals("Register Hours")){
             registerHoursPane.toFront();
         } else if (sceneId.equals("Overview")) {
+            overviewPane.refresh();
             overviewPane.toFront();
         }
     }

@@ -8,18 +8,13 @@ import javafx.scene.control.Label;
 /**
  * Created by Morten on 30/04/16.
  */
-public class EmployeeOverview extends GridPane {
+public class EmployeeOverviewPane extends ControlPane {
 
-    private PManagementSystem pms;
 
-    private final double WIDTH = 300;
+    public EmployeeOverviewPane(PManagementSystem pms) {
+        super(pms, "Overview");
 
-    public EmployeeOverview(PManagementSystem pms) {
-        this.pms = pms;
-
-        this.setMinWidth(WIDTH);
-        this.getStyleClass().add("EmployeeOverview");
-
+        //TODO: This should get the emps actual hours and activity count.
         double empTotalHours = 2000.50;
         double empMonthHours = 140.00;
         int empActivityCount = 5;
@@ -39,8 +34,8 @@ public class EmployeeOverview extends GridPane {
                 empActivityCountLblRight};
 
         for (int i = 0; i <= labels.length/2 + 1; i += 2) {
-            this.add(labels[i], 0, i);
-            this.add(labels[i+1], 1, i);
+            controlsGrid.add(labels[i], 0, i);
+            controlsGrid.add(labels[i+1], 1, i);
         }
 
     }

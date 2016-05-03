@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,11 +17,9 @@ import javafx.stage.Stage;
 /**
  * Created by Morten on 02/05/16.
  */
-public class ProjectPane extends BorderPane {
+public class ProjectPane extends StandardPane {
 
     private ActivityPane activityPane;
-    private TitlePane titlePane;
-    private PManagementSystem pms;
     private ListView activitiesListView;
     private ManageProjectPane manageProjectPane;
     private CreateActivityPane createActivityPane;
@@ -31,20 +30,9 @@ public class ProjectPane extends BorderPane {
 
 
     public ProjectPane(ActivityPane activityPane, PManagementSystem pms) {
-        this.pms = pms;
+        super(pms, true);
+
         this.activityPane = activityPane;
-        this.getStyleClass().add("ProjectPane");
-
-        //Create the exit button
-        StackPane exitBtnPane = new StackPane();
-        exitBtnPane.getStyleClass().add("ExitBtnPane");
-        Button exitBtn = new Button("Go Back");
-        exitBtnPane.getChildren().add(exitBtn);
-        //Connect exit button to controls
-        exitBtn.setOnMouseClicked(e -> close());
-
-        //Create Title bar
-        titlePane = new TitlePane("N/A", TitleFontSize.LARGE);
 
         manageProjectPane = new ManageProjectPane(pms);
         createActivityPane = new CreateActivityPane(pms, this);
@@ -52,16 +40,14 @@ public class ProjectPane extends BorderPane {
         activitiesListView = new ListView();
         activitiesListView.setOnMouseClicked(e -> manageActivity(e));
 
-        VBox rightContainer = new VBox();
         rightContainer.getChildren().addAll(manageProjectPane, createActivityPane);
 
-        this.setTop(titlePane);
-        this.setRight(rightContainer);
-        this.setBottom(exitBtnPane);
-
-        this.setCenter(activitiesListView);
+        addTitleToCenterContainer("Activities");
+        addNewExpandingChildToCenterContainer(activitiesListView);
 
     }
+
+
 
     public void setProject(Project project) {
 
@@ -87,7 +73,7 @@ public class ProjectPane extends BorderPane {
         refresh();
     }
 
-    private void close() {
+    protected void close() {
         this.toBack();
         projectsPane.refresh();
     }
