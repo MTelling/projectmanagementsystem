@@ -1,5 +1,6 @@
 package dk.dtu.software.group8.GUI;
 
+import dk.dtu.software.group8.PManagementSystem;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -14,9 +15,14 @@ public abstract class ControlPane extends VBox {
 
     protected TitlePane titlePane;
     protected GridPane controlsGrid;
+
+    protected PManagementSystem pms;
+
     private HBox btnPane;
 
-    public ControlPane(String titleText) {
+    public ControlPane(PManagementSystem pms, String titleText) {
+
+        this.pms = pms;
 
         BorderPane borderPane = new BorderPane();
         this.getStyleClass().add("ControlPane");

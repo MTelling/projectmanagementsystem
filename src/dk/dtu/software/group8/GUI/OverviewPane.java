@@ -30,7 +30,8 @@ public class OverviewPane extends BorderPane {
 
         StackPane titlePane = new TitlePane("Welcome " + pms.getCurrentEmployee().getFirstName(), TitleFontSize.LARGE);
 
-        EmployeeActivitiesOverview employeeActivitiesOverview = new EmployeeActivitiesOverview(pms);
+        EmployeeActivitiesOverview employeeActivitiesOverview =
+                new EmployeeActivitiesOverview(pms.getCurrentEmployee().getCurrentActivities());
         EmployeeOverview employeeOverview = new EmployeeOverview(pms);
 
         this.setCenter(employeeActivitiesOverview);

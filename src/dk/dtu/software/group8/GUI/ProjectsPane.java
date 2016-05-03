@@ -1,12 +1,15 @@
 package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.PManagementSystem;
+import dk.dtu.software.group8.Project;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,26 +23,23 @@ public class ProjectsPane extends BorderPane {
     private PManagementSystem pms;
     private ListView projectListView;
 
-    public ProjectsPane(PrimaryStage primaryStage, ProjectPane projectPane) {
+    public ProjectsPane(ProjectPane projectPane, PManagementSystem pms) {
 
         this.projectPane = projectPane;
+        this.pms = pms;
+
+        projectPane.setProjectsPane(this);
 
         this.getStyleClass().add("ProjectsPane");
 
         StackPane titlePane = new TitlePane("Projects", TitleFontSize.LARGE);
-        ///////////////TEST//////////////////////////
-        List<Test> testList = new ArrayList<>();
-        for (int i = 1; i < 40; i++) {
-            testList.add(new Test("Test" + i, "22/4/16", "22/6/16", Integer.toString(i)));
-        }
-        ///////////////////////////////////////////
 
         projectListView = new ListView();
-        ObservableList<Test> obsProjects = FXCollections.observableList(testList);
+        ObservableList<Project> obsProjects = FXCollections.observableList(pms.getProjects());
         projectListView.setItems(obsProjects);
         projectListView.setOnMouseClicked(e -> openProject(e));
 
-        CreateProjectPane createProjectPane = new CreateProjectPane();
+        CreateProjectPane createProjectPane = new CreateProjectPane(pms, this);
 
         this.setTop(titlePane);
         this.setCenter(projectListView);
@@ -47,10 +47,13 @@ public class ProjectsPane extends BorderPane {
 
     }
 
+    public void refresh() {
+        projectListView.refresh();
+    }
 
     private void openProject(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            projectPane.showProject((Test)projectListView.getSelectionModel().getSelectedItem());
+            projectPane.showProject((Project)projectListView.getSelectionModel().getSelectedItem());
         }
     }
 

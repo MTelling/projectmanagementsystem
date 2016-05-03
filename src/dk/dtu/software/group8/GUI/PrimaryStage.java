@@ -38,7 +38,8 @@ public class PrimaryStage extends Stage{
 
         overviewPane = new OverviewPane(pms);
         projectPane = new ProjectPane(pms);
-        projectsPane = new ProjectsPane(this, projectPane);
+        projectsPane = new ProjectsPane(projectPane, pms);
+
         registerHoursPane = new RegisterHoursPane(pms);
 
 

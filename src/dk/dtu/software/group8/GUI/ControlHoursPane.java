@@ -1,6 +1,7 @@
 package dk.dtu.software.group8.GUI;
 
 
+import dk.dtu.software.group8.PManagementSystem;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,8 +12,8 @@ import javafx.scene.control.TextField;
  */
 public class ControlHoursPane extends ControlPane {
 
-    public ControlHoursPane() {
-        super("Change/Edit Hours");
+    public ControlHoursPane(PManagementSystem pms) {
+        super(pms, "Change/Edit Hours");
 
         Label totalHoursLbl = new Label("Total hours for day:");
         Label totalHoursField = new Label("0");

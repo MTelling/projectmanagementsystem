@@ -17,7 +17,7 @@ public class Project {
     private Employee projectManager;
     private List<Activity> activities;
 
-    public Project(String id, LocalDate startDate, LocalDate endDate) throws WrongDateException, NoAccessException {
+    public Project(String id, LocalDate startDate, LocalDate endDate) throws WrongDateException {
         this.id = id;
         
         this.activities = new ArrayList<Activity>();
@@ -47,7 +47,7 @@ public class Project {
     public void setEndDate(LocalDate endDate) throws WrongDateException { this.endDate = endDate; }
     
     public ProjectActivity createActivity(String type, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws IncorrectAttributeException {
-        ProjectActivity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours);
+        ProjectActivity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours, this);
         this.activities.add(newActivity);
         return newActivity;
     }
@@ -80,6 +80,19 @@ public class Project {
 
     public String extractReport() {
         return null;
+    }
+
+    public String toString() {
+        String name = this.getName();
+
+        if (name == null) {
+            name = "N/A";
+        }
+
+        return id + "\t - \t" + name
+                + " (" + this.startDate.toString()
+                + " - " + this.endDate.toString()
+                + ")";
     }
 
 }

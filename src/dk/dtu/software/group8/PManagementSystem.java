@@ -27,7 +27,7 @@ public class PManagementSystem {
         projects = new LinkedList<>();
     }
 
-    public Project createProject(LocalDate startDate, LocalDate endDate) throws WrongDateException, NoAccessException {
+    public Project createProject(LocalDate startDate, LocalDate endDate) throws WrongDateException {
         if(startDate == null || endDate == null) {
             throw new WrongDateException("Missing date(s)!");
         } else if(startDate.isBefore(dateServer.getDate())) {
@@ -65,7 +65,8 @@ public class PManagementSystem {
     
     public boolean manageProjectDates(Project project, LocalDate startDate, LocalDate endDate) throws NoAccessException, WrongDateException {
     	if(this.manageProject(project)) {
-	    	if(startDate != null && startDate.isAfter(dateServer.getDate())) {
+	    	if(startDate != null
+                    && (startDate.isAfter(dateServer.getDate()) || startDate.isEqual(dateServer.getDate()))) {
                 project.setStartDate(startDate);
             } else {
                 throw new WrongDateException("Start Date is not allowed to be in the past!");

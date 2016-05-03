@@ -1,6 +1,8 @@
 package dk.dtu.software.group8.GUI;
 
+import dk.dtu.software.group8.Activity;
 import dk.dtu.software.group8.PManagementSystem;
+import dk.dtu.software.group8.Project;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -24,13 +26,14 @@ public class ProjectPane extends BorderPane {
     private ListView activitiesListView;
     private ManageProjectPane manageProjectPane;
     private CreateActivityPane createActivityPane;
-    private Test test;
+    private Project project;
+
+    private ProjectsPane projectsPane;
 
 
     public ProjectPane(PManagementSystem pms) {
         this.pms = pms;
         this.getStyleClass().add("ProjectPane");
-
 
         //Create the exit button
         StackPane exitBtnPane = new StackPane();
@@ -43,8 +46,8 @@ public class ProjectPane extends BorderPane {
         //Create Title bar
         titlePane = new TitlePane("N/A", TitleFontSize.LARGE);
 
-        manageProjectPane = new ManageProjectPane();
-        createActivityPane = new CreateActivityPane();
+        manageProjectPane = new ManageProjectPane(pms);
+        createActivityPane = new CreateActivityPane(pms, this);
 
         VBox rightContainer = new VBox();
         rightContainer.getChildren().addAll(manageProjectPane, createActivityPane);
@@ -55,41 +58,53 @@ public class ProjectPane extends BorderPane {
 
     }
 
-    public void showProject(Test test) {
+    public void showProject(Project project) {
 
-        this.test = test;
-        this.toFront();
+        this.project = project;
 
-        this.titlePane.setText(test.name);
-        this.manageProjectPane.setProject(test);
-
-        ///////////////TEST//////////////////////////
-        List<Test> testList = new ArrayList<>();
-        for (int i = 1; i < 40; i++) {
-            testList.add(new Test("Activity" + i, "22/4/16", "22/6/16", Integer.toString(i)));
-        }
-        ///////////////////////////////////////////
+        createActivityPane.setProject(project);
 
         activitiesListView = new ListView();
-        ObservableList<Test> obsActivities = FXCollections.observableList(testList);
+        ObservableList<Activity> obsActivities = FXCollections.observableList(project.getActivities());
         activitiesListView.setItems(obsActivities);
 
         activitiesListView.setOnMouseClicked(e -> manageActivity(e));
 
+        update();
+
         this.setCenter(activitiesListView);
+
+        this.toFront();
+    }
+
+
+    private void update() {
+        this.titlePane.setText("Project Id: " + project.getId());
+        this.manageProjectPane.setProject(project);
+
+        activitiesListView.refresh();
     }
 
     private void close() {
         this.toBack();
+        projectsPane.refresh();
     }
 
     private void manageActivity(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            Test activity = (Test)activitiesListView.getSelectionModel().getSelectedItem();
+            Activity activity = (Activity)activitiesListView.getSelectionModel().getSelectedItem();
             Stage manageActivityPopup = new ManageActivityPopup(pms, activity);
 
             manageActivityPopup.show();
         }
     }
 
+
+    public void setProjectsPane(ProjectsPane projectsPane) {
+        this.projectsPane = projectsPane;
+    }
+
+    public void refresh() {
+        activitiesListView.refresh();
+    }
 }

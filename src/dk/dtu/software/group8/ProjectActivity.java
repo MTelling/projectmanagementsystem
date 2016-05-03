@@ -2,11 +2,8 @@ package dk.dtu.software.group8;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import dk.dtu.software.group8.Exceptions.*;
 
@@ -17,8 +14,13 @@ public class ProjectActivity extends  Activity {
     private List<Employee> assignedEmployees;
     private List<RegisteredWork> registeredWork = new ArrayList<>();
 
+    private Project project;
 
-    public ProjectActivity(String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws IncorrectAttributeException {
+
+    public ProjectActivity(String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours, Project project) throws IncorrectAttributeException {
+
+        this.project = project;
+
         if(!activityType.matches("[a-zA-Z ]{3,}")) {
             throw new IncorrectAttributeException("The supplied activity type is not a correct activity type.");
         } else if (startWeek.isBefore(YearWeek.fromDate(LocalDate.now())) || endWeek.isBefore(startWeek)) {
@@ -69,4 +71,8 @@ public class ProjectActivity extends  Activity {
     }
 
     public List<RegisteredWork> getRegisteredWork() { return this.registeredWork; }
+
+    public Project getProject() {
+        return project;
+    }
 }

@@ -1,5 +1,6 @@
 package dk.dtu.software.group8.GUI;
 
+import dk.dtu.software.group8.Activity;
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -11,20 +12,20 @@ import javafx.stage.Stage;
 public class ManageActivityPopup extends Stage {
 
     private PManagementSystem pms;
-    private Test activity;
+    private Activity activity;
 
-    public ManageActivityPopup(PManagementSystem pms, Test activity) {
+    public ManageActivityPopup(PManagementSystem pms, Activity activity) {
 
         this.pms = pms;
         this.activity = activity;
 
         //Set window properties.
-        this.setTitle(activity.name);
+        this.setTitle("Manage activity");
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
 
 
-        ManageActivityPane manageActivityPane = new ManageActivityPane();
+        ManageActivityPane manageActivityPane = new ManageActivityPane(pms, activity);
 
         Scene scene = new Scene(manageActivityPane);
 
@@ -34,6 +35,7 @@ public class ManageActivityPopup extends Stage {
         this.setScene(scene);
         this.sizeToScene();
     }
+
 
 
 }

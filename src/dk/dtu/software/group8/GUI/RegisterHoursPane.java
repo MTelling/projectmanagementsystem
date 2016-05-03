@@ -1,5 +1,6 @@
 package dk.dtu.software.group8.GUI;
 
+import dk.dtu.software.group8.Activity;
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,20 +53,12 @@ public class RegisterHoursPane extends BorderPane {
         centerContainer.getChildren().addAll(datePickContainer, activitiesList);
 
         //Create the right view for adding hours and viewing total hours.
-        ControlHoursPane controlHoursPane = new ControlHoursPane();
+        ControlHoursPane controlHoursPane = new ControlHoursPane(pms);
 
-        //////////////////////////TEST //////////////////////////
-
-        List<Test> testList = new ArrayList<Test>();
-        for (int i = 0; i < 20; i++) {
-            testList.add(new Test("Activity" + i, "22/4/16", "22/5/16", "test"));
-        }
-
-        ObservableList<Test> obsActivities = FXCollections.observableList(testList);
+        //TODO: This should get the activity for the given day.
+        ObservableList<Activity> obsActivities = FXCollections.observableList(pms.getCurrentEmployee().getCurrentActivities());
 
         activitiesList.setItems(obsActivities);
-
-        //////////////////////////////////////////////////////////
 
 
         this.setCenter(centerContainer);

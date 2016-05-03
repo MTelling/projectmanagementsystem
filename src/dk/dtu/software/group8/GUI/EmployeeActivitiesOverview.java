@@ -1,5 +1,6 @@
 package dk.dtu.software.group8.GUI;
 
+import dk.dtu.software.group8.Activity;
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +19,11 @@ import java.util.List;
  * Created by Morten on 30/04/16.
  */
 public class EmployeeActivitiesOverview extends BorderPane {
-    private PManagementSystem pms;
-    private TableView<Test> table;
+    private List<Activity> activityList;
+    private TableView<Activity> table;
 
-    public EmployeeActivitiesOverview(PManagementSystem pms) {
-        this.pms = pms;
-
+    public EmployeeActivitiesOverview(List<Activity> activityList) {
+        this.activityList = activityList;
         StackPane titlePane = new TitlePane("Current activities", TitleFontSize.MEDIUM);
 
         createTable();
@@ -33,15 +34,8 @@ public class EmployeeActivitiesOverview extends BorderPane {
 
     private void createTable() {
 
-        ///////////////TEST//////////////////////////
-        List<Test> testList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            testList.add(new Test("test", "22/4/16", "22/6/16", Integer.toString(i)));
-        }
-        ///////////////////////////////////////////
-
         //TODO: Should take the current activities from user from pms.
-        ObservableList<Test> observableActivities = FXCollections.observableList(testList);
+        ObservableList<Activity> obsActivities = FXCollections.observableList(activityList);
         //Create the table.
         table = new TableView();
 
@@ -50,60 +44,37 @@ public class EmployeeActivitiesOverview extends BorderPane {
         table.setSelectionModel(null);
 
         //Create table columns
-        TableColumn<Test, String> nameCol = new TableColumn<>("Name");
-        TableColumn<Test, String> startDateCol = new TableColumn<>("Start Date");
-        TableColumn<Test, String> endDateCol = new TableColumn<>("End Date");
-        TableColumn<Test, String> originProjectCol = new TableColumn<>("Associated Project");
-        TableColumn[] columns = {nameCol, startDateCol, endDateCol, originProjectCol};
+        TableColumn<Activity, String> nameCol = new TableColumn<>("Name");
+        TableColumn<Activity, String> startDateCol = new TableColumn<>("Start Week");
+        TableColumn<Activity, String> endDateCol = new TableColumn<>("End Week");
+        TableColumn[] columns = {nameCol, startDateCol, endDateCol};
 
         //Set settings for the columns.
-        for(TableColumn<Test, String> column : columns) {
+        for(TableColumn<Activity, String> column : columns) {
             column.setSortable(false);
             column.setResizable(false);
         }
 
-        nameCol.prefWidthProperty().bind(table.widthProperty().divide(9).multiply(4));
-        startDateCol.prefWidthProperty().bind(table.widthProperty().divide(9).multiply(1));
-        endDateCol.prefWidthProperty().bind(table.widthProperty().divide(9).multiply(1));
-        originProjectCol.prefWidthProperty().bind(table.widthProperty().divide(9).multiply(3));
+        nameCol.prefWidthProperty().bind(table.widthProperty().divide(5).multiply(3));
+        startDateCol.prefWidthProperty().bind(table.widthProperty().divide(5).multiply(1));
+        endDateCol.prefWidthProperty().bind(table.widthProperty().divide(5).multiply(1));
 
 
 
         //Connect to model
-        table.setItems(observableActivities);
-        nameCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().name));
-        startDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().startDate));
-        endDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().endDate));
-        originProjectCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().originProject));
+        table.setItems(obsActivities);
+        nameCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getActivityType()));
+        startDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getStartWeek().toString()));
+        endDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getEndWeek().toString()));
 
         //Add all columns to the table.
-        table.getColumns().addAll(nameCol, startDateCol, endDateCol, originProjectCol);
+        table.getColumns().addAll(nameCol, startDateCol, endDateCol);
 
 
     }
 
     public void updateTable() {
         table.refresh();
-    }
-
-}
-
-//TODO: Delete this.
-class Test {
-    public String name;
-    public String startDate;
-    public String endDate;
-    public String originProject;
-
-    public Test(String name, String startDate, String endDate, String originProject) {
-        this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.originProject = originProject;
-    }
-
-    public String toString() {
-        return name + " (" + startDate + " - " + endDate + ") " + originProject;
     }
 
 }
