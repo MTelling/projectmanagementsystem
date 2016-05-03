@@ -4,6 +4,7 @@ package dk.dtu.software.group8;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,15 @@ public class PManagementSystem {
     	
     	project.assignProjectManager(this.currentEmployee);
     }
-    
+
+    public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee) throws NoAccessException, TooManyActivitiesException {
+        if(this.manageProject(project)) {
+            return project.addEmployeeToActivity(activity, employee);
+        } else {
+            return false;
+        }
+    }
+
     public boolean changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
     	if(this.manageProject(project))  {
     		project.setName(name);
@@ -84,13 +93,24 @@ public class PManagementSystem {
     
     public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
     	if(this.manageProject(project)) {
-
-    		return project.createActivity(activityType, startWeek, endWeek, approximatedHours);
+    		return project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate(), approximatedHours);
     	} else {
     		return null;
     	}
     }
-    
+
+    public List<Employee> findAvailableEmployees(LocalDate startDate, LocalDate endDate, ProjectActivity activity) throws WrongDateException {
+        if(startDate.isBefore(dateServer.getDate()) || endDate.isBefore(startDate)) {
+            throw new WrongDateException("Time period is invalid!");
+        }
+
+        List<Employee> availableEmployees = new ArrayList<>();
+            for(Employee emp : this.getEmployees()) {
+                if(emp.isAvailable(startDate, endDate, activity)) availableEmployees.add(emp);
+            }
+        return availableEmployees;
+    }
+
     public boolean endProject(Project project) throws NoAccessException {
     	if(this.manageProject(project)) {
             try {
@@ -108,13 +128,13 @@ public class PManagementSystem {
                 throw new IncorrectAttributeException("Invalid Activity: Project does not contain supplied activity!");
             } else {
                 if(startWeek != null && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
-                    activity.setStartWeek(startWeek);
+                    activity.setStartDate(startWeek.toLocalDate());
                 } else {
                     throw new WrongDateException("Start Week is not allowed to be in the past!");
                 }
 
-                if(endWeek != null && (endWeek.isEqual(startWeek) || endWeek.isAfter(startWeek))) {
-                    activity.setEndWeek(endWeek);
+                if(endWeek != null && (endWeek.equals(startWeek) || endWeek.isAfter(startWeek))) {
+                    activity.setEndDate(endWeek.toLocalDate());
                 } else {
                     throw new WrongDateException("End Week is not allowed to be before Start Week!");
                 }
@@ -132,7 +152,11 @@ public class PManagementSystem {
     	
     	return true;
     }
-    
+
+    public PersonalActivity createPersonalActivityForEmployee(String activityType, LocalDate startDate, LocalDate endDate, Employee emp) throws WrongDateException, IncorrectAttributeException {
+        return emp.createPersonalActivity(activityType, startDate, endDate);
+    }
+
     public Employee getCurrentEmployee() {
 		return this.currentEmployee;
 	}
@@ -186,6 +210,10 @@ public class PManagementSystem {
 
     public LocalDate getDate() {
         return dateServer.getDate();
+    }
+
+    public List<Employee> getEmployees() {
+        return this.db.getEmployees();
     }
 
     public void setDateServer(DateServer dateServer) {

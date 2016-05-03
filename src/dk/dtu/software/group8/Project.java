@@ -46,8 +46,8 @@ public class Project {
     
     public void setEndDate(LocalDate endDate) throws WrongDateException { this.endDate = endDate; }
     
-    public ProjectActivity createActivity(String type, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws IncorrectAttributeException {
-        ProjectActivity newActivity = new ProjectActivity(type, startWeek, endWeek, approximatedHours);
+    public ProjectActivity createActivity(String type, LocalDate startDate, LocalDate endDate, int approximatedHours) throws IncorrectAttributeException {
+        ProjectActivity newActivity = new ProjectActivity(type, startDate, endDate, approximatedHours);
         this.activities.add(newActivity);
         return newActivity;
     }

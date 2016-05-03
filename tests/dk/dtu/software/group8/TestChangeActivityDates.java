@@ -30,8 +30,8 @@ public class TestChangeActivityDates extends TestManageProject {
 
         pms.manageActivityDates(project, activity, newStart, newEnd);
 
-        assertThat(activity.getStartWeek(), is(newStart));
-        assertThat(activity.getEndWeek(), is(newEnd));
+        assertThat(activity.getStartDate(), is(newStart.toLocalDate()));
+        assertThat(activity.getEndDate(), is(newEnd.toLocalDate()));
     }
 
     @Test
@@ -41,8 +41,8 @@ public class TestChangeActivityDates extends TestManageProject {
 
         pms.manageActivityDates(project, activity, newStart, newEnd);
 
-        assertThat(activity.getStartWeek(), is(newStart));
-        assertThat(activity.getEndWeek(), is(newEnd));
+        assertThat(activity.getStartDate(), is(newStart.toLocalDate()));
+        assertThat(activity.getEndDate(), is(newEnd.toLocalDate()));
     }
 
     @Test

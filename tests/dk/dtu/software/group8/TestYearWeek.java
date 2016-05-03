@@ -1,6 +1,9 @@
 package dk.dtu.software.group8;
 
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+
+import java.time.LocalDate;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
@@ -60,7 +63,7 @@ public class TestYearWeek {
         YearWeek first = new YearWeek(2016, 37);
         YearWeek second = new YearWeek(2016, 37);
 
-        assertThat(first.isEqual(second), is(true));
+        assertThat(first.equals(second), is(true));
     }
 
     @Test
@@ -68,7 +71,21 @@ public class TestYearWeek {
         YearWeek first = new YearWeek(2016, 37);
         YearWeek second = new YearWeek(2016, 42);
 
-        assertThat(first.isEqual(second), is(false));
+        assertThat(first.equals(second), is(false));
+    }
+
+    @Test
+    public void testFromDate() {
+        YearWeek week37 = new YearWeek(2016, 37);
+        YearWeek fromDate = YearWeek.fromDate(LocalDate.parse("2016-09-12"));
+        assertThat(fromDate, is(equalTo(week37)));
+    }
+
+    @Test
+    public void testToLocalDate() {
+        YearWeek week37 = new YearWeek(2016, 37);
+        LocalDate localDate = LocalDate.parse("2016-09-12");
+        assertThat(week37.toLocalDate(), is(equalTo(localDate)));
     }
 
 }

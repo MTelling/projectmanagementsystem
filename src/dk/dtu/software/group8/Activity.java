@@ -1,6 +1,7 @@
 package dk.dtu.software.group8;
 
 import dk.dtu.software.group8.Exceptions.WrongDateException;
+import org.mockito.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
@@ -9,28 +10,23 @@ import java.util.Locale;
 public abstract class Activity {
 
     protected String activityType;
-    protected YearWeek startTime, endTime;
+    protected LocalDate startTime, endTime;
 
-    public void end() {
-        this.endTime = YearWeek.fromDate(LocalDate.now());
+    public boolean isTimePeriodInActivityDuration(LocalDate startDate, LocalDate endDate) {
+        return (startDate.isAfter(startTime) && startDate.isBefore(endTime))
+                || (endDate.isAfter(startTime) && endDate.isBefore(endTime));
     }
-
-    public boolean isTimePeriodInActivityDuration(YearWeek date) {
-        return date.isAfter(startTime) && date.isBefore(endTime);
-    }
-
-    public void setStartWeek(YearWeek week) { this.startTime = week; }
-
-    public void setEndWeek(YearWeek week) { this.endTime = week; }
 
     public String getActivityType() {
-       return this.activityType;
+        return this.activityType;
     }
 
-    public YearWeek getStartWeek() {
-        return startTime;
-    }
+    public void setStartDate(LocalDate date) { this.startTime = date; }
 
-    public YearWeek getEndWeek() { return endTime; }
+    public void setEndDate(LocalDate date) { this.endTime = date; }
+
+    public LocalDate getStartDate() { return this.startTime; }
+
+    public LocalDate getEndDate() { return this.endTime; }
 
 }
