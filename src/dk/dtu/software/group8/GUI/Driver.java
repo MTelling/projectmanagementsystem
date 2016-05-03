@@ -1,9 +1,11 @@
 package dk.dtu.software.group8.GUI;
 
-import dk.dtu.software.group8.*;
 import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
+import dk.dtu.software.group8.PManagementSystem;
+import dk.dtu.software.group8.Project;
+import dk.dtu.software.group8.ProjectActivity;
+import dk.dtu.software.group8.YearWeek;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -41,7 +43,6 @@ public class Driver extends Application {
 
         demo();
 
-        System.out.println(pms.getProjects());
         primaryStage = new PrimaryStage(pms);
 
         primaryStage.show();

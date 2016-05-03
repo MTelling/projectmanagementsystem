@@ -14,9 +14,6 @@ public class OverviewPane extends StandardPane {
                 new EmployeeActivitiesTableView(pms.getCurrentEmployee().getCurrentActivities());
         EmployeeOverviewPane employeeOverviewPane = new EmployeeOverviewPane(pms);
 
-
-
-
         addTitleToCenterContainer("Current activities");
         addNewExpandingChildToCenterContainer(employeeActivitiesTableView);
         rightContainer.getChildren().add(employeeOverviewPane);
