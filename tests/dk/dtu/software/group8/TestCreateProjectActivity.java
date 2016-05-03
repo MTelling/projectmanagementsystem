@@ -17,13 +17,13 @@ import dk.dtu.software.group8.Exceptions.NoAccessException;
 
 public class TestCreateProjectActivity extends TestManageProject {
 	
-	LocalDate week36, week37, week42;
+	YearWeek week36, week37, week42;
 	
 	@Before
 	public void setUpWeeks() {
-		week36 = LocalDate.now().with(ChronoField.ALIGNED_WEEK_OF_YEAR, 36).with(DayOfWeek.MONDAY);
-		week37 = LocalDate.now().with(ChronoField.ALIGNED_WEEK_OF_YEAR, 37).with(DayOfWeek.MONDAY);
-		week42 = LocalDate.now().with(ChronoField.ALIGNED_WEEK_OF_YEAR, 42).with(DayOfWeek.MONDAY);
+		week36 = new YearWeek(2016, 36);
+		week37 = new YearWeek(2016, 37);
+		week42 = new YearWeek(2016, 42);;
 	}
 	
 	@Test
@@ -85,7 +85,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 
 		int numOfActivities = project.getActivities().size();
 
-		Activity projectActivity = pms.createActivityForProject(project, "Implementation", 37, 42, 42);
+		Activity projectActivity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
 
 		assertThat(projectActivity, instanceOf(ProjectActivity.class));
 		assertThat(project.getActivities().size(), is(numOfActivities + 1));
@@ -99,6 +99,6 @@ public class TestCreateProjectActivity extends TestManageProject {
 		//Sign in as employee who is not PM.
 		pms.signIn(db.getEmployees().get(2).getId());
 
-		pms.createActivityForProject(project, "Implementation", 37, 42, 42);
+		pms.createActivityForProject(project, "Implementation", week37, week42, 42);
 	}
 }
