@@ -119,6 +119,7 @@ public class PManagementSystem {
     	}
     }
 
+    //TODO: Now an activity has it's project, this could be done simpler. Just remove the project parameter.
     public boolean manageActivityDates(Project project, Activity activity, YearWeek startWeek, YearWeek endWeek) throws IncorrectAttributeException, NoAccessException, WrongDateException {
         if(this.manageProject(project)) {
             if(!project.getActivities().contains(activity)) {

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class TestChangeActivityDates extends TestManageProject {
 
@@ -96,5 +97,42 @@ public class TestChangeActivityDates extends TestManageProject {
 
         pms.manageActivityDates(project,activity, newStart, newEnd);
     }
+
+
+    //TODO: Should we add these two extra tests?
+    @Test
+    public void testEndDateExceedsProject() throws WrongDateException, IncorrectAttributeException, NoAccessException {
+        expectedEx.expect(WrongDateException.class);
+        expectedEx.expectMessage("The given end week exceeds the duration of the project.");
+
+        YearWeek newStart = YearWeek.fromDate(LocalDate.parse("2016-05-12"));
+        YearWeek newEnd = YearWeek.fromDate(LocalDate.parse("2020-05-15"));
+
+        assertTrue(newEnd.isAfter(YearWeek.fromDate(project.getEndDate())));
+
+        pms.manageActivityDates(project, activity, newStart, newEnd);
+
+    }
+
+    @Test
+    public void testStartDateIsBeforeProject() throws WrongDateException, IncorrectAttributeException, NoAccessException {
+        expectedEx.expect(WrongDateException.class);
+        expectedEx.expectMessage("The given start week is before the start of the project.");
+
+        LocalDate newProjectStart = LocalDate.parse("2016-07-10");
+        LocalDate newProjectEnd = LocalDate.parse("2016-09-12");
+
+        pms.manageProjectDates(project, newProjectStart, newProjectEnd);
+
+        YearWeek newStart = YearWeek.fromDate(LocalDate.parse("2016-05-12"));
+        YearWeek newEnd = YearWeek.fromDate(LocalDate.parse("2020-08-15"));
+
+        assertThat(newStart.isBefore(YearWeek.fromDate(project.getStartDate())), is(true));
+
+        pms.manageActivityDates(project, activity, newStart, newEnd);
+
+    }
+
+
 
 }
