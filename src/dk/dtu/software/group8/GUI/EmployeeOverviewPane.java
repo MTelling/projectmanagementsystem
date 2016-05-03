@@ -1,8 +1,6 @@
 package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.PManagementSystem;
-import javafx.geometry.Pos;
-import javafx.scene.layout.GridPane;
 import javafx.scene.control.Label;
 
 /**

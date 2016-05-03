@@ -2,15 +2,10 @@ package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
 import dk.dtu.software.group8.PManagementSystem;
 import dk.dtu.software.group8.Project;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import org.omg.CORBA.ORBPackage.InvalidName;
 
-import javax.naming.InvalidNameException;
 import java.util.Optional;
 
 

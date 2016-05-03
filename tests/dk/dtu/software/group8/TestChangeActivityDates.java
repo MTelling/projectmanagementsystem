@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class TestChangeActivityDates extends TestManageProject {
@@ -88,6 +87,14 @@ public class TestChangeActivityDates extends TestManageProject {
         YearWeek newEnd = new YearWeek(2016, 42);
 
         pms.manageActivityDates(project, activity, newStart, newEnd);
+    }
+
+    @Test
+    public void testStartDateIsToday() throws WrongDateException, IncorrectAttributeException, NoAccessException {
+        YearWeek newStart = YearWeek.fromDate(LocalDate.parse("2016-05-09"));
+        YearWeek newEnd = YearWeek.fromDate(LocalDate.parse("2016-05-15"));
+
+        pms.manageActivityDates(project,activity, newStart, newEnd);
     }
 
 }

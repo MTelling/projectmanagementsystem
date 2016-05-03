@@ -1,14 +1,11 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import dk.dtu.software.group8.Exceptions.*;
 
 public class ProjectActivity extends  Activity {
 
@@ -20,7 +17,7 @@ public class ProjectActivity extends  Activity {
 
     private Project project;
 
-    public ProjectActivity(String activityType, LocalDate startDate, LocalDate endDate, int approximatedHours) throws IncorrectAttributeException {
+    public ProjectActivity(String activityType, LocalDate startDate, LocalDate endDate, int approximatedHours, Project project) throws IncorrectAttributeException {
 
    	    this.project = project;
 

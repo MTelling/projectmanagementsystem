@@ -1,18 +1,12 @@
 package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.Activity;
-import dk.dtu.software.group8.PManagementSystem;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,8 +42,8 @@ public class EmployeeActivitiesTableView extends TableView {
         //Connect to model
         this.setItems(obsActivities);
         nameCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getActivityType()));
-        startDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getStartWeek().toString()));
-        endDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getEndWeek().toString()));
+        startDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getStartDate().toString()));
+        endDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getEndDate().toString()));
 
         //Add all columns to the table.
         this.getColumns().addAll(nameCol, startDateCol, endDateCol);

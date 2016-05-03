@@ -1,13 +1,14 @@
 package dk.dtu.software.group8;
 
 
+import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
+
+import javax.naming.InvalidNameException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import dk.dtu.software.group8.Exceptions.*;
-
-import javax.naming.InvalidNameException;
 
 
 public class Project {
@@ -46,8 +47,8 @@ public class Project {
     
     public void setEndDate(LocalDate endDate) throws WrongDateException { this.endDate = endDate; }
     
-    public ProjectActivity createActivity(String type, LocalDate startDate, LocalDate endDate, int approximatedHours) throws IncorrectAttributeException {
-        ProjectActivity newActivity = new ProjectActivity(type, startDate, endDate, approximatedHours);
+    public ProjectActivity createActivity(String type, LocalDate startDate, LocalDate endDate, int approximatedHours, Project project) throws IncorrectAttributeException {
+        ProjectActivity newActivity = new ProjectActivity(type, startDate, endDate, approximatedHours, project);
         this.activities.add(newActivity);
         return newActivity;
     }

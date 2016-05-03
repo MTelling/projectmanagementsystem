@@ -1,12 +1,8 @@
 package dk.dtu.software.group8;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
 import java.time.temporal.IsoFields;
-import java.time.temporal.WeekFields;
-import java.util.Locale;
 
 public class YearWeek {
 
@@ -20,12 +16,13 @@ public class YearWeek {
     public boolean isAfter(YearWeek other) {
        if(this.getYear() > other.getYear())
            return true;
-        else return this.getWeek() > other.getWeek() && this.getYear() == other.getYear();
+        else return this.getWeek() >= other.getWeek() && this.getYear() == other.getYear();
     }
 
     public boolean isBefore(YearWeek other) {
         return !isAfter(other);
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -56,4 +53,6 @@ public class YearWeek {
     public int getWeek() {
         return this.week;
     }
+
+
 }

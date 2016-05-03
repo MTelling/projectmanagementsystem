@@ -1,6 +1,5 @@
 package dk.dtu.software.group8.GUI;
 
-import dk.dtu.software.group8.GUI.*;
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;

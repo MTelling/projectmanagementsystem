@@ -2,7 +2,7 @@ package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;

@@ -5,8 +5,6 @@ import dk.dtu.software.group8.Project;
 import dk.dtu.software.group8.YearWeek;
 import javafx.scene.control.*;
 
-import java.time.Year;
-
 
 /**
  * Created by Morten on 02/05/16.

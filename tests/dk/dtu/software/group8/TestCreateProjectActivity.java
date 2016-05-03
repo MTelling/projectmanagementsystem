@@ -1,15 +1,14 @@
 package dk.dtu.software.group8;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
 import org.junit.Before;
 import org.junit.Test;
 
-import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
+import java.time.LocalDate;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 public class TestCreateProjectActivity extends TestManageProject {
 	
@@ -17,6 +16,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 	
 	@Before
 	public void setUpWeeks() {
+
 		week36 = new YearWeek(2016, 36).toLocalDate();
 		week37 = new YearWeek(2016, 37).toLocalDate();
 		week42 = new YearWeek(2016, 42).toLocalDate();

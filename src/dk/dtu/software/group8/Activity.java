@@ -25,7 +25,7 @@ public abstract class Activity {
     public LocalDate getEndDate() { return this.endTime; }
 
     public String toString() {
-        return activityType + " (" + getStartWeek() + " - " + getEndWeek() + ")";
+        return activityType + " (" + getStartDate() + " - " + getEndDate() + ")";
     }
 
 }

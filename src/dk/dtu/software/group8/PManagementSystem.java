@@ -1,14 +1,13 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.*;
+
+import javax.naming.InvalidNameException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.naming.InvalidNameException;
-
-import dk.dtu.software.group8.Exceptions.*;
 
 public class PManagementSystem {
 
@@ -91,7 +90,7 @@ public class PManagementSystem {
     
     public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
     	if(this.manageProject(project)) {
-    		return project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate(), approximatedHours);
+    		return project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate(), approximatedHours, project);
     	} else {
     		return null;
     	}
@@ -125,7 +124,8 @@ public class PManagementSystem {
             if(!project.getActivities().contains(activity)) {
                 throw new IncorrectAttributeException("Invalid Activity: Project does not contain supplied activity!");
             } else {
-                if(startWeek != null && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
+                if(startWeek != null
+                        && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
                     activity.setStartDate(startWeek.toLocalDate());
                 } else {
                     throw new WrongDateException("Start Week is not allowed to be in the past!");
@@ -223,9 +223,4 @@ public class PManagementSystem {
         }
     }
 
-
-    //TODO: This should probably not be here:
-    public List<Employee> getEmployees() {
-        return db.getEmployees();
-    }
 }

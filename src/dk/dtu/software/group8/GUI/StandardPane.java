@@ -1,16 +1,9 @@
 package dk.dtu.software.group8.GUI;
 
-import dk.dtu.software.group8.*;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import dk.dtu.software.group8.PManagementSystem;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;

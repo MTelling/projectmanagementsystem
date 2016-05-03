@@ -5,14 +5,8 @@ import dk.dtu.software.group8.PManagementSystem;
 import dk.dtu.software.group8.Project;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 /**
  * Created by Morten on 02/05/16.
@@ -79,7 +73,6 @@ public class ProjectPane extends StandardPane {
     }
 
     private void manageActivity(MouseEvent e) {
-        System.out.println("You clicked me!");
         if (e.getClickCount() == 2) {
             Activity activity = (Activity)activitiesListView.getSelectionModel().getSelectedItem();
             if (activity != null) {

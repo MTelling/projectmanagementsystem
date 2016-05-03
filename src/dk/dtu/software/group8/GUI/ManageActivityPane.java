@@ -1,9 +1,10 @@
 package dk.dtu.software.group8.GUI;
 
-import dk.dtu.software.group8.*;
+import dk.dtu.software.group8.Activity;
+import dk.dtu.software.group8.PManagementSystem;
+import dk.dtu.software.group8.ProjectActivity;
+import dk.dtu.software.group8.YearWeek;
 import javafx.scene.control.*;
-
-import java.time.Year;
 
 /**
  * Created by Morten on 02/05/16.

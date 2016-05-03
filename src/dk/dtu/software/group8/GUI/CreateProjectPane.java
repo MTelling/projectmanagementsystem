@@ -5,8 +5,8 @@ import dk.dtu.software.group8.Exceptions.WrongDateException;
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 
 /**
  * Created by Morten on 02/05/16.
