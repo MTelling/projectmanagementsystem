@@ -81,7 +81,7 @@ public class TestChangeActivityDates extends TestManageProject {
         expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
         //Sign in as employee who is not PM.
-        pms.signIn(db.getEmployees().get(2).getId());
+        pms.signIn(pms.getEmployees().get(2).getId());
 
         //Try to change the date anyway.
         YearWeek newStart = new YearWeek(2016, 37);

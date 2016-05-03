@@ -168,6 +168,22 @@ public class PManagementSystem {
         return false;
     }
 
+    public boolean addEmployeeToActivityAsConsultant(ProjectActivity activity, Employee employee) throws NoAccessException, InvalidEmployeeException {
+        if(!this.userLoggedIn()) {
+            throw new NoAccessException("User is not logged in.");
+        } else if(!activity.getEmployees().contains(this.currentEmployee)) {
+            throw new NoAccessException("Current user is not assigned to this activity.");
+        } else if (!this.db.getEmployees().contains(employee)) {
+            throw new InvalidEmployeeException("No employee with that name is in the system.");
+        } else {
+            return employee.assignConsultantToActivity(activity);
+        }
+    }
+
+    public List<Employee> getEmployees() {
+        return db.getEmployees();
+    }
+
     public LocalDate getDate() {
         return dateServer.getDate();
     }
