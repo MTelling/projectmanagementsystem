@@ -17,6 +17,7 @@ public class ProjectActivity extends  Activity {
     private List<Employee> assignedEmployees;
     private List<RegisteredWork> registeredWork = new ArrayList<>();
 
+
     public ProjectActivity(String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws IncorrectAttributeException {
         if(!activityType.matches("[a-zA-Z ]{3,}")) {
             throw new IncorrectAttributeException("The supplied activity type is not a correct activity type.");
