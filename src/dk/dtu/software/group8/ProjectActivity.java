@@ -15,6 +15,7 @@ public class ProjectActivity extends  Activity {
     private int approximatedHours;
 
     private List<Employee> assignedEmployees;
+    private List<Employee> assignedConsultants;
     private List<RegisteredWork> registeredWork = new ArrayList<>();
 
     public ProjectActivity(String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws IncorrectAttributeException {
@@ -35,6 +36,7 @@ public class ProjectActivity extends  Activity {
         this.approximatedHours = approximatedHours;
 
         assignedEmployees = new ArrayList<Employee>();
+        assignedConsultants = new ArrayList<Employee>();
     }
 
     public int getApproximatedHours() {
@@ -47,6 +49,15 @@ public class ProjectActivity extends  Activity {
             return true;
         }
         return false;
+    }
+
+    public boolean assignConsultantToActivity(Employee employee) throws InvalidEmployeeException {
+        if(this.getEmployees().contains(employee)) {
+            throw new InvalidEmployeeException("Employee already assigned to activity.");
+        } else {
+            assignedConsultants.add(employee);
+            return true;
+        }
     }
 
     public void registerWork(RegisteredWork registeredWork) throws TooManyHoursException, NegativeHoursException {
@@ -66,6 +77,7 @@ public class ProjectActivity extends  Activity {
     public List<Employee> getEmployees() {
         return this.assignedEmployees;
     }
+    public List<Employee> getConsultants() { return this.assignedConsultants; }
 
     public List<RegisteredWork> getRegisteredWork() { return this.registeredWork; }
 }

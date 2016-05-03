@@ -19,7 +19,6 @@ import dk.dtu.software.group8.Exceptions.WrongDateException;
 public class TestManageProject {
 
     PManagementSystem pms;
-    DatabaseManager db;
     Project project;
     Employee emp;
 
@@ -29,7 +28,6 @@ public class TestManageProject {
     @Before
     public void setup() throws WrongDateException, NoAccessException, AlreadyAssignedProjectManagerException {
         pms = new PManagementSystem();
-        db = new DatabaseManager();
 
         //Set current date to may 9th 2016.
         DateServer mockDateServer = mock(DateServer.class);
@@ -40,7 +38,7 @@ public class TestManageProject {
 
         //Login a user
 
-        emp = db.getEmployees().get(0);
+        emp = pms.getEmployees().get(0);
         pms.signIn(emp.getId());
         assertTrue(pms.userLoggedIn());
 

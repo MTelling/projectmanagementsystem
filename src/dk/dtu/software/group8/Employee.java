@@ -1,9 +1,6 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.NegativeHoursException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
-import dk.dtu.software.group8.Exceptions.TooManyHoursException;
+import dk.dtu.software.group8.Exceptions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,7 +15,8 @@ public class Employee {
     private String firstName;
     private String lastName;
 
-	private List<Activity> currentActivities;
+    private List<Activity> currentActivities;
+    private List<Activity> currentConsultants;
 	private List<RegisteredWork> registeredWork = new ArrayList<RegisteredWork>();
 	
 	public Employee(String id, String firstName, String lastName) {
@@ -26,6 +24,7 @@ public class Employee {
         this.firstName = firstName;
         this.lastName = lastName;
 		this.currentActivities = new LinkedList<>();
+        this.currentConsultants = new LinkedList<>();
 	}
 	
 	public void setId(String id) {
@@ -36,14 +35,23 @@ public class Employee {
 		return this.id;
 	}
 
-	public boolean assignToActivity(ProjectActivity projectActivity) throws TooManyActivitiesException {
-		if (currentActivities.size() < 20) {
-			currentActivities.add(projectActivity);
+    public boolean assignToActivity(ProjectActivity projectActivity) throws TooManyActivitiesException {
+        if (currentActivities.size() < 20) {
+            currentActivities.add(projectActivity);
             return true;
-		} else {
-			throw new TooManyActivitiesException("Employee is assigned to too many activities in given period.");
-		}
-	}
+        } else {
+            throw new TooManyActivitiesException("Employee is assigned to too many activities in given period.");
+        }
+    }
+
+    public boolean assignConsultantToActivity(ProjectActivity projectActivity) throws InvalidEmployeeException {
+        if (projectActivity.assignConsultantToActivity(this)) {
+            currentConsultants.add(projectActivity);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 	public void registerWorkHours(ProjectActivity activity, int minutes, LocalDate day) throws NoAccessException, TooManyHoursException, NegativeHoursException {
 		if(!currentActivities.contains(activity)) { // Test if employee is assigned to activity

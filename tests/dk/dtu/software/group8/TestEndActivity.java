@@ -22,7 +22,7 @@ public class TestEndActivity extends TestManageProject {
         expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
         //Sign in as employee who is not PM.
-        String empId = db.getEmployees().get(2).getId();
+        String empId = pms.getEmployees().get(2).getId();
         pms.signIn(empId);
         
         //Test Again. Now without project manager signed in.
