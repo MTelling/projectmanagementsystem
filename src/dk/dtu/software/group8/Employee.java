@@ -157,4 +157,12 @@ public class Employee {
     }
 
 	public List<RegisteredWork> getRegisteredWork() { return this.registeredWork; }
+
+	public List<Activity> getCurrentActivities() {
+        return currentActivities;
+    }
+
+	public String toString() {
+		return firstName + " " + lastName;
+	}
 }

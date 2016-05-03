@@ -18,8 +18,12 @@ public class ProjectActivity extends  Activity {
     private List<Employee> assignedConsultants;
     private List<RegisteredWork> registeredWork = new ArrayList<>();
 
+    private Project project;
 
     public ProjectActivity(String activityType, LocalDate startDate, LocalDate endDate, int approximatedHours) throws IncorrectAttributeException {
+
+   	    this.project = project;
+
         if(!activityType.matches("[a-zA-Z ]{3,}")) {
             throw new IncorrectAttributeException("The supplied activity type is not a correct activity type.");
         } else if (startDate.isBefore(LocalDate.now()) || endDate.isBefore(startDate)) {
@@ -81,4 +85,8 @@ public class ProjectActivity extends  Activity {
     public List<Employee> getConsultants() { return this.assignedConsultants; }
 
     public List<RegisteredWork> getRegisteredWork() { return this.registeredWork; }
+
+    public Project getProject() {
+        return project;
+    }
 }

@@ -1,6 +1,7 @@
 package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.PManagementSystem;
+import dk.dtu.software.group8.Project;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -8,50 +9,50 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Morten on 25/04/16.
  */
-public class ProjectsPane extends BorderPane {
+public class ProjectsPane extends StandardPane {
 
     private ProjectPane projectPane;
-    private PManagementSystem pms;
     private ListView projectListView;
 
-    public ProjectsPane(PrimaryStage primaryStage, ProjectPane projectPane) {
+    public ProjectsPane(ProjectPane projectPane, PManagementSystem pms) {
+        super(pms, false);
+
+        titlePane.setText("Projects");
 
         this.projectPane = projectPane;
 
-        this.getStyleClass().add("ProjectsPane");
-
-        StackPane titlePane = new TitlePane("Projects", TitleFontSize.LARGE);
-        ///////////////TEST//////////////////////////
-        List<Test> testList = new ArrayList<>();
-        for (int i = 1; i < 40; i++) {
-            testList.add(new Test("Test" + i, "22/4/16", "22/6/16", Integer.toString(i)));
-        }
-        ///////////////////////////////////////////
+        projectPane.setProjectsPane(this);
 
         projectListView = new ListView();
-        ObservableList<Test> obsProjects = FXCollections.observableList(testList);
+        ObservableList<Project> obsProjects = FXCollections.observableList(pms.getProjects());
         projectListView.setItems(obsProjects);
         projectListView.setOnMouseClicked(e -> openProject(e));
 
-        CreateProjectPane createProjectPane = new CreateProjectPane();
+        CreateProjectPane createProjectPane = new CreateProjectPane(pms, this);
 
-        this.setTop(titlePane);
-        this.setCenter(projectListView);
-        this.setRight(createProjectPane);
+
+        //Add all elements to the pane.
+        rightContainer.getChildren().add(createProjectPane);
+        addNewExpandingChildToCenterContainer(projectListView);
 
     }
 
+    public void refresh() {
+        projectListView.refresh();
+    }
 
     private void openProject(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            projectPane.showProject((Test)projectListView.getSelectionModel().getSelectedItem());
+            projectPane.setProject((Project)projectListView.getSelectionModel().getSelectedItem());
+            projectPane.show();
         }
     }
 
+    @Override
+    protected void close() {
+        this.toBack();
+    }
 }

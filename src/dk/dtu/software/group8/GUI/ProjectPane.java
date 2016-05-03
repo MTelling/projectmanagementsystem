@@ -1,95 +1,106 @@
 package dk.dtu.software.group8.GUI;
 
+import dk.dtu.software.group8.Activity;
 import dk.dtu.software.group8.PManagementSystem;
+import dk.dtu.software.group8.Project;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Morten on 02/05/16.
  */
-public class ProjectPane extends BorderPane {
+public class ProjectPane extends StandardPane {
 
-    private TitlePane titlePane;
-    private PManagementSystem pms;
+    private ActivityPane activityPane;
     private ListView activitiesListView;
     private ManageProjectPane manageProjectPane;
     private CreateActivityPane createActivityPane;
-    private Test test;
+    private Project project;
+
+    private ProjectsPane projectsPane;
+    private ObservableList<Activity> obsActivities;
 
 
-    public ProjectPane(PManagementSystem pms) {
-        this.pms = pms;
-        this.getStyleClass().add("ProjectPane");
+    public ProjectPane(ActivityPane activityPane, PManagementSystem pms) {
+        super(pms, true);
 
+        this.activityPane = activityPane;
 
-        //Create the exit button
-        StackPane exitBtnPane = new StackPane();
-        exitBtnPane.getStyleClass().add("ExitBtnPane");
-        Button exitBtn = new Button("Go Back");
-        exitBtnPane.getChildren().add(exitBtn);
-        //Connect exit button to controls
-        exitBtn.setOnMouseClicked(e -> close());
-
-        //Create Title bar
-        titlePane = new TitlePane("N/A", TitleFontSize.LARGE);
-
-        manageProjectPane = new ManageProjectPane();
-        createActivityPane = new CreateActivityPane();
-
-        VBox rightContainer = new VBox();
-        rightContainer.getChildren().addAll(manageProjectPane, createActivityPane);
-
-        this.setTop(titlePane);
-        this.setRight(rightContainer);
-        this.setBottom(exitBtnPane);
-
-    }
-
-    public void showProject(Test test) {
-
-        this.test = test;
-        this.toFront();
-
-        this.titlePane.setText(test.name);
-        this.manageProjectPane.setProject(test);
-
-        ///////////////TEST//////////////////////////
-        List<Test> testList = new ArrayList<>();
-        for (int i = 1; i < 40; i++) {
-            testList.add(new Test("Activity" + i, "22/4/16", "22/6/16", Integer.toString(i)));
-        }
-        ///////////////////////////////////////////
+        manageProjectPane = new ManageProjectPane(pms);
+        createActivityPane = new CreateActivityPane(pms, this);
 
         activitiesListView = new ListView();
-        ObservableList<Test> obsActivities = FXCollections.observableList(testList);
-        activitiesListView.setItems(obsActivities);
-
         activitiesListView.setOnMouseClicked(e -> manageActivity(e));
 
-        this.setCenter(activitiesListView);
+        rightContainer.getChildren().addAll(manageProjectPane, createActivityPane);
+
+        addTitleToCenterContainer("Activities");
+        addNewExpandingChildToCenterContainer(activitiesListView);
+
     }
 
-    private void close() {
+
+
+    public void setProject(Project project) {
+
+        this.project = project;
+
+        createActivityPane.setProject(project);
+
+        obsActivities = FXCollections.observableList(project.getActivities());
+        activitiesListView.setItems(obsActivities);
+
+    }
+
+    public void show() {
+        update();
+        this.toFront();
+    }
+
+
+    private void update() {
+        this.titlePane.setText("Project Id: " + project.getId());
+        this.manageProjectPane.setProject(project);
+
+        refresh();
+    }
+
+    protected void close() {
         this.toBack();
+        projectsPane.refresh();
     }
 
     private void manageActivity(MouseEvent e) {
+        System.out.println("You clicked me!");
         if (e.getClickCount() == 2) {
-            Test activity = (Test)activitiesListView.getSelectionModel().getSelectedItem();
-            Stage manageActivityPopup = new ManageActivityPopup(pms, activity);
-
-            manageActivityPopup.show();
+            Activity activity = (Activity)activitiesListView.getSelectionModel().getSelectedItem();
+            if (activity != null) {
+                activityPane.setProjectPane(this);
+                activityPane.setProject(project);
+                activityPane.setActivity(activity);
+                activityPane.toFront();
+            }
         }
     }
 
+
+    public void setProjectsPane(ProjectsPane projectsPane) {
+        this.projectsPane = projectsPane;
+    }
+
+    public void refresh() {
+        //TODO: Do this smarter.
+        obsActivities = FXCollections.observableList(project.getActivities());
+        activitiesListView.setItems(obsActivities);
+
+        activitiesListView.refresh();
+    }
 }

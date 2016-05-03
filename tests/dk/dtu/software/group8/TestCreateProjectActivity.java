@@ -5,10 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.ChronoField;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +27,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 		String activityType = "Implementation";
 		int approximatedHours = 42;
 
-		ProjectActivity projectActivity = new ProjectActivity(activityType, week37, week42, approximatedHours);
+		ProjectActivity projectActivity = new ProjectActivity(activityType, week37, week42, approximatedHours, project);
 
 		assertThat(projectActivity, instanceOf(Activity.class));
 		assertThat(projectActivity, instanceOf(ProjectActivity.class));
@@ -50,7 +46,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 		String activityType = "1234";
 		int approximatedHours = 42;
 
-		Activity projectActivity = new ProjectActivity(activityType, week37, week42, approximatedHours);
+		Activity projectActivity = new ProjectActivity(activityType, week37, week42, approximatedHours, project);
 		assertThat(projectActivity, is(nullValue()));
 	}
 
@@ -62,7 +58,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 		String activityType = "Implementation";
 		int approximatedHours = 42;
 
-		Activity projectActivity = new ProjectActivity(activityType, week37, week36, approximatedHours);
+		Activity projectActivity = new ProjectActivity(activityType, week37, week36, approximatedHours, project);
 		assertThat(projectActivity, is(nullValue()));
 	}
 
@@ -74,7 +70,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 		String activityType = "Implementation";
 		int approximatedHours = -42;
 
-		Activity projectActivity = new ProjectActivity(activityType, week37, week42, approximatedHours);
+		Activity projectActivity = new ProjectActivity(activityType, week37, week42, approximatedHours, project);
 		assertThat(projectActivity, is(nullValue()));
 	}
 

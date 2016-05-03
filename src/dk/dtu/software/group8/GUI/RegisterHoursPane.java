@@ -1,5 +1,6 @@
 package dk.dtu.software.group8.GUI;
 
+import dk.dtu.software.group8.Activity;
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,20 +21,19 @@ import java.util.List;
 /**
  * Created by Morten on 25/04/16.
  */
-public class RegisterHoursPane extends BorderPane {
+public class RegisterHoursPane extends StandardPane {
 
 
     private PManagementSystem pms;
 
     public RegisterHoursPane(PManagementSystem pms) {
-        this.getStyleClass().add("RegisterHoursPane");
-        this.pms = pms;
+        super(pms, false);
 
-        TitlePane titlePane = new TitlePane("Register Hours", TitleFontSize.LARGE);
+        this.getStyleClass().add("RegisterHoursPane");
+
+        titlePane.setText("Register Hours");
 
         //Create the center items. First two containers.
-        VBox centerContainer = new VBox();
-        centerContainer.getStyleClass().add("Container");
         HBox datePickContainer = new HBox();
         datePickContainer.getStyleClass().add("Container");
         datePickContainer.setAlignment(Pos.CENTER_LEFT);
@@ -46,31 +46,26 @@ public class RegisterHoursPane extends BorderPane {
 
         //Create the listview and make sure it fills the height.
         ListView activitiesList = new ListView();
-        VBox.setVgrow(activitiesList, Priority.ALWAYS);
-
-        //Add all children to the center container
-        centerContainer.getChildren().addAll(datePickContainer, activitiesList);
 
         //Create the right view for adding hours and viewing total hours.
-        ControlHoursPane controlHoursPane = new ControlHoursPane();
+        ControlHoursPane controlHoursPane = new ControlHoursPane(pms);
 
-        //////////////////////////TEST //////////////////////////
-
-        List<Test> testList = new ArrayList<Test>();
-        for (int i = 0; i < 20; i++) {
-            testList.add(new Test("Activity" + i, "22/4/16", "22/5/16", "test"));
-        }
-
-        ObservableList<Test> obsActivities = FXCollections.observableList(testList);
+        //TODO: This should get the activity for the given day.
+        ObservableList<Activity> obsActivities = FXCollections.observableList(pms.getCurrentEmployee().getCurrentActivities());
 
         activitiesList.setItems(obsActivities);
 
-        //////////////////////////////////////////////////////////
+        //Add all children to the center and right container.
+        centerContainer.getChildren().add(datePickContainer);
+        addNewExpandingChildToCenterContainer(activitiesList);
+        rightContainer.getChildren().add(controlHoursPane);
 
 
-        this.setCenter(centerContainer);
-        this.setTop(titlePane);
-        this.setRight(controlHoursPane);
 
+    }
+
+    @Override
+    protected void close() {
+        toBack();
     }
 }

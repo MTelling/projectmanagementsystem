@@ -73,4 +73,16 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         testA();
     }
 
+
+    //TODO: Make this test pass.
+//    @Test //Add the same employee twice
+//    public void testE() throws NoAccessException, TooManyActivitiesException {
+//        expectedEx.expect(EmployeeAlreadyAddedException.class);
+//        expectedEx.expectMessage("That employee has already been assigned to the activity.");
+//
+//        //Running test A twice should do this.
+//        testA();
+//        testA();
+//    }
+
 }

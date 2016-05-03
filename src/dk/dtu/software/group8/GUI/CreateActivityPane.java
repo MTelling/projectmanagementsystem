@@ -1,9 +1,11 @@
 package dk.dtu.software.group8.GUI;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import dk.dtu.software.group8.PManagementSystem;
+import dk.dtu.software.group8.Project;
+import dk.dtu.software.group8.YearWeek;
+import javafx.scene.control.*;
+
+import java.time.Year;
 
 
 /**
@@ -11,8 +13,16 @@ import javafx.scene.control.TextField;
  */
 public class CreateActivityPane extends ControlPane {
 
-    public CreateActivityPane() {
-        super("Create Activity");
+    private TextField expectedHoursField;
+    private TextField typeField;
+    private DatePicker startDatePicker;
+    private DatePicker endDatePicker;
+    private ProjectPane projectPane;
+    private Project project;
+
+    public CreateActivityPane(PManagementSystem pms, ProjectPane projectPane) {
+        super(pms, "Create Activity");
+        this.projectPane = projectPane;
 
         //Create the labels.
         Label typeLbl = new Label("Activity Type:");
@@ -21,11 +31,11 @@ public class CreateActivityPane extends ControlPane {
         Label endDateLbl = new Label("End Date:");
 
         //Create text fields and date pickers.
-        TextField typeField = new TextField();
-        TextField expectedHoursField = new TextField();
+        typeField = new TextField();
+        expectedHoursField = new TextField();
 
-        DatePicker startDatePicker = new DatePicker();
-        DatePicker endDatePicker = new DatePicker();
+        startDatePicker = new DatePicker();
+        endDatePicker = new DatePicker();
 
 
         //Add everything to the grid
@@ -40,6 +50,32 @@ public class CreateActivityPane extends ControlPane {
 
 
         Button createBtn = new Button("Create Activity");
+
+
+        //Connect button to control
+        createBtn.setOnAction(e -> createActivity());
+
         this.addButton(createBtn);
+    }
+
+    private void createActivity() {
+        try {
+            pms.createActivityForProject(project,
+                    typeField.getText(),
+                    YearWeek.fromDate(startDatePicker.getValue()),
+                    YearWeek.fromDate(endDatePicker.getValue()),
+                    Integer.parseInt(expectedHoursField.getText()));
+
+
+            projectPane.refresh();
+
+        } catch (Exception e) {
+            Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
+            error.showAndWait();
+        }
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

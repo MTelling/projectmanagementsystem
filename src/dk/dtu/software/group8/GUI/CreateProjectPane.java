@@ -1,6 +1,9 @@
 package dk.dtu.software.group8.GUI;
 
 
+import dk.dtu.software.group8.Exceptions.WrongDateException;
+import dk.dtu.software.group8.PManagementSystem;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.DatePicker;
@@ -10,8 +13,15 @@ import javafx.scene.control.DatePicker;
  */
 public class CreateProjectPane extends ControlPane {
 
-    public CreateProjectPane() {
-        super("Create Project");
+
+    private DatePicker startDatePicker;
+    private DatePicker endDatePicker;
+    private ProjectsPane projectsPane;
+
+    public CreateProjectPane(PManagementSystem pms, ProjectsPane projectsPane) {
+        super(pms, "Create Project");
+        this.projectsPane = projectsPane;
+
         //Create the labels.
         Label nameLbl = new Label("Name:");
         Label startDateLbl = new Label("Start Date:");
@@ -19,8 +29,8 @@ public class CreateProjectPane extends ControlPane {
         Label projectManagerLbl = new Label("Project Manager:");
 
         //Create text fields and date pickers.
-        DatePicker startDatePicker = new DatePicker();
-        DatePicker endDatePicker = new DatePicker();
+        startDatePicker = new DatePicker();
+        endDatePicker = new DatePicker();
 
         //Create the labels.
         Label startDateLabel = new Label("Start Date:");
@@ -36,5 +46,26 @@ public class CreateProjectPane extends ControlPane {
         //Create the button to create
         Button createProjectBtn = new Button("Create Project");
         this.addButton(createProjectBtn);
+
+        //Connect button to controls
+        createProjectBtn.setOnAction(e -> createProject());
+    }
+
+    private void createProject() {
+        try {
+
+            pms.createProject(startDatePicker.getValue(), endDatePicker.getValue());
+
+            Alert success = new SuccessPrompt();
+            success.showAndWait();
+
+            projectsPane.refresh();
+
+        } catch (WrongDateException e) {
+
+            Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
+            error.showAndWait();
+
+        }
     }
 }

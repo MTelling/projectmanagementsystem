@@ -14,6 +14,7 @@ public class PrimaryStage extends Stage{
 
     private final int WIDTH = 1200;
     private final int HEIGHT = 800;
+    private ActivityPane activityPane;
     private PManagementSystem pms;
     private StackPane mainPane;
 
@@ -37,12 +38,15 @@ public class PrimaryStage extends Stage{
         mainPane = new StackPane();
 
         overviewPane = new OverviewPane(pms);
-        projectPane = new ProjectPane(pms);
-        projectsPane = new ProjectsPane(this, projectPane);
+        activityPane = new ActivityPane(pms);
+        projectPane = new ProjectPane(activityPane, pms);
+        projectsPane = new ProjectsPane(projectPane, pms);
+
         registerHoursPane = new RegisterHoursPane(pms);
 
 
-        mainPane.getChildren().addAll(projectPane,
+        mainPane.getChildren().addAll(activityPane,
+                projectPane,
                 registerHoursPane,
                 projectsPane,
                 overviewPane);
@@ -72,6 +76,7 @@ public class PrimaryStage extends Stage{
         } else if (sceneId.equals("Register Hours")){
             registerHoursPane.toFront();
         } else if (sceneId.equals("Overview")) {
+            overviewPane.refresh();
             overviewPane.toFront();
         }
     }
