@@ -7,6 +7,8 @@ import dk.dtu.software.group8.Exceptions.WrongDateException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Employee {
 	
@@ -49,6 +51,24 @@ public class Employee {
         this.personalActivities.add(pa);
         return pa;
     }
+
+	public boolean isAvailable(LocalDate startDate, LocalDate endDate, ProjectActivity activity) {
+		if(this.currentActivities.contains(activity))
+            return false;
+
+        Optional<Activity> personalQuery = this.personalActivities.stream()
+                .filter(pa -> pa.isTimePeriodInActivityDuration(startDate, endDate))
+                .findAny();
+
+        if(personalQuery.isPresent()) {
+            return false;
+        } else {
+            List<Activity> projectQuery = this.currentActivities.stream()
+                    .filter(pa -> pa.isTimePeriodInActivityDuration(startDate, endDate))
+                    .collect(Collectors.toList());
+            return projectQuery.size() < 20;
+        }
+	}
 
 	public List<Activity> getPersonalActivities() {
 		return this.personalActivities;

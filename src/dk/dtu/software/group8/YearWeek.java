@@ -2,6 +2,7 @@ package dk.dtu.software.group8;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
@@ -36,7 +37,7 @@ public class YearWeek {
 
 
     public LocalDate toLocalDate() {
-        return LocalDate.of(this.getYear(), 1, 1).with(ChronoField.ALIGNED_WEEK_OF_YEAR, this.week + 1).with(DayOfWeek.MONDAY);
+        return LocalDate.parse("" + this.getYear() + "-W" + this.getWeek() + "-1", DateTimeFormatter.ISO_WEEK_DATE);
     }
 
     public static YearWeek fromDate(LocalDate date) {

@@ -4,6 +4,7 @@ package dk.dtu.software.group8;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -97,6 +98,18 @@ public class PManagementSystem {
     		return null;
     	}
     }
+
+    public List<Employee> findAvailableEmployees(LocalDate startDate, LocalDate endDate, ProjectActivity activity) throws WrongDateException {
+        if(startDate.isBefore(dateServer.getDate()) || endDate.isBefore(startDate)) {
+            throw new WrongDateException("Time period is invalid!");
+        }
+
+        List<Employee> availableEmployees = new ArrayList<>();
+            for(Employee emp : this.getEmployees()) {
+                if(emp.isAvailable(startDate, endDate, activity)) availableEmployees.add(emp);
+            }
+        return availableEmployees;
+    }
     
     public boolean endProject(Project project) throws NoAccessException {
     	if(this.manageProject(project)) {
@@ -176,6 +189,10 @@ public class PManagementSystem {
         return dateServer.getDate();
     }
 
+    public List<Employee> getEmployees() {
+        return this.db.getEmployees();
+    }
+
     public void setDateServer(DateServer dateServer) {
         this.dateServer = dateServer;
     }
@@ -187,4 +204,5 @@ public class PManagementSystem {
     public List<Project> getProjects() {
         return projects;
     }
+
 }
