@@ -1,11 +1,6 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.WrongDateException;
-import org.mockito.cglib.core.Local;
-
 import java.time.LocalDate;
-import java.time.temporal.WeekFields;
-import java.util.Locale;
 
 public abstract class Activity {
 

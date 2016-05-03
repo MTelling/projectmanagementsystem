@@ -1,9 +1,6 @@
 package dk.dtu.software.group8;
 
-
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -185,13 +182,6 @@ public class PManagementSystem {
 
     }
 
-    public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee) throws NoAccessException, TooManyActivitiesException {
-        if(this.manageProject(project)) {
-            return project.addEmployeeToActivity(activity, employee);
-        }
-        return false;
-    }
-
     public boolean addEmployeeToActivityAsConsultant(ProjectActivity activity, Employee employee) throws NoAccessException, InvalidEmployeeException {
         if(!this.userLoggedIn()) {
             throw new NoAccessException("User is not logged in.");
@@ -202,10 +192,6 @@ public class PManagementSystem {
         } else {
             return employee.assignConsultantToActivity(activity);
         }
-    }
-
-    public List<Employee> getEmployees() {
-        return db.getEmployees();
     }
 
     public LocalDate getDate() {

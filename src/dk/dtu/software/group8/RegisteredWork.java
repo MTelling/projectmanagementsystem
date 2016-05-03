@@ -2,7 +2,6 @@ package dk.dtu.software.group8;
 
 import dk.dtu.software.group8.Exceptions.NegativeHoursException;
 import dk.dtu.software.group8.Exceptions.TooManyHoursException;
-import org.mockito.cglib.core.Local;
 
 import java.time.LocalDate;
 

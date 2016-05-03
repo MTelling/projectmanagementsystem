@@ -67,7 +67,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
         //Sign in as employee who is not PM.
-        pms.signIn(db.getEmployees().get(2).getId());
+        pms.signIn(pms.getEmployees().get(2).getId());
 
         //Run test A again.
         testA();
