@@ -109,4 +109,8 @@ public class Employee {
 	public List<Activity> getCurrentActivities() {
         return currentActivities;
     }
+
+	public String toString() {
+		return firstName + " " + lastName;
+	}
 }

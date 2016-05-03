@@ -4,15 +4,10 @@ import dk.dtu.software.group8.PManagementSystem;
 import dk.dtu.software.group8.Project;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.util.Callback;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Morten on 25/04/16.
@@ -53,7 +48,8 @@ public class ProjectsPane extends BorderPane {
 
     private void openProject(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            projectPane.showProject((Project)projectListView.getSelectionModel().getSelectedItem());
+            projectPane.setProject((Project)projectListView.getSelectionModel().getSelectedItem());
+            projectPane.show();
         }
     }
 

@@ -13,14 +13,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Morten on 02/05/16.
  */
 public class ProjectPane extends BorderPane {
 
+    private ActivityPane activityPane;
     private TitlePane titlePane;
     private PManagementSystem pms;
     private ListView activitiesListView;
@@ -29,10 +27,12 @@ public class ProjectPane extends BorderPane {
     private Project project;
 
     private ProjectsPane projectsPane;
+    private ObservableList<Activity> obsActivities;
 
 
-    public ProjectPane(PManagementSystem pms) {
+    public ProjectPane(ActivityPane activityPane, PManagementSystem pms) {
         this.pms = pms;
+        this.activityPane = activityPane;
         this.getStyleClass().add("ProjectPane");
 
         //Create the exit button
@@ -49,6 +49,9 @@ public class ProjectPane extends BorderPane {
         manageProjectPane = new ManageProjectPane(pms);
         createActivityPane = new CreateActivityPane(pms, this);
 
+        activitiesListView = new ListView();
+        activitiesListView.setOnMouseClicked(e -> manageActivity(e));
+
         VBox rightContainer = new VBox();
         rightContainer.getChildren().addAll(manageProjectPane, createActivityPane);
 
@@ -56,24 +59,23 @@ public class ProjectPane extends BorderPane {
         this.setRight(rightContainer);
         this.setBottom(exitBtnPane);
 
+        this.setCenter(activitiesListView);
+
     }
 
-    public void showProject(Project project) {
+    public void setProject(Project project) {
 
         this.project = project;
 
         createActivityPane.setProject(project);
 
-        activitiesListView = new ListView();
-        ObservableList<Activity> obsActivities = FXCollections.observableList(project.getActivities());
+        obsActivities = FXCollections.observableList(project.getActivities());
         activitiesListView.setItems(obsActivities);
 
-        activitiesListView.setOnMouseClicked(e -> manageActivity(e));
+    }
 
+    public void show() {
         update();
-
-        this.setCenter(activitiesListView);
-
         this.toFront();
     }
 
@@ -82,7 +84,7 @@ public class ProjectPane extends BorderPane {
         this.titlePane.setText("Project Id: " + project.getId());
         this.manageProjectPane.setProject(project);
 
-        activitiesListView.refresh();
+        refresh();
     }
 
     private void close() {
@@ -91,11 +93,15 @@ public class ProjectPane extends BorderPane {
     }
 
     private void manageActivity(MouseEvent e) {
+        System.out.println("You clicked me!");
         if (e.getClickCount() == 2) {
             Activity activity = (Activity)activitiesListView.getSelectionModel().getSelectedItem();
-            Stage manageActivityPopup = new ManageActivityPopup(pms, activity);
-
-            manageActivityPopup.show();
+            if (activity != null) {
+                activityPane.setProjectPane(this);
+                activityPane.setProject(project);
+                activityPane.setActivity(activity);
+                activityPane.toFront();
+            }
         }
     }
 
@@ -105,6 +111,10 @@ public class ProjectPane extends BorderPane {
     }
 
     public void refresh() {
+        //TODO: Do this smarter.
+        obsActivities = FXCollections.observableList(project.getActivities());
+        activitiesListView.setItems(obsActivities);
+
         activitiesListView.refresh();
     }
 }

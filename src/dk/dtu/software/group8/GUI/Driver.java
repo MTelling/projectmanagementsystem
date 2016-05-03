@@ -40,6 +40,7 @@ public class Driver extends Application {
     public void startPrimaryStage() {
 
         demo();
+
         System.out.println(pms.getProjects());
         primaryStage = new PrimaryStage(pms);
 
@@ -61,7 +62,7 @@ public class Driver extends Application {
                             YearWeek.fromDate(LocalDate.now().plusDays(40)),
                             20);
 
-                    pms.getCurrentEmployee().assignToActivity(activity);
+                    pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
 
                 } catch (Exception e) {
                     Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
@@ -109,7 +110,8 @@ public class Driver extends Application {
                         YearWeek.fromDate(LocalDate.now().plusDays(40)),
                         20);
 
-                pms.getCurrentEmployee().assignToActivity(activity);
+                pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
+
 
             } catch (Exception e) {
                 Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());

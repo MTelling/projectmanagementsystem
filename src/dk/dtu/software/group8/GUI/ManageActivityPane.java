@@ -72,13 +72,19 @@ public class ManageActivityPane extends ControlPane {
                         YearWeek.fromDate(endDatePicker.getValue()));
 
 
+
             } catch (Exception e) {
                 Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
                 error.showAndWait();
             }
 
             //TODO: Set expected hours.
+            //TODO: Should projectpane be refreshed?
+            //projectPane.refresh();
+
         }
+
+
     }
 
     private void update() {

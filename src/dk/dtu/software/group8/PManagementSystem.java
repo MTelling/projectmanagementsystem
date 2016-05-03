@@ -192,4 +192,10 @@ public class PManagementSystem {
             this.getCurrentEmployee().registerWorkHours(activity, minutes, day);
         }
     }
+
+
+    //TODO: This should probably not be here:
+    public List<Employee> getEmployees() {
+        return db.getEmployees();
+    }
 }

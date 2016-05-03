@@ -33,4 +33,8 @@ public abstract class Activity {
 
     public YearWeek getEndWeek() { return endTime; }
 
+    public String toString() {
+        return activityType + " (" + getStartWeek() + " - " + getEndWeek() + ")";
+    }
+
 }

@@ -111,6 +111,7 @@ GENERAL
 .OverviewPane,
 .ProjectsPane,
 .ProjectPane,
+.ActivityPane,
 .TitlePane,
 .list-view,
 .RegisterHoursPane {
@@ -121,7 +122,8 @@ GENERAL
 .OverviewPane,
 .ProjectsPane,
 .RegisterHoursPane,
-.ProjectPane {
+.ProjectPane,
+.ActivityPane {
     -fx-background-color: #f4f4f4;
     -fx-padding: 5;
 }
@@ -180,4 +182,12 @@ Register Hours Pane
 
 .Container .label {
     -fx-font-size: 18;
+}
+
+/* ------------------------------------------------------------------------------------
+Activity Pane
+--------------------------------------------------------------------------------------*/
+
+.ActivityRightContainer {
+    -fx-spacing: 10;
 }
