@@ -1,6 +1,7 @@
 package dk.dtu.software.group8;
 
 import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
+import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
@@ -26,7 +27,7 @@ public class TestManageProject {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Before
-    public void setup() throws WrongDateException, NoAccessException, AlreadyAssignedProjectManagerException {
+    public void setup() throws WrongDateException, NoAccessException, AlreadyAssignedProjectManagerException, IncorrectAttributeException {
         pms = new PManagementSystem();
 
         //Set current date to may 9th 2016.
