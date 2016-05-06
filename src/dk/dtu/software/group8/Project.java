@@ -2,6 +2,7 @@ package dk.dtu.software.group8;
 
 
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+import dk.dtu.software.group8.Exceptions.InvalidActivityException;
 import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 
@@ -96,4 +97,10 @@ public class Project {
                 + ")";
     }
 
+    public void removeActivity(ProjectActivity projectActivity) throws InvalidActivityException {
+        if(!this.getActivities().contains(projectActivity))
+            throw new InvalidActivityException("The activity does not belong to the project!");
+        else
+            this.getActivities().remove(projectActivity);
+    }
 }

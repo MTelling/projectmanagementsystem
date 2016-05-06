@@ -1,6 +1,7 @@
 package dk.dtu.software.group8;
 
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+import dk.dtu.software.group8.Exceptions.NegativeHoursException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
@@ -15,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class TestChangeActivityDates extends TestManageProject {
 
-    Activity activity;
+    ProjectActivity activity;
 
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException{
@@ -133,6 +134,18 @@ public class TestChangeActivityDates extends TestManageProject {
 
     }
 
+    @Test
+    public void testChangeExpectedHours() throws Exception {
+        pms.changeActivityApproximatedHours(project, activity, 84);
+        assertThat(activity.getApproximatedHours(), is(84));
+    }
 
+    @Test
+    public void testChangeApproximatedHoursNegative() throws Exception {
+        expectedEx.expect(NegativeHoursException.class);
+        expectedEx.expectMessage("Approximated hours can not be negative!");
 
+        pms.changeActivityApproximatedHours(project, activity, -42);
+        assertThat(activity.getApproximatedHours(), is(42));
+    }
 }

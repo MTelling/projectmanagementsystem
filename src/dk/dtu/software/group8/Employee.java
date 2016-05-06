@@ -17,7 +17,7 @@ public class Employee {
 
     private List<Activity> currentActivities;
     private List<Activity> currentConsultants;
-	private List<RegisteredWork> registeredWork = new ArrayList<RegisteredWork>();
+	private List<RegisteredWork> registeredWork = new ArrayList<>();
 	private List<Activity> personalActivities;
 
 	public Employee(String id, String firstName, String lastName) {
@@ -161,4 +161,15 @@ public class Employee {
 	public String toString() {
 		return firstName + " " + lastName;
 	}
+
+	public List<Activity> getActivitiesOnDate(LocalDate date) {
+		return this.getCurrentActivities().stream().filter(pa -> pa.isTimePeriodInActivityDuration(date, date)).collect(Collectors.toList());
+	}
+
+    public void removePersonalActivity(PersonalActivity personalActivity) throws InvalidActivityException {
+        if(!this.getPersonalActivities().contains(personalActivity))
+            throw new InvalidActivityException("The activity does not belong to you!");
+        else
+            this.getPersonalActivities().remove(personalActivity);
+    }
 }

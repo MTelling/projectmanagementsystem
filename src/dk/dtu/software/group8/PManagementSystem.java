@@ -52,11 +52,7 @@ public class PManagementSystem {
     }
 
     public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee) throws NoAccessException, TooManyActivitiesException {
-        if(this.manageProject(project)) {
-            return project.addEmployeeToActivity(activity, employee);
-        } else {
-            return false;
-        }
+        return this.manageProject(project) && project.addEmployeeToActivity(activity, employee);
     }
 
     public boolean changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
@@ -224,4 +220,24 @@ public class PManagementSystem {
         }
     }
 
+    public List<Activity> getEmployeeActivitiesOnDate(Employee emp, LocalDate date) {
+        if(emp != null && date != null) {
+            return emp.getActivitiesOnDate(date);
+        }
+        return null;
+    }
+
+    public void changeActivityApproximatedHours(Project project, ProjectActivity activity, int hours) throws NoAccessException, NegativeHoursException {
+        if(this.manageProject(project))
+            activity.changeApproximatedHours(hours);
+    }
+
+    public void removeActivityFromProject(Project project, ProjectActivity projectActivity) throws NoAccessException, InvalidActivityException {
+        if(this.manageProject(project))
+            project.removeActivity(projectActivity);
+    }
+
+    public void removePersonalActivity(PersonalActivity personalActivity) throws InvalidActivityException {
+        this.getCurrentEmployee().removePersonalActivity(personalActivity);
+    }
 }

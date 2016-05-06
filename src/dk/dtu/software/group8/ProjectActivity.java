@@ -102,4 +102,9 @@ public class ProjectActivity extends  Activity {
     public int getEndYear() {
         return YearWeek.fromDate(this.getEndDate()).getYear();
     }
+
+    public void changeApproximatedHours(int hours) throws NegativeHoursException {
+        if(hours < 0) throw new NegativeHoursException("Approximated hours can not be negative!");
+        else this.approximatedHours = hours;
+    }
 }
