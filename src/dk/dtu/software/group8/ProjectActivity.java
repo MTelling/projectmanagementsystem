@@ -86,4 +86,9 @@ public class ProjectActivity extends  Activity {
     public Project getProject() {
         return project;
     }
+
+    public void changeApproximatedHours(int hours) throws NegativeHoursException {
+        if(hours < 0) throw new NegativeHoursException("Approximated hours can not be negative!");
+        else this.approximatedHours = hours;
+    }
 }

@@ -226,4 +226,9 @@ public class PManagementSystem {
         }
         return null;
     }
+
+    public void changeActivityApproximatedHours(Project project, ProjectActivity activity, int hours) throws NoAccessException, NegativeHoursException {
+        if(this.manageProject(project))
+            activity.changeApproximatedHours(hours);
+    }
 }
