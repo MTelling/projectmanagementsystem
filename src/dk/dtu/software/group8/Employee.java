@@ -165,4 +165,11 @@ public class Employee {
 	public List<Activity> getActivitiesOnDate(LocalDate date) {
 		return this.getCurrentActivities().stream().filter(pa -> pa.isTimePeriodInActivityDuration(date, date)).collect(Collectors.toList());
 	}
+
+    public void removePersonalActivity(PersonalActivity personalActivity) throws InvalidActivityException {
+        if(!this.getPersonalActivities().contains(personalActivity))
+            throw new InvalidActivityException("The activity does not belong to you!");
+        else
+            this.getPersonalActivities().remove(personalActivity);
+    }
 }

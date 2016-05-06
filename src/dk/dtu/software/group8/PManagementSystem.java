@@ -231,4 +231,13 @@ public class PManagementSystem {
         if(this.manageProject(project))
             activity.changeApproximatedHours(hours);
     }
+
+    public void removeActivityFromProject(Project project, ProjectActivity projectActivity) throws NoAccessException, InvalidActivityException {
+        if(this.manageProject(project))
+            project.removeActivity(projectActivity);
+    }
+
+    public void removePersonalActivity(PersonalActivity personalActivity) throws InvalidActivityException {
+        this.getCurrentEmployee().removePersonalActivity(personalActivity);
+    }
 }
