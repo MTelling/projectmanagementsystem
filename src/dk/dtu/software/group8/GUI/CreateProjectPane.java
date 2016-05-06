@@ -30,7 +30,9 @@ public class CreateProjectPane extends ControlPane {
 
         //Create text fields and date pickers.
         startDatePicker = new DatePicker();
+        startDatePicker.setId("createProjectStartDatePicker");
         endDatePicker = new DatePicker();
+        endDatePicker.setId("createProjectEndDatePicker");
 
         //Create the labels.
         Label startDateLabel = new Label("Start Date:");
@@ -45,6 +47,7 @@ public class CreateProjectPane extends ControlPane {
 
         //Create the button to create
         Button createProjectBtn = new Button("Create Project");
+        createProjectBtn.setId("createProjectBtn");
         this.addButton(createProjectBtn);
 
         //Connect button to controls

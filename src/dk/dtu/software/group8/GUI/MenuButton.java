@@ -23,11 +23,16 @@ public class MenuButton extends VBox {
 
         this.getStyleClass().add("MenuButton");
         this.setAlignment(Pos.CENTER);
-        Image img = new Image(iconPath, BUTTON_SIZE, BUTTON_SIZE, true, true);
-        ImageView icon = new ImageView(img);
+        try { //TODO: this is only done in try/catch because of the possibility of exception.
+            Image img = new Image(iconPath, BUTTON_SIZE, BUTTON_SIZE, true, true);
+            ImageView icon = new ImageView(img);
+            this.getChildren().add(icon);
+        } catch (Exception e) {
+        }
+
         Label label = new Label(name);
 
-        this.getChildren().addAll(icon, label);
+        this.getChildren().add(label);
 
         this.addHoverEffect();
 

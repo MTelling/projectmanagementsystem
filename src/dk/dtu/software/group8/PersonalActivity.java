@@ -20,4 +20,8 @@ public class PersonalActivity extends Activity {
         this.startTime = startDate;
         this.endTime = endDate;
     }
+
+
+
+
 }

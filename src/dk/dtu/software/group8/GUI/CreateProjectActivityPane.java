@@ -1,32 +1,31 @@
 package dk.dtu.software.group8.GUI;
 
-import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
 import dk.dtu.software.group8.PManagementSystem;
-import dk.dtu.software.group8.ProjectActivity;
+import dk.dtu.software.group8.Project;
 import dk.dtu.software.group8.YearWeek;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+
 /**
  * Created by Morten on 02/05/16.
  */
-public class ManageActivityPane extends ControlPane {
-
+public class CreateProjectActivityPane extends ControlPane {
 
     private final TextField startWeekField;
     private final TextField startYearField;
     private final TextField endWeekField;
     private final TextField endYearField;
-    private TextField expectedHoursField;
-    private ProjectActivity activity;
+    private final TextField expectedHoursField;
+    private final TextField typeField;
+    private ProjectPane projectPane;
+    private Project project;
 
-    public ManageActivityPane(PManagementSystem pms, ProjectActivity activity) {
-        super(pms, "Manage Activity");
-        this.activity = activity;
+    public CreateProjectActivityPane(PManagementSystem pms, ProjectPane projectPane) {
+        super(pms, "Create Activity");
+        this.projectPane = projectPane;
 
         //Create the labels.
         Label typeLbl = new Label("Activity Type:");
@@ -36,15 +35,14 @@ public class ManageActivityPane extends ControlPane {
         Label endWeekLbl = new Label("End Week:");
         Label endYearLbl = new Label("End Year:");
 
-        //Create text fields and date pickers.
-        Label typeField = new Label(activity.getActivityType());
 
+        typeField = new TextField();
         startWeekField = new TextField();
         startYearField = new TextField();
         endWeekField = new TextField();
         endYearField = new TextField();
-        expectedHoursField = new TextField();
 
+        expectedHoursField = new TextField();
 
 
         //Add everything to the grid.
@@ -63,20 +61,16 @@ public class ManageActivityPane extends ControlPane {
 
 
 
-        Button endBtn = new Button("End Activity");
-        Button saveBtn = new Button("Save Activity");
+        Button createBtn = new Button("Create Activity");
 
-        //Connect controls to buttons
-        saveBtn.setOnAction(e -> saveActivity());
 
-        this.addButton(endBtn);
-        this.addButton(saveBtn);
+        //Connect button to control
+        createBtn.setOnAction(e -> createActivity());
 
-        this.update();
+        this.addButton(createBtn);
     }
 
-    private void saveActivity() {
-
+    private void createActivity() {
         try {
             YearWeek startWeek = new YearWeek(Integer.parseInt(startYearField.getText()),
                     Integer.parseInt(startWeekField.getText()));
@@ -84,36 +78,22 @@ public class ManageActivityPane extends ControlPane {
             YearWeek endWeek = new YearWeek(Integer.parseInt(endYearField.getText()),
                     Integer.parseInt(endWeekField.getText()));
 
-            pms.manageActivityDates(activity.getProject(),
-                    activity,
+            pms.createActivityForProject(project,
+                    typeField.getText(),
                     startWeek,
-                    endWeek);
+                    endWeek,
+                    Integer.parseInt(expectedHoursField.getText()));
 
 
-        } catch (IncorrectAttributeException | NoAccessException | WrongDateException e) {
+            projectPane.refresh();
+
+        } catch (Exception e) {
             Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
             error.showAndWait();
-        } catch (Exception e) {
-            Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION,
-                    "You can only type weeks and years as numbers!");
-            error.showAndWait();
         }
-
-        //TODO: Set expected hours.
-        //TODO: Should projectpane be refreshed?
-        //projectPane.refresh();
-
-
     }
 
-    private void update() {
-        expectedHoursField.setText(Integer.toString(activity.getApproximatedHours()));
-        startWeekField.setText(Integer.toString(activity.getStartWeek()));
-        startYearField.setText(Integer.toString(activity.getStartYear()));
-
-        endWeekField.setText(Integer.toString(activity.getEndWeek()));
-        endYearField.setText(Integer.toString(activity.getEndYear()));
-
+    public void setProject(Project project) {
+        this.project = project;
     }
-
 }

@@ -1,8 +1,11 @@
 package dk.dtu.software.group8.GUI;
 
-import dk.dtu.software.group8.*;
+import dk.dtu.software.group8.Employee;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
+import dk.dtu.software.group8.PManagementSystem;
+import dk.dtu.software.group8.Project;
+import dk.dtu.software.group8.ProjectActivity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -13,20 +16,20 @@ import javafx.scene.control.ListView;
 /**
  * Created by Morten on 02/05/16.
  */
-public class ActivityPane extends StandardPane {
+public class ProjectActivityPane extends StandardPane {
 
-    private Activity activity;
+    private ProjectActivity projectActivity;
     private ProjectPane projectPane;
     private ComboBox<Employee> employeeComboBox;
     private ListView<Employee> assignedEmpListView;
     private ObservableList<Employee> obsAssignedEmpList;
     private boolean setupRight;
 
-    //TODO: Change this when an activity has it's own project
+    //TODO: Change this when an projectActivity has it's own project
     private Project project;
 
 
-    public ActivityPane(PManagementSystem pms) {
+    public ProjectActivityPane(PManagementSystem pms) {
         super(pms, true);
         setupRight = false;
 
@@ -45,10 +48,10 @@ public class ActivityPane extends StandardPane {
     }
 
     private void setupRightContainer() {
-        //This is the pane that can manage the activity.
-        ManageActivityPane manageActivityPane = new ManageActivityPane(pms, activity);
+        //This is the pane that can manage the projectActivity.
+        ManageActivityPane manageActivityPane = new ManageActivityPane(pms, projectActivity);
 
-        TitlePane addEmployeeTitle = new TitlePane("Add employee to activity", TitleFontSize.MEDIUM);
+        TitlePane addEmployeeTitle = new TitlePane("Add employee to projectActivity", TitleFontSize.MEDIUM);
         employeeComboBox = new ComboBox<>();
         ObservableList<Employee> obsAvailableEmployees = FXCollections.observableList(pms.getEmployees());
         employeeComboBox.setItems(obsAvailableEmployees);
@@ -61,12 +64,12 @@ public class ActivityPane extends StandardPane {
     }
 
     private void addEmployeeToActivity() {
-        //TODO: Change this once an activity has it's project.
+        //TODO: Change this once an projectActivity has it's project.
 
         Employee emp = employeeComboBox.getValue();
         try {
 
-            pms.addEmployeeToActivity(project, (ProjectActivity) activity, emp);
+            pms.addEmployeeToActivity(project, projectActivity, emp);
             refresh();
 
         } catch (NoAccessException | TooManyActivitiesException e) {
@@ -76,28 +79,28 @@ public class ActivityPane extends StandardPane {
 
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public void setProjectActivity(ProjectActivity projectActivity) {
+        this.projectActivity = projectActivity;
 
-        //If the manage activity pane isn't on, set it on.
+        //If the manage projectActivity pane isn't on, set it on.
         if (!setupRight) {
             setupRightContainer();
             setupRight = true;
         }
 
         obsAssignedEmpList
-                = FXCollections.observableList(((ProjectActivity) activity).getEmployees());
+                = FXCollections.observableList(projectActivity.getEmployees());
 
         assignedEmpListView.setItems(obsAssignedEmpList);
 
-        titlePane.setText(activity.getActivityType());
+        titlePane.setText(projectActivity.getActivityType());
 
         refresh();
     }
 
     public void refresh() {
         //TODO: Do this smarter!
-        obsAssignedEmpList = FXCollections.observableList(((ProjectActivity) activity).getEmployees());
+        obsAssignedEmpList = FXCollections.observableList(projectActivity.getEmployees());
         assignedEmpListView.setItems(obsAssignedEmpList);
 
         assignedEmpListView.refresh();

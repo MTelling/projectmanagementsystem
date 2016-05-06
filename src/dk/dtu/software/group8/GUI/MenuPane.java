@@ -20,9 +20,16 @@ public class MenuPane extends VBox {
         this.getStyleClass().add("MenuPane");
 
         menuButtons = new ArrayList<>();
-        menuButtons.add(new MenuButton("Overview", "overview_icon.png"));
-        menuButtons.add(new MenuButton("Projects", "projects_icon.png"));
-        menuButtons.add(new MenuButton("Register Hours", "timeregister_icon.png"));
+
+        MenuButton overviewBtn = new MenuButton("Overview", "overview_icon.png");
+        overviewBtn.setId("overviewBtn");
+        MenuButton projectsBtn = new MenuButton("Projects", "projects_icon.png");
+        projectsBtn.setId("projectsBtn");
+        MenuButton registerHoursBtn = new MenuButton("Register Hours", "timeregister_icon.png");
+        registerHoursBtn.setId("registerHoursBtn");
+        menuButtons.add(overviewBtn);
+        menuButtons.add(projectsBtn);
+        menuButtons.add(registerHoursBtn);
 
         //Overview should by active by default:
         menuButtons.get(0).setId("active");

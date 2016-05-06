@@ -3,6 +3,7 @@ package dk.dtu.software.group8.GUI;
 import dk.dtu.software.group8.Activity;
 import dk.dtu.software.group8.PManagementSystem;
 import dk.dtu.software.group8.Project;
+import dk.dtu.software.group8.ProjectActivity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -13,28 +14,28 @@ import javafx.scene.input.MouseEvent;
  */
 public class ProjectPane extends StandardPane {
 
-    private ActivityPane activityPane;
+    private ProjectActivityPane projectActivityPane;
     private ListView activitiesListView;
     private ManageProjectPane manageProjectPane;
-    private CreateActivityPane createActivityPane;
+    private CreateProjectActivityPane createProjectActivityPane;
     private Project project;
 
     private ProjectsPane projectsPane;
     private ObservableList<Activity> obsActivities;
 
 
-    public ProjectPane(ActivityPane activityPane, PManagementSystem pms) {
+    public ProjectPane(ProjectActivityPane projectActivityPane, PManagementSystem pms) {
         super(pms, true);
 
-        this.activityPane = activityPane;
+        this.projectActivityPane = projectActivityPane;
 
         manageProjectPane = new ManageProjectPane(pms);
-        createActivityPane = new CreateActivityPane(pms, this);
+        createProjectActivityPane = new CreateProjectActivityPane(pms, this);
 
         activitiesListView = new ListView();
         activitiesListView.setOnMouseClicked(e -> manageActivity(e));
 
-        rightContainer.getChildren().addAll(manageProjectPane, createActivityPane);
+        rightContainer.getChildren().addAll(manageProjectPane, createProjectActivityPane);
 
         addTitleToCenterContainer("Activities");
         addNewExpandingChildToCenterContainer(activitiesListView);
@@ -47,7 +48,7 @@ public class ProjectPane extends StandardPane {
 
         this.project = project;
 
-        createActivityPane.setProject(project);
+        createProjectActivityPane.setProject(project);
 
         obsActivities = FXCollections.observableList(project.getActivities());
         activitiesListView.setItems(obsActivities);
@@ -74,12 +75,12 @@ public class ProjectPane extends StandardPane {
 
     private void manageActivity(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            Activity activity = (Activity)activitiesListView.getSelectionModel().getSelectedItem();
-            if (activity != null) {
-                activityPane.setProjectPane(this);
-                activityPane.setProject(project);
-                activityPane.setActivity(activity);
-                activityPane.toFront();
+            ProjectActivity projectActivity = (ProjectActivity) activitiesListView.getSelectionModel().getSelectedItem();
+            if (projectActivity != null) {
+                projectActivityPane.setProjectPane(this);
+                projectActivityPane.setProject(project);
+                projectActivityPane.setProjectActivity(projectActivity);
+                projectActivityPane.toFront();
             }
         }
     }

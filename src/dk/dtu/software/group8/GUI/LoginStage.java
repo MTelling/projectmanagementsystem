@@ -1,9 +1,6 @@
 package dk.dtu.software.group8.GUI;
 
-import dk.dtu.software.group8.GUI.Driver;
 import dk.dtu.software.group8.PManagementSystem;
-import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,8 +10,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -63,11 +58,14 @@ public class LoginStage extends Stage {
 
         Label userNameLabel = new Label("Id:");
         wrongLoginLabel = new Label("That is not a valid id.");
+        wrongLoginLabel.setId("wrongLoginLabel");
         wrongLoginLabel.getStyleClass().add("WrongLoginLabel");
 
         wrongLoginLabel.setVisible(false);
         userNameInput = new TextField();
+        userNameInput.setId("userNameInput");
         Button loginBtn = new Button("Login");
+        loginBtn.setId("loginBtn");
         //We want the button to be to the outer right.
         //To do this we need to put it in a hbox first.
         HBox hbox = new HBox();

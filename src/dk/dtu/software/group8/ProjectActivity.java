@@ -86,4 +86,20 @@ public class ProjectActivity extends  Activity {
     public Project getProject() {
         return project;
     }
+
+    public int getStartWeek() {
+        return YearWeek.fromDate(this.getStartDate()).getWeek();
+    }
+
+    public int getStartYear() {
+        return YearWeek.fromDate(this.getStartDate()).getYear();
+    }
+
+    public int getEndWeek() {
+        return YearWeek.fromDate(this.getEndDate()).getWeek();
+    }
+
+    public int getEndYear() {
+        return YearWeek.fromDate(this.getEndDate()).getYear();
+    }
 }
