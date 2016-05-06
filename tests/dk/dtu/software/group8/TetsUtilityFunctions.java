@@ -34,4 +34,6 @@ public class TetsUtilityFunctions extends  TestManageProject {
         assertThat(activitiesOnDate.isEmpty(), is(true));
     }
 
+
+    //TODO: Maybe test the functions that get registered work on given date and time here?
 }

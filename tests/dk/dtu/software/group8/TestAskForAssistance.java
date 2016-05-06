@@ -1,13 +1,8 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
-import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
+import dk.dtu.software.group8.Exceptions.*;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
@@ -19,7 +14,8 @@ public class TestAskForAssistance extends TestManageProject {
     YearWeek week42 = new YearWeek(2016, 42);
 
     @Before
-    public void setupActivity() throws IncorrectAttributeException, NoAccessException, TooManyActivitiesException {
+    public void setupActivity() throws IncorrectAttributeException, NoAccessException,
+            TooManyActivitiesException, EmployeeAlreadyAddedException {
         activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
         assertThat(activity, is(not(nullValue())));
 
@@ -45,7 +41,8 @@ public class TestAskForAssistance extends TestManageProject {
     }
 
     @Test // Employee already assigned to activity
-    public void testC() throws NoAccessException, TooManyActivitiesException, InvalidEmployeeException {
+    public void testC() throws NoAccessException, TooManyActivitiesException,
+            InvalidEmployeeException, EmployeeAlreadyAddedException {
         expectedEx.expect(InvalidEmployeeException.class);
         expectedEx.expectMessage("Employee already assigned to activity.");
 

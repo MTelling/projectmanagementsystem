@@ -45,7 +45,10 @@ public class ProjectActivity extends  Activity {
         return this.approximatedHours;
     }
 
-    public boolean addEmployee(Employee employee) throws TooManyActivitiesException {
+    public boolean addEmployee(Employee employee) throws TooManyActivitiesException, EmployeeAlreadyAddedException {
+        if (assignedEmployees.contains(employee)) {
+            throw new EmployeeAlreadyAddedException("That employee has already been assigned to the activity.");
+        }
         if(employee.assignToActivity(this)) {
             assignedEmployees.add(employee);
             return true;
@@ -106,5 +109,13 @@ public class ProjectActivity extends  Activity {
     public void changeApproximatedHours(int hours) throws NegativeHoursException {
         if(hours < 0) throw new NegativeHoursException("Approximated hours can not be negative!");
         else this.approximatedHours = hours;
+    }
+
+    @Override
+    public String toString() {
+        return this.activityType
+                + " (week " + getStartWeek() + "." + getStartYear()
+                + " - week " + getEndWeek() + "." + getEndYear() + ")"
+                + " from project: " + this.project.getName();
     }
 }

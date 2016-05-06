@@ -22,6 +22,8 @@ public class PersonalActivity extends Activity {
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return activityType + " (" + getStartDate() + " - " + getEndDate() + ")";
+    }
 }

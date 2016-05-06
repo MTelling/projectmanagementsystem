@@ -1,6 +1,7 @@
 package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.Employee;
+import dk.dtu.software.group8.Exceptions.EmployeeAlreadyAddedException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
 import dk.dtu.software.group8.PManagementSystem;
@@ -72,7 +73,7 @@ public class ProjectActivityPane extends StandardPane {
             pms.addEmployeeToActivity(project, projectActivity, emp);
             refresh();
 
-        } catch (NoAccessException | TooManyActivitiesException e) {
+        } catch (EmployeeAlreadyAddedException | NoAccessException | TooManyActivitiesException e) {
             Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
             error.showAndWait();
         }

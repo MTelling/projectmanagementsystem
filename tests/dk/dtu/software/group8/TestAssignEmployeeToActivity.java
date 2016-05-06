@@ -1,9 +1,6 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
-import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.TooManyActivitiesException;
+import dk.dtu.software.group8.Exceptions.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,14 +20,14 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     }
 
     @Test //Correct username, employee is available
-    public void testA() throws NoAccessException, TooManyActivitiesException{
+    public void testA() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException{
         pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
 
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
 
     @Test //Correct username, employee unavailable
-    public void testB() throws TooManyActivitiesException, NoAccessException, IncorrectAttributeException {
+    public void testB() throws TooManyActivitiesException, NoAccessException, IncorrectAttributeException, EmployeeAlreadyAddedException {
         expectedEx.expect(TooManyActivitiesException.class);
         expectedEx.expectMessage("Employee is assigned to too many activities in given period.");
 
@@ -54,7 +51,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     }
 
     @Test //Not project manager, but otherwise correct.
-    public void testD() throws NoAccessException, TooManyActivitiesException {
+    public void testD() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException {
         expectedEx.expect(NoAccessException.class);
         expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
@@ -66,15 +63,14 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     }
 
 
-    //TODO: Make this test pass.
-//    @Test //Add the same employee twice
-//    public void testE() throws NoAccessException, TooManyActivitiesException {
-//        expectedEx.expect(EmployeeAlreadyAddedException.class);
-//        expectedEx.expectMessage("That employee has already been assigned to the activity.");
-//
-//        //Running test A twice should do this.
-//        testA();
-//        testA();
-//    }
+    @Test //Add the same employee twice
+    public void testE() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException {
+        expectedEx.expect(EmployeeAlreadyAddedException.class);
+        expectedEx.expectMessage("That employee has already been assigned to the activity.");
+
+        //Running test A twice should do this.
+        testA();
+        testA();
+    }
 
 }

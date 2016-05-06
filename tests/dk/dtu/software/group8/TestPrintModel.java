@@ -6,6 +6,7 @@ import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.naming.InvalidNameException;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,14 +21,15 @@ public class TestPrintModel extends TestCreateProject {
     private Project project;
 
     @Before
-    public void setupProject() throws WrongDateException {
+    public void setupProject() throws WrongDateException, InvalidNameException {
         super.setup();
         LocalDate startDate = LocalDate.parse("2016-05-10");
-        LocalDate endDate = LocalDate.parse("2016-06-10");
+        LocalDate endDate = LocalDate.parse("2018-06-10");
 
         //Create the project
         project = new Project("160000", startDate, endDate);
         project.assignProjectManager(pms.getCurrentEmployee());
+        project.setName("SoftwareEngineering");
     }
 
     @Test
@@ -35,23 +37,25 @@ public class TestPrintModel extends TestCreateProject {
 
         String projectStr = project.toString();
 
-        assertThat(projectStr, is("160000\t - \tN/A (2016-05-10 - 2016-06-10)"));
+        assertThat(projectStr, is("160000\t - \tSoftwareEngineering (2016-05-10 - 2018-06-10)"));
     }
 
     @Test
     public void testProjectActivityToString() throws WrongDateException, NoAccessException, IncorrectAttributeException {
 
+        YearWeek startWeek = new YearWeek(2016,37);
+        YearWeek endWeek = new YearWeek(2016,40);
+
         ProjectActivity activity = pms.createActivityForProject(project,
                 "Implementation",
-                YearWeek.fromDate(LocalDate.parse("2016-05-10")),
-                YearWeek.fromDate(LocalDate.parse("2016-06-09")),
+                startWeek,
+                endWeek,
                 40);
 
 
         String activityStr = activity.toString();
-        System.out.println(activityStr);
-        //TODO: Right now this prints a date?
-        assertThat(activityStr, is (""));
+
+        assertThat(activityStr, is ("Implementation (week 37.2016 - week 40.2016) from project: SoftwareEngineering"));
     }
 
     @Test

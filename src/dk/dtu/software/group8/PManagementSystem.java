@@ -51,7 +51,8 @@ public class PManagementSystem {
     	project.assignProjectManager(this.currentEmployee);
     }
 
-    public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee) throws NoAccessException, TooManyActivitiesException {
+    public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee)
+            throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException {
         return this.manageProject(project) && project.addEmployeeToActivity(activity, employee);
     }
 
@@ -115,12 +116,17 @@ public class PManagementSystem {
     	}
     }
 
+    //TODO: Can we put this inside the project class?
     //TODO: Now an activity has it's project, this could be done simpler. Just remove the project parameter.
     public boolean manageActivityDates(Project project, Activity activity, YearWeek startWeek, YearWeek endWeek) throws IncorrectAttributeException, NoAccessException, WrongDateException {
         if(this.manageProject(project)) {
             if(!project.getActivities().contains(activity)) {
                 throw new IncorrectAttributeException("Invalid Activity: Project does not contain supplied activity!");
             } else {
+
+
+
+
                 if(startWeek != null
                         && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
                     activity.setStartDate(startWeek.toLocalDate());
@@ -134,13 +140,22 @@ public class PManagementSystem {
                     throw new WrongDateException("End Week is not allowed to be before Start Week!");
                 }
 
+                //TODO: This could be added, but makes a lot of other tests fail.
+//                if (startWeek != null && startWeek.isBefore(YearWeek.fromDate(project.getStartDate()))) {
+//                    throw new WrongDateException("The given end week exceeds the duration of the project.");
+//                }
+//
+//                if (endWeek != null && endWeek.isAfter(YearWeek.fromDate(project.getEndDate()))) {
+//                    throw new WrongDateException("The given end week exceeds the duration of the project.");
+//                }
+
                 return true;
             }
         }
         return false;
     }
     
-    public boolean manageProject(Project project) throws NoAccessException {
+    private boolean manageProject(Project project) throws NoAccessException {
     	if(project.getProjectManager() == null || !project.getProjectManager().equals(this.currentEmployee)) {
     		throw new NoAccessException("Current user is not Project Manager for this project.");
     	}
@@ -186,6 +201,7 @@ public class PManagementSystem {
         } else if(!activity.getEmployees().contains(this.currentEmployee)) {
             throw new NoAccessException("Current user is not assigned to this activity.");
         } else if (!this.db.getEmployees().contains(employee)) {
+            //TODO: Would we ever get here? Maybe pass the employee as a name instead and let pms find the emp?
             throw new InvalidEmployeeException("No employee with that name is in the system.");
         } else {
             return employee.assignConsultantToActivity(activity);

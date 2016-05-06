@@ -98,7 +98,6 @@ public class Employee {
 			throw new NoAccessException("Current user not assigned to activity.");
 		} else {
 
-            //TODO: do this differently?
             Optional<RegisteredWork> empWorkQuery = getRegisteredWorkOnDateAndActivity(activity, day);
 
 			int workRegisteredThisDay = getTotalRegisteredMinutesOnDay(day);

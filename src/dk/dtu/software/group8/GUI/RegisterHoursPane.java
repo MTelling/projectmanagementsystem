@@ -23,7 +23,7 @@ import java.time.LocalDate;
 public class RegisterHoursPane extends StandardPane {
 
 
-    private final ListView activitiesList;
+    private final ListView activitiesListView;
     private ControlHoursPane controlHoursPane;
     private ObservableList<Activity> obsActivitiesOnDay;
     private final DatePicker datePicker;
@@ -47,30 +47,62 @@ public class RegisterHoursPane extends StandardPane {
         datePickContainer.getChildren().addAll(datePickLbl, datePicker);
 
         //Create the listview and make sure it fills the height.
-        activitiesList = new ListView();
+        activitiesListView = new ListView();
 
         //Create the right view for adding hours and viewing total hours.
         controlHoursPane = new ControlHoursPane(pms, this);
 
         obsActivitiesOnDay = FXCollections.observableList(pms.getCurrentEmployee().getActivitiesOnDate(datePicker.getValue()));
-        activitiesList.setItems(obsActivitiesOnDay);
+        activitiesListView.setItems(obsActivitiesOnDay);
 
         //Add listener to the date picker.
         datePicker.setOnAction(e -> updateDate());
 
         //Add listener for selection.
-        activitiesList.getSelectionModel().selectedItemProperty().addListener(e -> setShownActivity());
+        activitiesListView.getSelectionModel().selectedItemProperty().addListener(e -> setShownActivity());
 
 
         //Add all children to the center and right container.
         centerContainer.getChildren().add(datePickContainer);
-        addNewExpandingChildToCenterContainer(activitiesList);
+        addNewExpandingChildToCenterContainer(activitiesListView);
         rightContainer.getChildren().add(controlHoursPane);
-
 
         updateDate();
 
     }
+
+
+    //TODO: Do we want the colored cells? It can be done like: http://stackoverflow.com/questions/16880115/javafx-2-2-how-to-force-a-redraw-update-of-a-listview
+//    private void setCellFactoryForListView() {
+//        activitiesListView.setCellFactory(new Callback<ListView<ProjectActivity>, ListCell<ProjectActivity>>(){
+//
+//            @Override
+//            public ListCell<ProjectActivity> call(ListView<ProjectActivity> p) {
+//
+//                ListCell<ProjectActivity> cell = new ListCell<ProjectActivity>(){
+//
+//                    @Override
+//                    protected void updateItem(ProjectActivity projectActivity, boolean empty) {
+//                        super.updateItem(projectActivity, empty);
+//                        if (projectActivity != null) {
+//                            setText(projectActivity.toString());
+//                            System.out.println("Got here");
+//                            if (pms.getCurrentEmployee().getTotalRegisteredMinutesOnDayAndActivity(datePicker.getValue(), projectActivity) > 0) {
+//                                setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
+//                            }
+//                        }
+//                    }
+//
+//
+//
+//                };
+//
+//                return cell;
+//            }
+//        });
+//    }
+
+
 
     private void updateDate() {
 
@@ -79,14 +111,14 @@ public class RegisterHoursPane extends StandardPane {
         obsActivitiesOnDay = FXCollections.observableList(pms.getCurrentEmployee()
                 .getActivitiesOnDate(chosenDay));
 
-        activitiesList.setItems(obsActivitiesOnDay);
+        activitiesListView.setItems(obsActivitiesOnDay);
 
         updateTotalMinutesOnDay(chosenDay);
 
     }
 
     private void setShownActivity() {
-        ProjectActivity projectActivity = (ProjectActivity) activitiesList.getSelectionModel().getSelectedItem();
+        ProjectActivity projectActivity = (ProjectActivity) activitiesListView.getSelectionModel().getSelectedItem();
         LocalDate chosenDay = datePicker.getValue();
 
         int totalMinutesOnDayAndActivity = pms.getCurrentEmployee()
@@ -104,7 +136,7 @@ public class RegisterHoursPane extends StandardPane {
     }
 
     public void registerTimeOnActivity(String[] time) {
-        ProjectActivity projectActivity = (ProjectActivity) activitiesList.getSelectionModel().getSelectedItem();
+        ProjectActivity projectActivity = (ProjectActivity) activitiesListView.getSelectionModel().getSelectedItem();
         LocalDate chosenDay = datePicker.getValue();
 
         try {

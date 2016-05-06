@@ -65,7 +65,9 @@ public class TestRegisterWorkHours {
 
     //Date in the past, employee assigned to activity, hours less than 24
     @Test
-    public void testA() throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException, TooManyHoursException, NegativeHoursException, WrongDateException {
+    public void testA()
+            throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException,
+            TooManyHoursException, NegativeHoursException, WrongDateException, EmployeeAlreadyAddedException {
 
         activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
@@ -85,7 +87,9 @@ public class TestRegisterWorkHours {
 
    // Date in the future, employee assigned to activity, hours less than 24
     @Test
-    public void testB() throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException, TooManyHoursException, NegativeHoursException, WrongDateException {
+    public void testB()
+            throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException,
+            TooManyHoursException, NegativeHoursException, WrongDateException, EmployeeAlreadyAddedException {
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("You can not register work hours in the future.");
 
@@ -101,7 +105,8 @@ public class TestRegisterWorkHours {
 
    // Date in the past, employee not assigned to activity, hours less than 24
     @Test
-    public void testC() throws NoAccessException, IncorrectAttributeException, WrongDateException, NegativeHoursException, TooManyHoursException {
+    public void testC() throws NoAccessException, IncorrectAttributeException, WrongDateException,
+            NegativeHoursException, TooManyHoursException {
         expectedEx.expect(NoAccessException.class);
         expectedEx.expectMessage("Current user not assigned to activity.");
 
@@ -115,7 +120,8 @@ public class TestRegisterWorkHours {
 
     // Date in the past, employee assigned to activity, hours exceeds 24
     @Test
-    public void testD() throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException, WrongDateException, NegativeHoursException, TooManyHoursException {
+    public void testD() throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException,
+            WrongDateException, NegativeHoursException, TooManyHoursException, EmployeeAlreadyAddedException {
         expectedEx.expect(TooManyHoursException.class);
         expectedEx.expectMessage("You can not work more than 24 hours in one day.");
 
@@ -131,7 +137,8 @@ public class TestRegisterWorkHours {
     // Date in the past, employee assigned, hours less than 24
     // other activity exceeds 24 - entered hours
     @Test
-    public void testE() throws TooManyActivitiesException, NoAccessException, IncorrectAttributeException, WrongDateException, NegativeHoursException, TooManyHoursException {
+    public void testE() throws TooManyActivitiesException, NoAccessException, IncorrectAttributeException,
+            WrongDateException, NegativeHoursException, TooManyHoursException, EmployeeAlreadyAddedException {
         expectedEx.expect(TooManyHoursException.class);
         expectedEx.expectMessage("You can not work more than 24 hours in one day.");
 
@@ -150,7 +157,8 @@ public class TestRegisterWorkHours {
 
     //Date in the past, employee assigned to activity, hours less than 0
     @Test
-    public void testF() throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException, WrongDateException, NegativeHoursException, TooManyHoursException {
+    public void testF() throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException,
+            WrongDateException, NegativeHoursException, TooManyHoursException, EmployeeAlreadyAddedException {
         expectedEx.expect(NegativeHoursException.class);
         expectedEx.expectMessage("You can not work negative hours.");
 
@@ -168,13 +176,15 @@ public class TestRegisterWorkHours {
         assertThat(activity.getRegisteredWork().get(0), is(equalTo(pms.getCurrentEmployee().getRegisteredWork().get(0))));
 
         pms.registerWorkHours(activity, (-6)*60, pastDate);
-        assertThat(pms.getCurrentEmployee().getRegisteredWork().isEmpty(), is(false));
-        assertThat(pms.getCurrentEmployee().getRegisteredWork().get(0).getDay(), is(pastDate));
-        assertThat(pms.getCurrentEmployee().getRegisteredWork().get(0).getMinutes(), is(6*60));
-        assertThat(activity.getRegisteredWork().isEmpty(), is(false));
-        assertThat(activity.getRegisteredWork().get(0), is(equalTo(pms.getCurrentEmployee().getRegisteredWork().get(0))));
 
-        pms.registerWorkHours(activity, (-7)*60, pastDate);
+        //TODO: SHouldn't we just stop when we know we will get an exception?
+//        assertThat(pms.getCurrentEmployee().getRegisteredWork().isEmpty(), is(false));
+//        assertThat(pms.getCurrentEmployee().getRegisteredWork().get(0).getDay(), is(pastDate));
+//        assertThat(pms.getCurrentEmployee().getRegisteredWork().get(0).getMinutes(), is(6*60));
+//        assertThat(activity.getRegisteredWork().isEmpty(), is(false));
+//        assertThat(activity.getRegisteredWork().get(0), is(equalTo(pms.getCurrentEmployee().getRegisteredWork().get(0))));
+//
+//        pms.registerWorkHours(activity, (-7)*60, pastDate);
     }
 
     //TODO: Do we test for multiple entries on same day and same activity?
