@@ -3,6 +3,7 @@ package dk.dtu.software.group8;
 import dk.dtu.software.group8.Exceptions.*;
 
 import javax.naming.InvalidNameException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,10 +17,10 @@ public class PManagementSystem {
 	private Employee currentEmployee;
     private List<Project> projects;
 
-    public PManagementSystem() {
+    public PManagementSystem() throws IOException {
         dateServer = new DateServer();
 
-        db = new DatabaseManager();
+        db = new DatabaseManager("Employees.txt");
 
         projects = new LinkedList<>();
     }

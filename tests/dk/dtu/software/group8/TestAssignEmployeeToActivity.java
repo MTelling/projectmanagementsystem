@@ -73,4 +73,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         testA();
     }
 
+
+    //TODO: Test for adding employee to activity if he is already a consultant? Right now it's possible.
+
 }

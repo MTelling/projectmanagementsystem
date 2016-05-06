@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.hasItems;
@@ -27,7 +28,8 @@ public class TestManageProject {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Before
-    public void setup() throws WrongDateException, NoAccessException, AlreadyAssignedProjectManagerException, IncorrectAttributeException {
+    public void setup() throws WrongDateException, NoAccessException, AlreadyAssignedProjectManagerException,
+            IncorrectAttributeException, IOException {
         pms = new PManagementSystem();
 
         //Set current date to may 9th 2016.

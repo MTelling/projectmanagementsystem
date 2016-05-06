@@ -1,12 +1,13 @@
 package dk.dtu.software.group8;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import java.io.IOException;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 
 /**
@@ -14,18 +15,22 @@ import org.junit.Test;
  */
 public class TestDatabaseManager {
 
+
     private DatabaseManager db;
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void TestStandardDB() {
-        db = new DatabaseManager();
+    public void TestStandardDB() throws IOException {
+
+        db = new DatabaseManager("Employees.txt");
 
         assertThat(db, is(not(nullValue())));
         assertThat(db.getEmployees().get(0), instanceOf(Employee.class));
     }
 
     @Test
-    public void TestExampleDB() {
+    public void TestExampleDB() throws IOException{
         db = new DatabaseManager("EmployeesTest.txt");
 
         assertThat(db.getEmployees().get(0).getId(), is("huba"));
@@ -35,5 +40,11 @@ public class TestDatabaseManager {
     }
 
 
-    //TODO: should probably test with a file that is nonexistent and get the correct error.
+    @Test
+    public void testWrongDB() throws IOException{
+        expectedEx.expect(IOException.class);
+
+        db = new DatabaseManager("NotThere.txt");
+    }
+
 }

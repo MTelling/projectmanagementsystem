@@ -6,6 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -31,9 +32,10 @@ public class TestRegisterWorkHours {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Before
-    public void setup() throws WrongDateException, NoAccessException, AlreadyAssignedProjectManagerException {
+    public void setup() throws WrongDateException, NoAccessException,
+            AlreadyAssignedProjectManagerException, IOException {
         pms = new PManagementSystem();
-        db = new DatabaseManager();
+        db = new DatabaseManager("Employees.txt");
 
         //Set current date to the may 9th 2016.
         DateServer mockDateServer = mock(DateServer.class);

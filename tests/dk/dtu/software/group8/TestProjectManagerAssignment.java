@@ -1,22 +1,22 @@
 package dk.dtu.software.group8;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-
+import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
+import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
-import dk.dtu.software.group8.Exceptions.InvalidEmployeeException;
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
+import java.io.IOException;
+import java.time.LocalDate;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TestProjectManagerAssignment {
 	
@@ -28,9 +28,9 @@ public class TestProjectManagerAssignment {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Before
-    public void setup() throws WrongDateException, NoAccessException {
+    public void setup() throws WrongDateException, NoAccessException, IOException {
         pms = new PManagementSystem();
-        db = new DatabaseManager();
+        db = new DatabaseManager("Employees.txt");
 
         //Set current date to the may 9th 2016.
         DateServer mockDateServer = mock(DateServer.class);

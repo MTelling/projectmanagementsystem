@@ -1,34 +1,33 @@
 package dk.dtu.software.group8;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
+import java.io.IOException;
+import java.time.LocalDate;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TestCreateProject {
 	
 	PManagementSystem pms;
-	DatabaseManager db = new DatabaseManager();
+	DatabaseManager db;
 	
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
 	@Before
-	public void setup() {
+	public void setup() throws IOException {
 		pms = new PManagementSystem();
+        db =  new DatabaseManager("Employees.txt");
 
         //Set current date to the may 9th 2016.
         DateServer mockDateServer = mock(DateServer.class);

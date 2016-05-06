@@ -3,7 +3,10 @@ package dk.dtu.software.group8;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.*;
+import java.io.IOException;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class TestSignIn {
@@ -12,9 +15,9 @@ public class TestSignIn {
     DatabaseManager db;
 
     @Before
-    public void setup() {
+    public void setup() throws IOException {
         pms = new PManagementSystem();
-        db = new DatabaseManager();
+        db = new DatabaseManager("Employees.txt");
     }
 
     @Test

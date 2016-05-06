@@ -118,6 +118,8 @@ public class RegisterHoursPane extends StandardPane {
     }
 
     private void setShownActivity() {
+
+        //TODO: We have a problem regarding the activity times. They don't correspond correctly to the calendar.
         ProjectActivity projectActivity = (ProjectActivity) activitiesListView.getSelectionModel().getSelectedItem();
         LocalDate chosenDay = datePicker.getValue();
 

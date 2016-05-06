@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -28,7 +29,13 @@ public class Driver extends Application {
     public void start(Stage loginStage) {
 
         //Create an instance of the pms
-        this.pms = new PManagementSystem();
+
+        try {
+            this.pms = new PManagementSystem();
+        } catch (IOException e) {
+            Alert error = new Alert(Alert.AlertType.ERROR, "Couldn't load database! Execution aborted!");
+            error.showAndWait();
+        }
 
         beforeDemo();
 

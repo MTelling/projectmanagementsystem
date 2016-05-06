@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.naming.InvalidNameException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -21,7 +22,7 @@ public class TestPrintModel extends TestCreateProject {
     private Project project;
 
     @Before
-    public void setupProject() throws WrongDateException, InvalidNameException {
+    public void setupProject() throws WrongDateException, InvalidNameException, IOException {
         super.setup();
         LocalDate startDate = LocalDate.parse("2016-05-10");
         LocalDate endDate = LocalDate.parse("2018-06-10");
