@@ -52,11 +52,7 @@ public class PManagementSystem {
     }
 
     public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee) throws NoAccessException, TooManyActivitiesException {
-        if(this.manageProject(project)) {
-            return project.addEmployeeToActivity(activity, employee);
-        } else {
-            return false;
-        }
+        return this.manageProject(project) && project.addEmployeeToActivity(activity, employee);
     }
 
     public boolean changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
@@ -224,4 +220,10 @@ public class PManagementSystem {
         }
     }
 
+    public List<Activity> getEmployeeActivitiesOnDate(Employee emp, LocalDate date) {
+        if(emp != null && date != null) {
+            return emp.getActivitiesOnDate(date);
+        }
+        return null;
+    }
 }

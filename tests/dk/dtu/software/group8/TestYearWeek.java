@@ -2,6 +2,7 @@ package dk.dtu.software.group8;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.mockito.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -70,6 +71,14 @@ public class TestYearWeek {
     public void testIsEqualFailure() {
         YearWeek first = new YearWeek(2016, 37);
         YearWeek second = new YearWeek(2016, 42);
+
+        assertThat(first.equals(second), is(false));
+    }
+
+    @Test
+    public void testIsEqualDifferentObject() {
+        YearWeek first = new YearWeek(2016, 37);
+        LocalDate second = new YearWeek(2016, 37).toLocalDate();
 
         assertThat(first.equals(second), is(false));
     }

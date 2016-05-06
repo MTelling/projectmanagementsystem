@@ -14,9 +14,7 @@ public class YearWeek {
     }
 
     public boolean isAfter(YearWeek other) {
-       if(this.getYear() > other.getYear())
-           return true;
-        else return this.getWeek() >= other.getWeek() && this.getYear() == other.getYear();
+       return this.getYear() > other.getYear() || this.getWeek() >= other.getWeek() && this.getYear() == other.getYear();
     }
 
     public boolean isBefore(YearWeek other) {
@@ -40,10 +38,6 @@ public class YearWeek {
     public static YearWeek fromDate(LocalDate date) {
         int weekNumber = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
         return new YearWeek(date.getYear(), weekNumber);
-    }
-
-    public String toString() {
-        return this.getYear() + ", " + this.getWeek();
     }
 
     public int getYear() {
