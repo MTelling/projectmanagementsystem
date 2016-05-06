@@ -57,12 +57,18 @@ public class CreatePersonalActivityPane extends ControlPane{
         LocalDate endDate = endDatePicker.getValue();
 
         try {
+
             pms.createPersonalActivityForEmployee(type,startDate,endDate,pms.getCurrentEmployee());
+
+            Alert success = new SuccessPrompt();
+            success.showAndWait();
+
+            overviewPane.refresh();
+
         } catch (WrongDateException | IncorrectAttributeException e) {
             Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
             error.showAndWait();
         }
 
-        overviewPane.refresh();
     }
 }

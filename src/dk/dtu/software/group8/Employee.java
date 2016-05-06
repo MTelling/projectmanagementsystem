@@ -97,24 +97,11 @@ public class Employee {
 		if(!currentActivities.contains(activity)) { // Test if employee is assigned to activity
 			throw new NoAccessException("Current user not assigned to activity.");
 		} else {
-			// Check if employee has already registered work for this activity and day
-			List<RegisteredWork> empWorkDayQuery = this.registeredWork
-					.stream()
-					.filter(
-							e -> (e.getDay().equals(day))
-					)
-					.collect(Collectors.toList());
-			Optional<RegisteredWork> empWorkQuery = empWorkDayQuery
-					.stream()
-					.filter(
-							e -> (e.matches(this, activity, day))
-					)
-					.findAny();
 
-			int workRegisteredThisDay = 0;
-			for(RegisteredWork work : empWorkDayQuery) {
-				workRegisteredThisDay += work.getMinutes();
-			}
+            //TODO: do this differently?
+            Optional<RegisteredWork> empWorkQuery = getRegisteredWorkOnDateAndActivity(activity, day);
+
+			int workRegisteredThisDay = getTotalRegisteredMinutesOnDay(day);
 
 			if(empWorkQuery.isPresent()) {
 				int deltaMinutes = minutes - empWorkQuery.get().getMinutes();
@@ -136,6 +123,53 @@ public class Employee {
 			}
 		}
 	}
+
+    public int getTotalRegisteredMinutesOnDay(LocalDate day) {
+        List<RegisteredWork> empWorkDayQuery = getRegisteredWorkOnDate(day);
+        int workRegisteredThisDay = 0;
+        for(RegisteredWork work : empWorkDayQuery) {
+            workRegisteredThisDay += work.getMinutes();
+        }
+
+        return workRegisteredThisDay;
+    }
+
+    public int getTotalRegisteredMinutesOnDayAndActivity(LocalDate day, ProjectActivity activity) {
+        Optional<RegisteredWork> empWorkQuery = getRegisteredWorkOnDateAndActivity(activity, day);
+        int totalMinutes = 0;
+
+        if (empWorkQuery.isPresent()) {
+            totalMinutes = empWorkQuery.get().getMinutes();
+        }
+
+        return totalMinutes;
+    }
+
+    public List<RegisteredWork> getRegisteredWorkOnDate(LocalDate day) {
+        List<RegisteredWork> empWorkDayQuery = this.registeredWork
+                .stream()
+                .filter(
+                        e -> (e.getDay().equals(day))
+                )
+                .collect(Collectors.toList());
+
+        return empWorkDayQuery;
+    }
+
+    public Optional<RegisteredWork> getRegisteredWorkOnDateAndActivity(ProjectActivity activity, LocalDate day) {
+        // Check if employee has already registered work for this activity and day
+        List<RegisteredWork> empWorkDayQuery = getRegisteredWorkOnDate(day);
+
+        Optional<RegisteredWork> empWorkQuery = empWorkDayQuery
+                .stream()
+                .filter(
+                        e -> (e.matches(this, activity, day))
+                )
+                .findAny();
+
+        return empWorkQuery;
+    }
+
 
 	public boolean matches(Employee employee) {
 		return

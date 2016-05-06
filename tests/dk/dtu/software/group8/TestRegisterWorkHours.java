@@ -9,7 +9,8 @@ import org.junit.rules.ExpectedException;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -175,6 +176,8 @@ public class TestRegisterWorkHours {
 
         pms.registerWorkHours(activity, (-7)*60, pastDate);
     }
+
+    //TODO: Do we test for multiple entries on same day and same activity?
 
 }
 

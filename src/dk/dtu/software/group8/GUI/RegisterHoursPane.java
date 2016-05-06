@@ -1,10 +1,15 @@
 package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.Activity;
+import dk.dtu.software.group8.Exceptions.NegativeHoursException;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.TooManyHoursException;
 import dk.dtu.software.group8.PManagementSystem;
+import dk.dtu.software.group8.ProjectActivity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -18,7 +23,10 @@ import java.time.LocalDate;
 public class RegisterHoursPane extends StandardPane {
 
 
-    private PManagementSystem pms;
+    private final ListView activitiesList;
+    private ControlHoursPane controlHoursPane;
+    private ObservableList<Activity> obsActivitiesOnDay;
+    private final DatePicker datePicker;
 
     public RegisterHoursPane(PManagementSystem pms) {
         super(pms, false);
@@ -34,20 +42,25 @@ public class RegisterHoursPane extends StandardPane {
 
         //Create the datepicker
         Label datePickLbl = new Label("Choose a day:");
-        DatePicker datePicker = new DatePicker();
-        datePicker.setValue(LocalDate.now());
+        datePicker = new DatePicker();
+        datePicker.setValue(pms.getDate());
         datePickContainer.getChildren().addAll(datePickLbl, datePicker);
 
         //Create the listview and make sure it fills the height.
-        ListView activitiesList = new ListView();
+        activitiesList = new ListView();
 
         //Create the right view for adding hours and viewing total hours.
-        ControlHoursPane controlHoursPane = new ControlHoursPane(pms);
+        controlHoursPane = new ControlHoursPane(pms, this);
 
-        //TODO: This should get the activity for the given day.
-        ObservableList<Activity> obsActivities = FXCollections.observableList(pms.getCurrentEmployee().getCurrentActivities());
+        obsActivitiesOnDay = FXCollections.observableList(pms.getCurrentEmployee().getActivitiesOnDate(datePicker.getValue()));
+        activitiesList.setItems(obsActivitiesOnDay);
 
-        activitiesList.setItems(obsActivities);
+        //Add listener to the date picker.
+        datePicker.setOnAction(e -> updateDate());
+
+        //Add listener for selection.
+        activitiesList.getSelectionModel().selectedItemProperty().addListener(e -> setShownActivity());
+
 
         //Add all children to the center and right container.
         centerContainer.getChildren().add(datePickContainer);
@@ -55,11 +68,64 @@ public class RegisterHoursPane extends StandardPane {
         rightContainer.getChildren().add(controlHoursPane);
 
 
+        updateDate();
 
     }
+
+    private void updateDate() {
+
+        LocalDate chosenDay = datePicker.getValue();
+
+        obsActivitiesOnDay = FXCollections.observableList(pms.getCurrentEmployee()
+                .getActivitiesOnDate(chosenDay));
+
+        activitiesList.setItems(obsActivitiesOnDay);
+
+        updateTotalMinutesOnDay(chosenDay);
+
+    }
+
+    private void setShownActivity() {
+        ProjectActivity projectActivity = (ProjectActivity) activitiesList.getSelectionModel().getSelectedItem();
+        LocalDate chosenDay = datePicker.getValue();
+
+        int totalMinutesOnDayAndActivity = pms.getCurrentEmployee()
+                .getTotalRegisteredMinutesOnDayAndActivity(chosenDay, projectActivity);
+
+
+        controlHoursPane.setTotalMinutesOnActivity(totalMinutesOnDayAndActivity);
+
+    }
+
 
     @Override
     protected void close() {
         toBack();
+    }
+
+    public void registerTimeOnActivity(String[] time) {
+        ProjectActivity projectActivity = (ProjectActivity) activitiesList.getSelectionModel().getSelectedItem();
+        LocalDate chosenDay = datePicker.getValue();
+
+        try {
+
+            int minutes = Integer.parseInt(time[0]) * 60 + Integer.parseInt(time[1]);
+
+            pms.getCurrentEmployee().registerWorkHours(projectActivity, minutes, chosenDay);
+
+        } catch (NoAccessException | TooManyHoursException | NegativeHoursException e) {
+            Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
+            error.showAndWait();
+        } catch (Exception e) {
+            Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, "Something went wrong converting your input.");
+            error.showAndWait();
+        }
+
+        updateTotalMinutesOnDay(chosenDay);
+    }
+
+    private void updateTotalMinutesOnDay(LocalDate day) {
+        controlHoursPane.setTotalMinutesOnDay(pms.getCurrentEmployee().getTotalRegisteredMinutesOnDay(day));
+
     }
 }
