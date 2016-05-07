@@ -102,13 +102,8 @@ public class Employee {
 			if(empWorkQuery.isPresent()) {
 				int deltaMinutes = minutes - empWorkQuery.get().getMinutes();
 
-				if(workRegisteredThisDay + deltaMinutes > 1440) {
-					throw new TooManyHoursException("You can not work more than 24 hours in one day.");
-				}
-
 				empWorkQuery.get().addWork(deltaMinutes);
 			} else {
-
 				if(workRegisteredThisDay + minutes > 1440) {
 					throw new TooManyHoursException("You can not work more than 24 hours in one day.");
 				}
