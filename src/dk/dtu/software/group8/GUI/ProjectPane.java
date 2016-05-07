@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -55,7 +57,12 @@ public class ProjectPane extends StandardPane {
      */
     private void extractWorkReport() {
         try {
-            pms.extractWorkReport(project);
+
+
+            //Open file in your browser:
+            File file = new File(pms.extractWorkReport(project));
+            Desktop.getDesktop().browse(file.toURI());
+
         } catch (IOException e) {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setHeaderText("Something went wrong!");

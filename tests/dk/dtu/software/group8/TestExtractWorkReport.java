@@ -5,12 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.naming.InvalidNameException;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
@@ -39,13 +37,13 @@ public class TestExtractWorkReport  extends TestManageProject {
      * Created by Morten
      */
     @Test
-    public void extractReport() throws IOException {
-        WorkReport DankReport = new WorkReport(pms, project);
-        DankReport.make();
-        String fileName = "Not available" + pms.getDate();
-        assertThat(DankReport.getFileName(),is(equalTo(fileName)));
+    public void extractReport() throws Exception {
+        String reportName = pms.extractWorkReport(project);
+        String actualName = "Not available" + pms.getDate() + ".html";
 
-        byte[] file1Bytes = Files.readAllBytes(Paths.get(DankReport.getFileName() + ".html"));
+        assertThat(reportName, is(equalTo(actualName)));
+
+        byte[] file1Bytes = Files.readAllBytes(Paths.get(reportName));
         byte[] file2Bytes = Files.readAllBytes(Paths.get("TestWorkReport1.html"));
 
         String file1 = new String(file1Bytes, StandardCharsets.UTF_8);

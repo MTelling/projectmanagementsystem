@@ -3,12 +3,9 @@ package dk.dtu.software.group8;
 import dk.dtu.software.group8.Exceptions.*;
 
 import javax.naming.InvalidNameException;
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.List;
 
 /**
  * Created by Marcus
@@ -259,14 +256,14 @@ public class PManagementSystem {
     /**
      * Created by Tobias
      */
-    public void extractWorkReport(Project project) throws IOException, NoAccessException {
+    public String extractWorkReport(Project project) throws IOException, NoAccessException {
+        String workReportPath = null;
         if (this.manageProject(project)) {
             WorkReport workReport = new WorkReport(this, project);
-            String workReportPath = workReport.make();
-            //Open file in your browser:
-            File file = new File(workReportPath);
-            Desktop.getDesktop().browse(file.toURI());
+            workReportPath = workReport.make();
         }
+
+        return workReportPath;
     }
 
     /**
