@@ -88,7 +88,7 @@ public class PManagementSystem {
     
     public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
     	if(this.manageProject(project)) {
-    		return project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate(), approximatedHours, project);
+    		return project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate().plusDays(6), approximatedHours, project);
     	} else {
     		return null;
     	}
@@ -136,7 +136,7 @@ public class PManagementSystem {
                 }
 
                 if(endWeek != null && (endWeek.equals(startWeek) || endWeek.isAfter(startWeek))) {
-                    activity.setEndDate(endWeek.toLocalDate());
+                    activity.setEndDate(endWeek.toLocalDate().plusDays(6));
                 } else {
                     throw new WrongDateException("End Week is not allowed to be before Start Week!");
                 }
