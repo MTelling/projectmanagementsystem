@@ -13,9 +13,6 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Morten on 30/04/16.
- */
 public class EmployeeActivitiesOverview extends BorderPane {
     private PManagementSystem pms;
     private TableView<Test> table;

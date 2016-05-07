@@ -4,9 +4,6 @@ import dk.dtu.software.group8.PManagementSystem;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-/**
- * Created by Morten on 25/04/16.
- */
 public class Driver extends Application {
 
     private PManagementSystem pms;

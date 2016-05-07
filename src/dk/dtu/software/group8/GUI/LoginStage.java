@@ -18,9 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * Created by Morten on 25/04/16.
- */
 public class LoginStage extends Stage {
 
     private PManagementSystem pms;
