@@ -1,12 +1,9 @@
 package dk.dtu.software.group8;
 
-import org.mockito.cglib.core.Local;
-
-import java.io.*;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,7 +80,7 @@ public class WorkReport {
     /**
      * Created by Marcus
      */
-    public void make() throws IOException {
+    public String make() throws IOException {
         //All data is collected
         //Begin file processing
 
@@ -214,6 +211,8 @@ public class WorkReport {
 
         writer.println(post);
         writer.close();
+
+        return this.fileName + ".html";
     }
 
     /**

@@ -40,6 +40,15 @@ public class ProjectsPane extends StandardPane {
     /**
      * Created by Tobias
      */
+    @Override
+    public void toFront() {
+        super.toFront();
+        refresh();
+    }
+
+    /**
+     * Created by Morten
+     */
     public void refresh() {
         ObservableList<Project> obsProjects = FXCollections.observableList(pms.getProjects());
         projectListView.setItems(obsProjects);

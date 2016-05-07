@@ -117,13 +117,6 @@ public class Project {
     }
 
     /**
-     * Created by Tobias
-     */
-    public String extractReport() {
-        return null;
-    }
-
-    /**
      * Created by Marcus
      */
     public String toString() {
