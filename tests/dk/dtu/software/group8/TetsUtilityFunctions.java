@@ -1,8 +1,6 @@
 package dk.dtu.software.group8;
 
-import dk.dtu.software.group8.Exceptions.NoAccessException;
-import dk.dtu.software.group8.Exceptions.WrongDateException;
-import org.junit.Before;
+import dk.dtu.software.group8.Exceptions.*;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -14,6 +12,27 @@ import static org.junit.Assert.assertThat;
 
 public class TetsUtilityFunctions extends TestManageProject {
 
+    @Test
+    public void testGetWorkedMinutes() throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed, TooManyHoursException, NegativeHoursException {
+        LocalDate date = LocalDate.parse("2016-05-09");
+        ProjectActivity testActivityHours = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 25), 42);
+
+        pms.addEmployeeToActivity(project, testActivityHours, emp);
+
+        emp.registerWorkHours(testActivityHours,60,date);
+        for(int i = 1; i <= 7; i++) {
+            emp.registerWorkHours(testActivityHours,i*30,date.minusDays(i));
+        }
+
+        assertThat(emp.getTotalRegisteredMinutesOnActivity(testActivityHours),is(equalTo(900)));
+        assertThat(emp.getTotalRegisteredMinutesOnDayAndActivityPastWeek(date.minusDays(1), testActivityHours), is(equalTo(840)));
+        assertThat(emp.getTotalRegisteredMinutesOnDayAndActivityPastWeek(date, testActivityHours), is(equalTo(690)));
+
+        assertThat(testActivityHours.getTotalRegisteredMinutes(),is(equalTo(900)));
+        assertThat(testActivityHours.getTotalRegisteredMinutesOnDay(date.minusDays(7)), is(equalTo(210)));
+        assertThat(testActivityHours.getTotalRegisteredMinutesPastWeek(date), is(equalTo(690)));
+
+    }
 
     @Before
     public void setupProjectDates() throws NoAccessException, WrongDateException {

@@ -127,6 +127,23 @@ public class Employee {
         return workRegisteredThisDay;
     }
 
+    public int getTotalRegisteredMinutesOnDayAndActivityPastWeek(LocalDate day, ProjectActivity activity) {
+        int result = 0;
+        for(int i = 0; i < 7; i++) {
+            result += getTotalRegisteredMinutesOnDayAndActivity(day.minusDays(i), activity);
+        }
+        return result;
+    }
+
+    public int getTotalRegisteredMinutesOnActivity(ProjectActivity activity) {
+        int result = 0;
+
+        for(RegisteredWork empWork : this.registeredWork) {
+            result += empWork.getMinutes();
+        }
+        return result;
+    }
+
     public int getTotalRegisteredMinutesOnDayAndActivity(LocalDate day, ProjectActivity activity) {
         Optional<RegisteredWork> empWorkQuery = getRegisteredWorkOnDateAndActivity(activity, day);
         int totalMinutes = 0;

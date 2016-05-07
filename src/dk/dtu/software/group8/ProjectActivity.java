@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ProjectActivity extends  Activity {
 
@@ -40,6 +41,48 @@ public class ProjectActivity extends  Activity {
         this.assignedEmployees = new ArrayList<>();
         this.assignedConsultants = new ArrayList<>();
     }
+
+    public List<RegisteredWork> getRegisteredWorkOnDate(LocalDate day) {
+        List<RegisteredWork> empWorkDayQuery = this.registeredWork
+                .stream()
+                .filter(
+                        e -> (e.getDay().equals(day))
+                )
+                .collect(Collectors.toList());
+
+        return empWorkDayQuery;
+    }
+
+    public int getTotalRegisteredMinutesOnDay(LocalDate day) {
+        List<RegisteredWork> empWorkDayQuery = getRegisteredWorkOnDate(day);
+        int workRegisteredThisDay = 0;
+        for(RegisteredWork work : empWorkDayQuery) {
+            workRegisteredThisDay += work.getMinutes();
+        }
+
+        return workRegisteredThisDay;
+    }
+
+    public int getTotalRegisteredMinutesPastWeek(LocalDate day) {
+        int result = 0;
+        for(int i = 0; i < 7; i++) {
+            result += getTotalRegisteredMinutesOnDay(day.minusDays(i));
+        }
+        return result;
+    }
+
+    public int getTotalRegisteredMinutes() {
+        int result = 0;
+        for(RegisteredWork work : this.registeredWork) {
+            result += work.getMinutes();
+        }
+        return result;
+    }
+
+
+/*    public int getTotalRegisteredMinutesPastWeek() {
+        return getTotalRegisteredMinutesPastWeek(LocalDate.now());
+    }*/
 
     public int getApproximatedHours() {
         return this.approximatedHours;
