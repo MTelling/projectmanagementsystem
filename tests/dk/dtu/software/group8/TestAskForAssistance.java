@@ -23,14 +23,14 @@ public class TestAskForAssistance extends TestManageProject {
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
 
-    @Test // Start and end time in the future
-    public void testA() throws NoAccessException, InvalidEmployeeException {
+    @Test // Add employee as consultant
+    public void testA() throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
         pms.addEmployeeToActivityAsConsultant(activity, pms.getEmployees().get(1));
         assertThat(activity.getConsultants(), hasItem(pms.getEmployees().get(1)));
     }
 
     @Test // Current user not assigned to activity
-    public void testB() throws NoAccessException, InvalidEmployeeException {
+    public void testB() throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
         expectedEx.expect(NoAccessException.class);
         expectedEx.expectMessage("Current user is not assigned to this activity.");
 
@@ -50,5 +50,15 @@ public class TestAskForAssistance extends TestManageProject {
         assertThat(activity.getEmployees(), hasItem(pms.getEmployees().get(1)));
 
         pms.addEmployeeToActivityAsConsultant(activity, pms.getEmployees().get(1));
+    }
+
+
+    @Test
+    public void testD() throws Exception {
+        expectedEx.expect(EmployeeAlreadyAddedException.class);
+        expectedEx.expectMessage("Employee is already added as consultant.");
+
+        testA();
+        testA();
     }
 }

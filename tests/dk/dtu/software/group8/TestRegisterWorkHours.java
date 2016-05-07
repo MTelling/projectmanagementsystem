@@ -179,14 +179,6 @@ public class TestRegisterWorkHours {
 
         pms.registerWorkHours(activity, (-6)*60, pastDate);
 
-        //TODO: SHouldn't we just stop when we know we will get an exception?
-//        assertThat(pms.getCurrentEmployee().getRegisteredWork().isEmpty(), is(false));
-//        assertThat(pms.getCurrentEmployee().getRegisteredWork().get(0).getDay(), is(pastDate));
-//        assertThat(pms.getCurrentEmployee().getRegisteredWork().get(0).getMinutes(), is(6*60));
-//        assertThat(activity.getRegisteredWork().isEmpty(), is(false));
-//        assertThat(activity.getRegisteredWork().get(0), is(equalTo(pms.getCurrentEmployee().getRegisteredWork().get(0))));
-//
-//        pms.registerWorkHours(activity, (-7)*60, pastDate);
     }
 
     //TODO: Do we test for multiple entries on same day and same activity?

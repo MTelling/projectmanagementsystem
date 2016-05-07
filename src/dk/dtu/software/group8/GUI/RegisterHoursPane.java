@@ -102,7 +102,11 @@ public class RegisterHoursPane extends StandardPane {
 //        });
 //    }
 
-
+    @Override
+    public void toFront() {
+        super.toFront();
+        updateDate();
+    }
 
     private void updateDate() {
 

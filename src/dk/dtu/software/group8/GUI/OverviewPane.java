@@ -27,7 +27,7 @@ public class OverviewPane extends StandardPane {
         CreatePersonalActivityPane createPersonalActivityPane = new CreatePersonalActivityPane(pms, this);
 
 
-        addTitleToCenterContainer("Current project activities");
+        addTitleToCenterContainer("All project activities");
         addNewExpandingChildToCenterContainer(employeeActivitiesTableView);
         addTitleToCenterContainer("All personal activities");
         addNewExpandingChildToCenterContainer(personalActivitiesListView);

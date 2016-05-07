@@ -57,13 +57,25 @@ public class PManagementSystem {
         return this.manageProject(project) && project.addEmployeeToActivity(activity, employee);
     }
 
-    public boolean changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
-    	if(this.manageProject(project))  {
-    		project.setName(name);
-    		return true;
-    	} else {
-    		return false;
-    	}
+    public void changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
+    	if(this.manageProject(project)) {
+
+            Optional<Project> projectsQuery = projects
+                    .stream()
+                    .filter(p -> {
+                        if (p.getName() != null) {
+                            return p.getName().equals(name);
+                        } else {
+                            return false;
+                        }
+                    }).findAny();
+
+            if (!projectsQuery.isPresent()) {
+                project.setName(name);
+            } else { //If there is already a project with the same name throw an exception.
+                throw new InvalidNameException("Name is already assigned to another project.");
+            }
+        }
     }
     
     public boolean manageProjectDates(Project project, LocalDate startDate, LocalDate endDate) throws NoAccessException, WrongDateException {
@@ -119,6 +131,7 @@ public class PManagementSystem {
 
     //TODO: Can we put this inside the project class?
     //TODO: Now an activity has it's project, this could be done simpler. Just remove the project parameter.
+    // (y)
     public boolean manageActivityDates(Project project, Activity activity, YearWeek startWeek, YearWeek endWeek) throws IncorrectAttributeException, NoAccessException, WrongDateException {
         if(this.manageProject(project)) {
             if(!project.getActivities().contains(activity)) {
@@ -142,6 +155,7 @@ public class PManagementSystem {
                 }
 
                 //TODO: This could be added, but makes a lot of other tests fail.
+                //Tager vi til sidst sammen.
 //                if (startWeek != null && startWeek.isBefore(YearWeek.fromDate(project.getStartDate()))) {
 //                    throw new WrongDateException("The given end week exceeds the duration of the project.");
 //                }
@@ -196,11 +210,14 @@ public class PManagementSystem {
 
     }
 
-    public boolean addEmployeeToActivityAsConsultant(ProjectActivity activity, Employee employee) throws NoAccessException, InvalidEmployeeException {
+    public boolean addEmployeeToActivityAsConsultant(ProjectActivity activity, Employee employee)
+            throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
         if(!this.userLoggedIn()) {
             throw new NoAccessException("User is not logged in.");
         } else if(!activity.getEmployees().contains(this.currentEmployee)) {
             throw new NoAccessException("Current user is not assigned to this activity.");
+        } else if (activity.getConsultants().contains(employee)) {
+            throw new EmployeeAlreadyAddedException("Employee is already added as consultant.");
         } else if (!this.db.getEmployees().contains(employee)) {
             //TODO: Would we ever get here? Maybe pass the employee as a name instead and let pms find the emp?
             throw new InvalidEmployeeException("No employee with that name is in the system.");

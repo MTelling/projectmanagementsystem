@@ -74,6 +74,27 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     }
 
 
-    //TODO: Test for adding employee to activity if he is already a consultant? Right now it's possible.
+    @Test
+    public void testAddEmpAsEmployeeIfAlreadyAssignedAsConsultant() throws Exception {
+        Employee emp = pms.getEmployeeFromId("toli");
+
+        //Add current employee to activity so he can add consultants
+        pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
+
+        //Add emp as consultant
+        pms.addEmployeeToActivityAsConsultant(activity, emp);
+
+        //Check that he has been set as consultant.
+        assertThat(activity.getConsultants(), hasItem(emp));
+
+        //Add employee to activity
+        pms.addEmployeeToActivity(project, activity, emp);
+
+        //Ensure that he is no longer a consultant, but is an employee now.
+        assertThat(activity.getEmployees(), hasItem(emp));
+        assertThat(activity.getConsultants(), not(hasItem(emp)));
+    }
+
+
 
 }

@@ -49,6 +49,11 @@ public class ProjectActivity extends  Activity {
         if (assignedEmployees.contains(employee)) {
             throw new EmployeeAlreadyAddedException("That employee has already been assigned to the activity.");
         }
+
+        if (assignedConsultants.contains(employee)) {
+            assignedConsultants.remove(employee);
+        }
+
         if(employee.assignToActivity(this)) {
             assignedEmployees.add(employee);
             return true;

@@ -1,13 +1,16 @@
 package dk.dtu.software.group8;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import javax.naming.InvalidNameException;
-
+import dk.dtu.software.group8.Exceptions.AlreadyAssignedProjectManagerException;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Test;
 
-import dk.dtu.software.group8.Exceptions.NoAccessException;
+import javax.naming.InvalidNameException;
+import java.time.LocalDate;
+
+import static junit.framework.TestCase.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class TestChangeProjectName extends TestManageProject{
 
@@ -57,40 +60,38 @@ public class TestChangeProjectName extends TestManageProject{
         pms.changeNameOfProject(project, name);
     }
 
-    //TODO: The project itself does not know other projects names. We must do this through PManagementSystem
-//    @Test //Test for duplicate name
-//    public void testChangeNameF() {
-//        expectedEx.except(InvalidNameException.class);
-//        expectedEx.expectMessage("Name is already assigned to another project.");
-//
-//        String name = "Test";
-//        pms.changeNameOfProject(project, name);
-//        assertEquals(project.getId(), name);
-//
-//        //Create a second project.
-//        Calendar startDate = new GregorianCalendar(2016, Calendar.MAY, 10);
-//        Calendar endDate = new GregorianCalendar(2016, Calendar.JUNE, 10);
-//        Project secondProject = pms.createProject(startDate, endDate);
-//        pms.assignManagerToProject(secondProject, emp);
-//
-//        pms.changeNameOfProject(project, name);
-//    }
-//
+    @Test //Test for duplicate name
+    public void testChangeNameF() throws NoAccessException, InvalidNameException, WrongDateException, AlreadyAssignedProjectManagerException {
+        expectedEx.expect(InvalidNameException.class);
+        expectedEx.expectMessage("Name is already assigned to another project.");
 
-    //TODO: The project knows who the project manager is, but not who the current user is.
-//    @Test //User is not project manager.
-//    public void testChangeNameG() {
-//        expectedEx.expect(NoAccessException.class);
-//        expectedEx.expectMessage("Current user is not Project Manager for this project.");
-//
-//        //Set the current employee to one who is not
-//        pms.signIn(db.getEmployees()[1]);
-//        assertEquals(pms.getCurrentEmployee().getId(), db.getEmployees()[1]);
-//
-//        //Try to change project name.
-//        pms.changeNameOfProject(project, "Test");
-//    }
-//
+        String name = "Test";
+        pms.changeNameOfProject(project, name);
+        assertEquals(project.getName(), name);
+
+        //Create a second project.
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-06-10");
+        Project secondProject = pms.createProject(startDate, endDate);
+        pms.assignManagerToProject(secondProject);
+
+        pms.changeNameOfProject(project, name);
+    }
+
+    @Test //User is not project manager.
+    public void testChangeNameG() throws NoAccessException, InvalidNameException {
+        expectedEx.expect(NoAccessException.class);
+        expectedEx.expectMessage("Current user is not Project Manager for this project.");
+
+        //Set the current employee to one who is not
+        pms.signIn(pms.getEmployees().get(1).getId());
+        assertEquals(pms.getCurrentEmployee().getId(), pms.getEmployees().get(1).getId());
+
+        //Try to change project name.
+        pms.changeNameOfProject(project, "Test");
+    }
+
+
     @Test //Test for too long name
     public void testChangeNameH() throws InvalidNameException, NoAccessException {
         expectedEx.expect(InvalidNameException.class);

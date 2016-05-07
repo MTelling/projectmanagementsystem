@@ -12,11 +12,29 @@ import static org.junit.Assert.assertThat;
 public class TetsUtilityFunctions extends  TestManageProject {
 
     @Test
-    public void testGetEmployeeActivitiesOnDate() throws Exception {
-        LocalDate date = LocalDate.parse("2016-05-11");
+    public void testGetEmployeeActivitiesOnDateDateIsStartDateForActivities() throws Exception {
+        LocalDate date = LocalDate.parse("2016-05-09");
         ProjectActivity activityOnDateOne = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 25), 42);
         ProjectActivity activityOnDateTwo = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 23), 42);
         ProjectActivity activityNotOnDateOne = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 24), new YearWeek(2016, 25), 42);
+
+        pms.addEmployeeToActivity(project, activityOnDateOne, emp);
+        pms.addEmployeeToActivity(project, activityOnDateTwo, emp);
+        pms.addEmployeeToActivity(project, activityNotOnDateOne, emp);
+
+        List<Activity> activitiesOnDate = pms.getEmployeeActivitiesOnDate(emp, date);
+        assertThat(activitiesOnDate, hasItems(activityOnDateOne, activityOnDateTwo));
+    }
+
+    @Test
+    public void testGetEmployeeActivitiesOnDateDateIsEndDateForActivities() throws Exception {
+        LocalDate date = LocalDate.parse("2016-05-26");
+        ProjectActivity activityOnDateOne = pms.createActivityForProject(project, "Implementation",
+                new YearWeek(2016, 19), new YearWeek(2016, 25), 42);
+        ProjectActivity activityNotOnDateOne = pms.createActivityForProject(project, "Implementation",
+                new YearWeek(2016, 19), new YearWeek(2016, 23), 42);
+        ProjectActivity activityOnDateTwo = pms.createActivityForProject(project, "Implementation",
+                new YearWeek(2016, 24), new YearWeek(2016, 25), 42);
 
         pms.addEmployeeToActivity(project, activityOnDateOne, emp);
         pms.addEmployeeToActivity(project, activityOnDateTwo, emp);
@@ -33,6 +51,7 @@ public class TetsUtilityFunctions extends  TestManageProject {
         List<Activity> activitiesOnDate = pms.getEmployeeActivitiesOnDate(emp, date);
         assertThat(activitiesOnDate.isEmpty(), is(true));
     }
+
 
 
     //TODO: Maybe test the functions that get registered work on given date and time here?

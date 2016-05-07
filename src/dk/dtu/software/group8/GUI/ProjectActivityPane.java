@@ -102,7 +102,7 @@ public class ProjectActivityPane extends StandardPane {
             pms.addEmployeeToActivityAsConsultant(projectActivity, emp);
             refresh();
 
-        } catch (NoAccessException | InvalidEmployeeException e) {
+        } catch (NoAccessException | InvalidEmployeeException | EmployeeAlreadyAddedException e) {
             Alert error = new ErrorPrompt(Alert.AlertType.ERROR, e.getMessage());
 
             error.showAndWait();
