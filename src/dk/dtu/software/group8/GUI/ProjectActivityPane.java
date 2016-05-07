@@ -87,7 +87,7 @@ public class ProjectActivityPane extends StandardPane {
             pms.addEmployeeToActivity(project, projectActivity, emp);
             refresh();
 
-        } catch (EmployeeAlreadyAddedException | NoAccessException | TooManyActivitiesException e) {
+        } catch (NullNotAllowed | EmployeeAlreadyAddedException | NoAccessException | TooManyActivitiesException e) {
             Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
             error.showAndWait();
         }

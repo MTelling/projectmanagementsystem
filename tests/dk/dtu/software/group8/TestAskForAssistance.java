@@ -15,7 +15,7 @@ public class TestAskForAssistance extends TestManageProject {
 
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException,
-            TooManyActivitiesException, EmployeeAlreadyAddedException {
+            TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
         activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
         assertThat(activity, is(not(nullValue())));
 
@@ -42,7 +42,7 @@ public class TestAskForAssistance extends TestManageProject {
 
     @Test // Employee already assigned to activity
     public void testC() throws NoAccessException, TooManyActivitiesException,
-            InvalidEmployeeException, EmployeeAlreadyAddedException {
+            InvalidEmployeeException, EmployeeAlreadyAddedException, NullNotAllowed {
         expectedEx.expect(InvalidEmployeeException.class);
         expectedEx.expectMessage("Employee already assigned to activity.");
 

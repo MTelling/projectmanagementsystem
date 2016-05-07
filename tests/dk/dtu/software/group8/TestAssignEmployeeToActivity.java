@@ -20,7 +20,8 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     }
 
     @Test //Correct username, employee is available
-    public void testA() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException{
+    public void testA() throws NoAccessException, TooManyActivitiesException,
+            EmployeeAlreadyAddedException, NullNotAllowed {
         pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
 
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
@@ -51,7 +52,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     }
 
     @Test //Not project manager, but otherwise correct.
-    public void testD() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException {
+    public void testD() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
         expectedEx.expect(NoAccessException.class);
         expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
@@ -64,7 +65,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
 
 
     @Test //Add the same employee twice
-    public void testE() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException {
+    public void testE() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
         expectedEx.expect(EmployeeAlreadyAddedException.class);
         expectedEx.expectMessage("That employee has already been assigned to the activity.");
 
@@ -93,6 +94,16 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         //Ensure that he is no longer a consultant, but is an employee now.
         assertThat(activity.getEmployees(), hasItem(emp));
         assertThat(activity.getConsultants(), not(hasItem(emp)));
+    }
+
+    @Test
+    public void testAddNull() throws TooManyActivitiesException, NoAccessException,
+            EmployeeAlreadyAddedException, NullNotAllowed {
+        expectedEx.expect(NullNotAllowed.class);
+        expectedEx.expectMessage("You need to choose an employee.");
+
+        pms.addEmployeeToActivity(project, activity, null);
+
     }
 
 

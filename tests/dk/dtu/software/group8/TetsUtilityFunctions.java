@@ -2,14 +2,11 @@ package dk.dtu.software.group8;
 
 import org.junit.Test;
 
-import java.rmi.server.ExportException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 public class TetsUtilityFunctions extends TestManageProject {
@@ -31,7 +28,10 @@ public class TetsUtilityFunctions extends TestManageProject {
 
     @Test
     public void testGetEmployeeActivitiesOnDateDateIsEndDateForActivities() throws Exception {
-        LocalDate date = LocalDate.parse("2016-05-26");
+
+        //This is the last day in week 25.
+        LocalDate date = LocalDate.parse("2016-06-26");
+
         ProjectActivity activityOnDateOne = pms.createActivityForProject(project, "Implementation",
                 new YearWeek(2016, 19), new YearWeek(2016, 25), 42);
         ProjectActivity activityNotOnDateOne = pms.createActivityForProject(project, "Implementation",

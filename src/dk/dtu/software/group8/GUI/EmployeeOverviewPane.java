@@ -9,20 +9,19 @@ import javafx.scene.control.Label;
 public class EmployeeOverviewPane extends ControlPane {
 
 
+    private Label empMonthHoursLblRight;
+    private Label empTotalHoursLblRight;
+    private Label empActivityCountLblRight;
+
     public EmployeeOverviewPane(PManagementSystem pms) {
         super(pms, "Overview");
-
-        //TODO: This should get the emps actual hours and activity count.
-        double empTotalHours = 2000.50;
-        double empMonthHours = 140.00;
-        int empActivityCount = 5;
 
         Label empTotalHoursLblLeft = new Label("Total Hours:");
         Label empMonthHoursLblLeft = new Label("Hours this month:");
         Label empActivityCountLblLeft = new Label("Current Activity Count:");
-        Label empTotalHoursLblRight = new Label(Double.toString(empTotalHours));
-        Label empMonthHoursLblRight = new Label(Double.toString(empMonthHours));
-        Label empActivityCountLblRight = new Label(Integer.toString(empActivityCount));
+        empTotalHoursLblRight = new Label("0");
+        empMonthHoursLblRight = new Label("0");
+        empActivityCountLblRight = new Label("0");
 
         Label[] labels = {empTotalHoursLblLeft,
                 empTotalHoursLblRight,
@@ -36,5 +35,11 @@ public class EmployeeOverviewPane extends ControlPane {
             controlsGrid.add(labels[i+1], 1, i);
         }
 
+        update();
+
+    }
+
+    public void update() {
+        empActivityCountLblRight.setText(Integer.toString(pms.getCurrentEmployee().getCurrentActivities().size()));
     }
 }

@@ -17,7 +17,7 @@ public class PManagementSystem {
     public PManagementSystem() throws IOException {
 
         Locale.setDefault(Locale.UK);
-        
+
         dateServer = new DateServer();
 
         db = new DatabaseManager("Employees.txt");
@@ -52,7 +52,13 @@ public class PManagementSystem {
     	project.assignProjectManager(this.currentEmployee);
     }
 
-    public void addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee) throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException {
+    public void addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee)
+            throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
+
+        if (employee == null) {
+            throw new NullNotAllowed("You need to choose an employee.");
+        }
+
         if(this.manageProject(project))
             project.addEmployeeToActivity(activity, employee);
     }
