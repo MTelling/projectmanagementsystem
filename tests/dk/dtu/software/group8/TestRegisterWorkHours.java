@@ -24,7 +24,6 @@ public class TestRegisterWorkHours {
     LocalDate pastDate;
     LocalDate futureDate;
 
-    //TODO: Add test for LocalDate after this period.
     YearWeek week21 = new YearWeek(2016, 21);
     YearWeek week22 = new YearWeek(2016, 22);
 
@@ -72,7 +71,7 @@ public class TestRegisterWorkHours {
         activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
-        pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee());
+        pms.addEmployeeToActivity(activity,pms.getCurrentEmployee());
         //project.addEmployeeToActivity(activity, pms.getCurrentEmployee()); // Add employee to an activity
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee())); // Test that employee is assigned to activity
 
@@ -94,7 +93,7 @@ public class TestRegisterWorkHours {
         activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
-        pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee());
+        pms.addEmployeeToActivity(activity,pms.getCurrentEmployee());
         //project.addEmployeeToActivity(activity, pms.getCurrentEmployee()); // Add employee to an activity
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee())); // Test that employee is assigned to activity
 
@@ -124,7 +123,7 @@ public class TestRegisterWorkHours {
         activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
-        pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee()); // Add employee to an activity
+        pms.addEmployeeToActivity(activity,pms.getCurrentEmployee()); // Add employee to an activity
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee())); // Test that employee is assigned to activity
 
         pms.registerWorkHours(activity, 25*60, pastDate);
@@ -140,7 +139,7 @@ public class TestRegisterWorkHours {
         activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
-        pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee()); // Add employee to an activity
+        pms.addEmployeeToActivity(activity,pms.getCurrentEmployee()); // Add employee to an activity
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee())); // Test that employee is assigned to activity
 
         pms.registerWorkHours(activity, 12*60, pastDate);
@@ -159,8 +158,8 @@ public class TestRegisterWorkHours {
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
         assertThat(secondActivity, is(not(nullValue()))); // Test that activity is created
 
-        pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee()); // Add employee to an activity
-        pms.addEmployeeToActivity(project,secondActivity,pms.getCurrentEmployee()); // Add employee to an activity
+        pms.addEmployeeToActivity(activity,pms.getCurrentEmployee()); // Add employee to an activity
+        pms.addEmployeeToActivity(secondActivity,pms.getCurrentEmployee()); // Add employee to an activity
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee())); // Test that employee is assigned to activity
 
         pms.registerWorkHours(activity, 12*60, pastDate);
@@ -176,7 +175,7 @@ public class TestRegisterWorkHours {
         activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
-        pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee()); // Add employee to an activity
+        pms.addEmployeeToActivity(activity,pms.getCurrentEmployee()); // Add employee to an activity
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee())); // Test that employee is assigned to activity
 
         pms.registerWorkHours(activity, 12*60, pastDate);

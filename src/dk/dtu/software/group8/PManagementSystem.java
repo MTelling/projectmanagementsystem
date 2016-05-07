@@ -52,12 +52,14 @@ public class PManagementSystem {
     	project.assignProjectManager(this.currentEmployee);
     }
 
-    public void addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee)
+    public void addEmployeeToActivity(ProjectActivity activity, Employee employee)
             throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
 
         if (employee == null) {
             throw new NullNotAllowed("You need to choose an employee.");
         }
+
+        Project project = activity.getProject();
 
         if(this.manageProject(project))
             project.addEmployeeToActivity(activity, employee);
@@ -140,8 +142,6 @@ public class PManagementSystem {
         }
     }
 
-    //TODO: Can we put this inside the project class?
-    //TODO: Now an activity has it's project, this could be done simpler. Just remove the project parameter.
     public void manageActivityDates(ProjectActivity activity, YearWeek startWeek, YearWeek endWeek) throws IncorrectAttributeException, NoAccessException, WrongDateException {
         if(this.manageProject(activity.getProject())) {
             if(startWeek != null && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
@@ -194,8 +194,6 @@ public class PManagementSystem {
     }
 
     public boolean signIn(String iD) {
-        //TODO: This could be done smarter with the help of getEmployeeFromId. We should look on that. It should probably just throw the same exception.
-
         Optional<Employee> emp = db.getEmployees().stream().filter(e -> e.getId().equals(iD)).findFirst();
 
         if (emp.isPresent()) {
@@ -254,14 +252,14 @@ public class PManagementSystem {
         return activitiesOnDate;
     }
 
-    public void changeActivityApproximatedHours(Project project, ProjectActivity activity, int hours) throws NoAccessException, NegativeHoursException {
-        if(this.manageProject(project))
-            activity.changeApproximatedHours(hours);
+    public void changeActivityApproximatedHours(ProjectActivity projectActivity, int hours) throws NoAccessException, NegativeHoursException {
+        if(this.manageProject(projectActivity.getProject()))
+            projectActivity.changeApproximatedHours(hours);
     }
 
-    public void removeActivityFromProject(Project project, ProjectActivity projectActivity) throws NoAccessException, InvalidActivityException {
-        if(this.manageProject(project))
-            project.removeActivity(projectActivity);
+    public void removeActivityFromProject(ProjectActivity projectActivity) throws NoAccessException, InvalidActivityException {
+        if(this.manageProject(projectActivity.getProject()))
+            projectActivity.getProject().removeActivity(projectActivity);
     }
 
     public void removePersonalActivity(PersonalActivity personalActivity) throws InvalidActivityException {

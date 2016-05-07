@@ -76,7 +76,6 @@ public class ProjectPane extends StandardPane {
             ProjectActivity projectActivity = (ProjectActivity) activitiesListView.getSelectionModel().getSelectedItem();
             if (projectActivity != null) {
                 projectActivityPane.setProjectPane(this);
-                projectActivityPane.setProject(project);
                 projectActivityPane.setProjectActivity(projectActivity);
                 projectActivityPane.toFront();
             }
@@ -89,7 +88,6 @@ public class ProjectPane extends StandardPane {
     }
 
     public void refresh() {
-        //TODO: Do this smarter.
         obsActivities = FXCollections.observableList(project.getActivities());
         activitiesListView.setItems(obsActivities);
 

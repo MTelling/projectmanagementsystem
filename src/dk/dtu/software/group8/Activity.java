@@ -8,7 +8,6 @@ public abstract class Activity {
     protected LocalDate startTime, endTime;
 
     public boolean isTimePeriodInActivityDuration(LocalDate startDate, LocalDate endDate) {
-        //TODO: TEST THIS THOROUGHLY
         return (startDate.isAfter(startTime) && startDate.isBefore(endTime))
                 || (endDate.isAfter(startTime) && endDate.isBefore(endTime))
                 || (endDate.isEqual(endTime))

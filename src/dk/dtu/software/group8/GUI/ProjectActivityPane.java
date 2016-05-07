@@ -3,7 +3,6 @@ package dk.dtu.software.group8.GUI;
 import dk.dtu.software.group8.Employee;
 import dk.dtu.software.group8.Exceptions.*;
 import dk.dtu.software.group8.PManagementSystem;
-import dk.dtu.software.group8.Project;
 import dk.dtu.software.group8.ProjectActivity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,10 +24,9 @@ public class ProjectActivityPane extends StandardPane {
     private ObservableList<Employee> obsAssignedEmpList;
     private boolean setupRight;
 
-    //TODO: Change this when an projectActivity has it's own project
-    private Project project;
     private ObservableList<Employee> obsConsultants;
     private ObservableList<Employee> obsAvailableEmployees;
+    private ManageActivityPane manageActivityPane;
 
 
     public ProjectActivityPane(PManagementSystem pms) {
@@ -54,13 +52,12 @@ public class ProjectActivityPane extends StandardPane {
 
     private void setupRightContainer() {
         //This is the pane that can manage the projectActivity.
-        ManageActivityPane manageActivityPane = new ManageActivityPane(pms, projectActivity);
+        manageActivityPane = new ManageActivityPane(pms, projectActivity);
 
 
         //Create the tools for adding an employee to the activity
         TitlePane addEmployeeTitle = new TitlePane("Add employee to activity", TitleFontSize.MEDIUM);
         employeeComboBox = new ComboBox<>();
-        //TODO: this should only show available employees:
 
         obsAvailableEmployees = null;
 
@@ -79,12 +76,10 @@ public class ProjectActivityPane extends StandardPane {
     }
 
     private void addEmployeeToActivity() {
-        //TODO: Change this once an projectActivity has it's project.
-
         Employee emp = employeeComboBox.getValue();
         try {
 
-            pms.addEmployeeToActivity(project, projectActivity, emp);
+            pms.addEmployeeToActivity(projectActivity, emp);
             refresh();
 
         } catch (NullNotAllowed | EmployeeAlreadyAddedException | NoAccessException | TooManyActivitiesException e) {
@@ -133,15 +128,21 @@ public class ProjectActivityPane extends StandardPane {
     }
 
     public void refresh() {
-        //TODO: Do this smarter!
+
+        //Set everything
+        manageActivityPane.setActivity(projectActivity);
+
         obsAssignedEmpList = FXCollections.observableList(projectActivity.getEmployees());
         assignedEmpListView.setItems(obsAssignedEmpList);
 
         obsConsultants = FXCollections.observableList(projectActivity.getConsultants());
         consultantsListView.setItems(obsConsultants);
 
+
+        //Refresh everything.
         assignedEmpListView.refresh();
         consultantsListView.refresh();
+        manageActivityPane.refresh();
 
         updateAvailableEmployeeList();
 
@@ -164,7 +165,4 @@ public class ProjectActivityPane extends StandardPane {
         this.projectPane = projectPane;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
-    }
 }

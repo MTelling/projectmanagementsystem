@@ -72,36 +72,6 @@ public class RegisterHoursPane extends StandardPane {
     }
 
 
-    //TODO: Do we want the colored cells? It can be done like: http://stackoverflow.com/questions/16880115/javafx-2-2-how-to-force-a-redraw-update-of-a-listview
-//    private void setCellFactoryForListView() {
-//        activitiesListView.setCellFactory(new Callback<ListView<ProjectActivity>, ListCell<ProjectActivity>>(){
-//
-//            @Override
-//            public ListCell<ProjectActivity> call(ListView<ProjectActivity> p) {
-//
-//                ListCell<ProjectActivity> cell = new ListCell<ProjectActivity>(){
-//
-//                    @Override
-//                    protected void updateItem(ProjectActivity projectActivity, boolean empty) {
-//                        super.updateItem(projectActivity, empty);
-//                        if (projectActivity != null) {
-//                            setText(projectActivity.toString());
-//                            System.out.println("Got here");
-//                            if (pms.getCurrentEmployee().getTotalRegisteredMinutesOnDayAndActivity(datePicker.getValue(), projectActivity) > 0) {
-//                                setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
-//                            }
-//                        }
-//                    }
-//
-//
-//
-//                };
-//
-//                return cell;
-//            }
-//        });
-//    }
-
     @Override
     public void toFront() {
         super.toFront();
@@ -125,7 +95,6 @@ public class RegisterHoursPane extends StandardPane {
 
     private void setShownActivity() {
 
-        //TODO: We have a problem regarding the activity times. They don't correspond correctly to the calendar.
         ProjectActivity projectActivity = (ProjectActivity) activitiesListView.getSelectionModel().getSelectedItem();
         LocalDate chosenDay = datePicker.getValue();
 

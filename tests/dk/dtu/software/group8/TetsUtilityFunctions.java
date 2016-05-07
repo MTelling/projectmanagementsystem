@@ -30,9 +30,9 @@ public class TetsUtilityFunctions extends TestManageProject {
         ProjectActivity activityOnDateTwo = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 23), 42);
         ProjectActivity activityNotOnDateOne = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 24), new YearWeek(2016, 25), 42);
 
-        pms.addEmployeeToActivity(project, activityOnDateOne, emp);
-        pms.addEmployeeToActivity(project, activityOnDateTwo, emp);
-        pms.addEmployeeToActivity(project, activityNotOnDateOne, emp);
+        pms.addEmployeeToActivity(activityOnDateOne, emp);
+        pms.addEmployeeToActivity(activityOnDateTwo, emp);
+        pms.addEmployeeToActivity(activityNotOnDateOne, emp);
 
         List<Activity> activitiesOnDate = pms.getEmployeeActivitiesOnDate(emp, date);
         assertThat(activitiesOnDate, hasItems(activityOnDateOne, activityOnDateTwo));
@@ -51,9 +51,9 @@ public class TetsUtilityFunctions extends TestManageProject {
         ProjectActivity activityOnDateTwo = pms.createActivityForProject(project, "Implementation",
                 new YearWeek(2016, 24), new YearWeek(2016, 25), 42);
 
-        pms.addEmployeeToActivity(project, activityOnDateOne, emp);
-        pms.addEmployeeToActivity(project, activityOnDateTwo, emp);
-        pms.addEmployeeToActivity(project, activityNotOnDateOne, emp);
+        pms.addEmployeeToActivity(activityOnDateOne, emp);
+        pms.addEmployeeToActivity(activityOnDateTwo, emp);
+        pms.addEmployeeToActivity(activityNotOnDateOne, emp);
 
         List<Activity> activitiesOnDate = pms.getEmployeeActivitiesOnDate(emp, date);
         assertThat(activitiesOnDate, hasItems(activityOnDateOne, activityOnDateTwo));
@@ -67,9 +67,6 @@ public class TetsUtilityFunctions extends TestManageProject {
         assertThat(activitiesOnDate.isEmpty(), is(true));
     }
 
-
-
-    //TODO: Maybe test the functions that get registered work on given date and time here?
     @Test
     public void testGetRegisteredWorkOnDate() throws Exception {
         LocalDate date = LocalDate.parse("2016-05-09");
@@ -77,8 +74,8 @@ public class TetsUtilityFunctions extends TestManageProject {
         ProjectActivity activityOnDateOne = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 25), 42);
         ProjectActivity activityOnDateTwo = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 23), 42);
 
-        pms.addEmployeeToActivity(project, activityOnDateOne, emp);
-        pms.addEmployeeToActivity(project, activityOnDateTwo, emp);
+        pms.addEmployeeToActivity(activityOnDateOne, emp);
+        pms.addEmployeeToActivity(activityOnDateTwo, emp);
 
         pms.registerWorkHours(activityOnDateOne, 30, date);
         pms.registerWorkHours(activityOnDateTwo, 100, date.minusDays(1));
@@ -98,8 +95,8 @@ public class TetsUtilityFunctions extends TestManageProject {
         ProjectActivity activityOnDateOne = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 25), 42);
         ProjectActivity activityOnDateTwo = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 23), 42);
 
-        pms.addEmployeeToActivity(project, activityOnDateOne, emp);
-        pms.addEmployeeToActivity(project, activityOnDateTwo, emp);
+        pms.addEmployeeToActivity(activityOnDateOne, emp);
+        pms.addEmployeeToActivity(activityOnDateTwo, emp);
 
         pms.registerWorkHours(activityOnDateOne, 30, date);
         pms.registerWorkHours(activityOnDateTwo, 100, date.minusDays(1));
@@ -118,8 +115,8 @@ public class TetsUtilityFunctions extends TestManageProject {
         ProjectActivity activityOnDateOne = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 25), 42);
         ProjectActivity activityOnDateTwo = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 23), 42);
 
-        pms.addEmployeeToActivity(project, activityOnDateOne, emp);
-        pms.addEmployeeToActivity(project, activityOnDateTwo, emp);
+        pms.addEmployeeToActivity(activityOnDateOne, emp);
+        pms.addEmployeeToActivity(activityOnDateTwo, emp);
 
         pms.registerWorkHours(activityOnDateOne, 30, date);
         pms.registerWorkHours(activityOnDateOne, 100, date.minusDays(1));

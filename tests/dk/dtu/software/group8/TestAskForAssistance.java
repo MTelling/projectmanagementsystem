@@ -19,7 +19,7 @@ public class TestAskForAssistance extends TestManageProject {
         activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
         assertThat(activity, is(not(nullValue())));
 
-        pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
+        pms.addEmployeeToActivity(activity, pms.getCurrentEmployee());
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
 
@@ -46,7 +46,7 @@ public class TestAskForAssistance extends TestManageProject {
         expectedEx.expect(InvalidEmployeeException.class);
         expectedEx.expectMessage("Employee already assigned to activity.");
 
-        pms.addEmployeeToActivity(project, activity, pms.getEmployees().get(1));
+        pms.addEmployeeToActivity(activity, pms.getEmployees().get(1));
         assertThat(activity.getEmployees(), hasItem(pms.getEmployees().get(1)));
 
         pms.addEmployeeToActivityAsConsultant(activity, pms.getEmployees().get(1));

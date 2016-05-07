@@ -22,7 +22,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     @Test //Correct username, employee is available
     public void testA() throws NoAccessException, TooManyActivitiesException,
             EmployeeAlreadyAddedException, NullNotAllowed {
-        pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
+        pms.addEmployeeToActivity(activity, pms.getCurrentEmployee());
 
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
@@ -41,7 +41,6 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
 
     }
 
-    //TODO: Should we really have this test? We have exactly the same in TestEndActivity.(Prob. others).
     @Test //Incorrect username
     public void testC() throws InvalidEmployeeException {
         expectedEx.expect(InvalidEmployeeException.class);
@@ -81,7 +80,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         Employee emp = pms.getEmployeeFromId("toli");
 
         //Add current employee to activity so he can add consultants
-        pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
+        pms.addEmployeeToActivity(activity, pms.getCurrentEmployee());
 
         //Add emp as consultant
         pms.addEmployeeToActivityAsConsultant(activity, emp);
@@ -90,7 +89,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         assertThat(activity.getConsultants(), hasItem(emp));
 
         //Add employee to activity
-        pms.addEmployeeToActivity(project, activity, emp);
+        pms.addEmployeeToActivity(activity, emp);
 
         //Ensure that he is no longer a consultant, but is an employee now.
         assertThat(activity.getEmployees(), hasItem(emp));
@@ -103,7 +102,7 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         expectedEx.expect(NullNotAllowed.class);
         expectedEx.expectMessage("You need to choose an employee.");
 
-        pms.addEmployeeToActivity(project, activity, null);
+        pms.addEmployeeToActivity(activity, null);
 
     }
 

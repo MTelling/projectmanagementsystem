@@ -1,6 +1,7 @@
 package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+import dk.dtu.software.group8.Exceptions.NegativeHoursException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.Exceptions.WrongDateException;
 import dk.dtu.software.group8.PManagementSystem;
@@ -21,6 +22,7 @@ public class ManageActivityPane extends ControlPane {
     private final TextField startYearField;
     private final TextField endWeekField;
     private final TextField endYearField;
+    private Label typeField;
     private TextField expectedHoursField;
     private ProjectActivity activity;
 
@@ -37,7 +39,7 @@ public class ManageActivityPane extends ControlPane {
         Label endYearLbl = new Label("End Year:");
 
         //Create text fields and date pickers.
-        Label typeField = new Label(activity.getActivityType());
+        typeField = new Label(activity.getActivityType());
 
         startWeekField = new TextField();
         startYearField = new TextField();
@@ -61,19 +63,19 @@ public class ManageActivityPane extends ControlPane {
         controlsGrid.add(endYearLbl, 0, 5);
         controlsGrid.add(endYearField,1,5);
 
-
-
-        Button endBtn = new Button("End Activity");
         Button saveBtn = new Button("Save Activity");
 
         //Connect controls to buttons
         saveBtn.setOnAction(e -> saveActivity());
 
-        this.addButton(endBtn);
         this.addButton(saveBtn);
-
-        this.update();
     }
+
+
+    public void setActivity(ProjectActivity activity) {
+        this.activity = activity;
+    }
+
 
     private void saveActivity() {
 
@@ -96,20 +98,30 @@ public class ManageActivityPane extends ControlPane {
             error.showAndWait();
         }
 
-        //TODO: Set expected hours.
-        //TODO: Should projectpane be refreshed?
-        //projectPane.refresh();
+        try {
+            int expectedHours = Integer.parseInt(expectedHoursField.getText());
 
+            pms.changeActivityApproximatedHours(activity, expectedHours);
+        } catch (NegativeHoursException | NoAccessException e) {
+            Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
+            error.showAndWait();
+        } catch (Exception e) {
+            Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION,
+                    "You can only type numbers as expected hours!");
+            error.showAndWait();
+        }
 
     }
 
-    private void update() {
+    public void refresh() {
         expectedHoursField.setText(Integer.toString(activity.getApproximatedHours()));
         startWeekField.setText(Integer.toString(activity.getStartWeek()));
         startYearField.setText(Integer.toString(activity.getStartYear()));
 
         endWeekField.setText(Integer.toString(activity.getEndWeek()));
         endYearField.setText(Integer.toString(activity.getEndYear()));
+
+        typeField.setText(activity.getActivityType());
 
     }
 

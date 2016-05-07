@@ -2,6 +2,7 @@ package dk.dtu.software.group8.GUI;
 
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,11 +24,14 @@ public class MenuButton extends VBox {
 
         this.getStyleClass().add("MenuButton");
         this.setAlignment(Pos.CENTER);
-        try { //TODO: this is only done in try/catch because of the possibility of exception.
+        try {
             Image img = new Image(iconPath, BUTTON_SIZE, BUTTON_SIZE, true, true);
             ImageView icon = new ImageView(img);
             this.getChildren().add(icon);
         } catch (Exception e) {
+            Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, "Couldn't load icons for menu buttons.");
+
+            error.showAndWait();
         }
 
         Label label = new Label(name);

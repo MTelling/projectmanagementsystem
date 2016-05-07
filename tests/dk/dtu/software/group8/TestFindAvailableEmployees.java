@@ -42,7 +42,7 @@ public class TestFindAvailableEmployees extends TestManageProject {
         Employee randomEmployee = pms.getEmployees().get(2);
 
         ProjectActivity activityQ = pms.createActivityForProject(project, "Jon Jones", new YearWeek(2016, 19), new YearWeek(2016, 52), 1850);
-        pms.addEmployeeToActivity(project, activityQ, randomEmployee);
+        pms.addEmployeeToActivity(activityQ, randomEmployee);
 
         List<Employee> availableEmployees = pms.findAvailableEmployees(startDate, endDate, activity);
 
@@ -58,7 +58,7 @@ public class TestFindAvailableEmployees extends TestManageProject {
 
         for(int i = 0; i < 20; i++) {
             ProjectActivity activityQ = pms.createActivityForProject(project, "Jon Jones", new YearWeek(2016, 19), new YearWeek(2016, 52), 1850);
-            pms.addEmployeeToActivity(project, activityQ, occupiedEmployee);
+            pms.addEmployeeToActivity(activityQ, occupiedEmployee);
         }
 
         ArrayList<Employee> actualAvailableEmployees = new ArrayList<>(pms.getEmployees());
@@ -93,7 +93,7 @@ public class TestFindAvailableEmployees extends TestManageProject {
 
         Employee occupiedEmployee = pms.getEmployees().get(2);
 
-        pms.addEmployeeToActivity(project, activity, occupiedEmployee);
+        pms.addEmployeeToActivity(activity, occupiedEmployee);
 
         ArrayList<Employee> actualAvailableEmployees = new ArrayList<>(pms.getEmployees());
         actualAvailableEmployees.remove(occupiedEmployee);

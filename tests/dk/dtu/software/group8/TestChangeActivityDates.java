@@ -139,7 +139,7 @@ public class TestChangeActivityDates extends TestManageProject {
 
     @Test
     public void testChangeExpectedHours() throws Exception {
-        pms.changeActivityApproximatedHours(project, activity, 84);
+        pms.changeActivityApproximatedHours(activity, 84);
         assertThat(activity.getApproximatedHours(), is(84));
     }
 
@@ -148,7 +148,7 @@ public class TestChangeActivityDates extends TestManageProject {
         expectedEx.expect(NegativeHoursException.class);
         expectedEx.expectMessage("Approximated hours can not be negative!");
 
-        pms.changeActivityApproximatedHours(project, activity, -42);
+        pms.changeActivityApproximatedHours(activity, -42);
         assertThat(activity.getApproximatedHours(), is(42));
     }
 }

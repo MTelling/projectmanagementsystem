@@ -17,7 +17,7 @@ public class TestRemoveActivity extends TestManageProject {
         ProjectActivity projectActivity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2016, 21), new YearWeek(2016, 22), 42);
         assertThat(project.getActivities(), hasItem(projectActivity));
 
-        pms.removeActivityFromProject(project, projectActivity);
+        pms.removeActivityFromProject(projectActivity);
         assertThat(project.getActivities(), not(hasItem(projectActivity)));
     }
 
@@ -32,7 +32,7 @@ public class TestRemoveActivity extends TestManageProject {
         //Log in as different employee
         pms.signIn(pms.getEmployees().get(1).getId());
 
-        pms.removeActivityFromProject(project, projectActivity);
+        pms.removeActivityFromProject(projectActivity);
         assertThat(project.getActivities(), hasItem(projectActivity));
     }
 
@@ -42,7 +42,7 @@ public class TestRemoveActivity extends TestManageProject {
         expectedEx.expectMessage("The activity does not belong to the project!");
 
         ProjectActivity projectActivity = new ProjectActivity("Unit Testing", new YearWeek(2016, 42).toLocalDate(), new YearWeek(2016, 45).toLocalDate(), 42, project);
-        pms.removeActivityFromProject(project, projectActivity);
+        pms.removeActivityFromProject(projectActivity);
     }
 
     @Test

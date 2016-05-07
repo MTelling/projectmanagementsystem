@@ -74,7 +74,7 @@ public class Driver extends Application {
                             YearWeek.fromDate(LocalDate.now().plusDays(40)),
                             20);
 
-                    pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
+                    pms.addEmployeeToActivity(activity, pms.getCurrentEmployee());
 
                 } catch (Exception e) {
                     Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
@@ -122,7 +122,7 @@ public class Driver extends Application {
                         YearWeek.fromDate(LocalDate.now().plusDays(40)),
                         20);
 
-                pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
+                pms.addEmployeeToActivity(activity, pms.getCurrentEmployee());
 
 
             } catch (Exception e) {

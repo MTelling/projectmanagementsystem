@@ -16,7 +16,6 @@ import java.util.List;
 public class EmployeeActivitiesTableView extends TableView {
 
     public EmployeeActivitiesTableView(List<ProjectActivity> activityList) {
-        //TODO: Should take the current activities from user from pms.
         ObservableList<ProjectActivity> obsActivities = FXCollections.observableList(activityList);
 
         //Set uneditable and nonclickable.

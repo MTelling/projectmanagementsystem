@@ -51,8 +51,6 @@ public class OverviewPane extends StandardPane {
 
 
     public void refresh() {
-
-        //TODO: do this smarter?
         obsPersonalActivities = FXCollections.observableList(pms.getCurrentEmployee().getPersonalActivities());
         personalActivitiesListView.setItems(obsPersonalActivities);
 
