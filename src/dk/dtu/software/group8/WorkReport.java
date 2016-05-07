@@ -13,16 +13,20 @@ import java.util.regex.Pattern;
 
 public class WorkReport {
 
+    private PManagementSystem pms;
     private Project project;
     private String projectName;
+    private String fileName;
 
-    public WorkReport(Project project) throws IOException {
+    public WorkReport(PManagementSystem pms, Project project) throws IOException {
+        this.pms = pms;
         this.project = project;
         if(project.getName() == null) {
             this.projectName = "Not available";
         } else {
             this.projectName = project.getName();
         }
+        fileName = projectName + pms.getDate().toString();
     }
 
     private static String subForData(String str, String[] tags, Map<String, String> data) {
@@ -40,7 +44,6 @@ public class WorkReport {
 
         //Go through all the lines
         for (int i = 0; i < strLines.length; i++) {
-            System.out.println(i + ": " + strLines[i]);
             // Look for the tags
             Matcher tagsMatcher = betweenTags.matcher(strLines[i]);
 
@@ -62,6 +65,10 @@ public class WorkReport {
             result += "\n";
         }
         return result;
+    }
+
+    public String getFileName() {
+        return this.fileName;
     }
 
     public void make() throws IOException {
@@ -152,26 +159,23 @@ public class WorkReport {
         //Specify tags
         String[] tags = new String[]{"{%", "%}"};
 
-        //Generate filename
-        String fileName = projectName + LocalDate.now().toString();
-
         //Generate file
         PrintWriter writer = new PrintWriter(fileName + ".html", "UTF-8");
 
         //Make general data set
         Map<String, String> generalData = new HashMap<>();
         generalData.put("PROJECT_NAME", this.projectName);
-        generalData.put("DATE", LocalDate.now().toString());
+        generalData.put("DATE", pms.getDate().toString());
 
         writer.println(subForData(pre, tags, generalData));
-
-        for (ProjectActivity activity : project.getActivities()) {
+        for(int i = 0; i < project.getActivities().size(); i++) {
+            ProjectActivity activity = project.getActivities().get(i);
             Map<String, String> activityData = new HashMap<>();
             activityData.put("ACTIVITY_NAME", activity.getActivityType());
             activityData.put("ACTIVITY_EXP_HOURS", "" + activity.getApproximatedHours());
             activityData.put("ACTIVITY_HOURS_SPENT", "" + (activity.getTotalRegisteredMinutes() / 60));
-            activityData.put("ACTIVITY_HOURS_WEEK", "" + (activity.getTotalRegisteredMinutesPastWeek() / 60));
-            activityData.put("ACTIVITY_ID", "" + System.identityHashCode(activity));
+            activityData.put("ACTIVITY_HOURS_WEEK", "" + (activity.getTotalRegisteredMinutesPastWeek(pms.getDate()) / 60));
+            activityData.put("ACTIVITY_ID", "" + i);
 
             writer.println(subForData(activityPart1, tags, activityData));
 
@@ -179,7 +183,7 @@ public class WorkReport {
             for (Employee employee : activity.getEmployees()) {
                 Map<String, String> employeeData = new HashMap<>();
                 String empName = employee.getFirstName() + " " + employee.getLastName();
-                String empWorkThisWeek = "" + employee.getTotalRegisteredMinutesOnDayAndActivityPastWeek(activity);
+                String empWorkThisWeek = "" + employee.getTotalRegisteredMinutesOnDayAndActivityPastWeek(pms.getDate(),activity);
                 String empWorkTotal = "" + employee.getTotalRegisteredMinutesOnActivity(activity);
                 employeeData.put("EMPLOYEE_NAME", empName);
                 employeeData.put("EMP_HOURS_WEEK", empWorkThisWeek);
@@ -193,7 +197,7 @@ public class WorkReport {
             for (Employee employee : activity.getConsultants()) {
                 Map<String, String> employeeData = new HashMap<>();
                 String empName = employee.getFirstName() + " " + employee.getLastName();
-                String empWorkThisWeek = "" + employee.getTotalRegisteredMinutesOnDayAndActivityPastWeek(activity);
+                String empWorkThisWeek = "" + employee.getTotalRegisteredMinutesOnDayAndActivityPastWeek(pms.getDate(),activity);
                 String empWorkTotal = "" + employee.getTotalRegisteredMinutesOnActivity(activity);
                 employeeData.put("EMPLOYEE_NAME", empName);
                 employeeData.put("EMP_HOURS_WEEK", empWorkThisWeek);

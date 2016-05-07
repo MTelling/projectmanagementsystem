@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<title>Not available 2016-05-09</title>
+
+		<script>
+		function ShowHide(body_id){
+		var TBody
+
+		TBody = document.getElementById(body_id);
+
+		if(!TBody) return true;
+
+		if (TBody.style.display=="none") {
+		 TBody.style.display="block"
+		 } 
+		else {
+		 TBody.style.display="none"
+		 }
+
+		return true;
+		}
+		</script>
+
+
+
+	</head>
+
+	<body>
+		<center><h1>Not available</h1></center>
+		<br />
+		<br />
+
+		<center><h3>Activities</h3></center>
+		<br />
+
+		<table border="1">
+		  <tr>
+		    <th colspan="2">Implementation</th>
+		  </tr>
+		  <tr>
+		    <td colspan="2">Hours</td>
+		  </tr>
+		  <tr>
+		    <td>Expected</td>
+		    <td>42</td>
+		  </tr>
+		  <tr>
+		    <td>Hours spent total</td>
+		    <td>0</td>
+		  </tr>
+		  <tr>
+		    <td>Hours spent past week</td>
+		    <td>0</td>
+		  </tr>
+
+		</table>
+		  <table border ="1">
+
+		  <tr><td><a href="#" onClick="ShowHide('0')">Show employee data</a></td></tr>
+
+			<tbody id = "0" style="display: none;">
+
+			 <tr>
+			 <th>Employee name</th>
+			 <th>Hours past week</th>
+			 <th>Hours total</th>
+			 </tr>
+			 <tr>
+			 <td>Hubert Baumeister</td>
+			 <td>0</td>
+			 <td>0</td>
+			 </tr>
+
+			</tbody>
+
+		 </table>
+		 <br />
+
+	</body>
+</html>

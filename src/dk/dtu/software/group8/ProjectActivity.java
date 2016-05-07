@@ -65,7 +65,7 @@ public class ProjectActivity extends  Activity {
 
     public int getTotalRegisteredMinutesPastWeek(LocalDate day) {
         int result = 0;
-        for(int i = 0; i <= 7; i++) {
+        for(int i = 0; i < 7; i++) {
             result += getTotalRegisteredMinutesOnDay(day.minusDays(i));
         }
         return result;
@@ -80,9 +80,9 @@ public class ProjectActivity extends  Activity {
     }
 
 
-    public int getTotalRegisteredMinutesPastWeek() {
+/*    public int getTotalRegisteredMinutesPastWeek() {
         return getTotalRegisteredMinutesPastWeek(LocalDate.now());
-    }
+    }*/
 
     public int getApproximatedHours() {
         return this.approximatedHours;

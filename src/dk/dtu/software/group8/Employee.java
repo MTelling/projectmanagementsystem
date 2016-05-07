@@ -130,7 +130,7 @@ public class Employee {
 
     public int getTotalRegisteredMinutesOnDayAndActivityPastWeek(LocalDate day, ProjectActivity activity) {
         int result = 0;
-        for(int i = 0; i <= 7; i++) {
+        for(int i = 0; i < 7; i++) {
             result += getTotalRegisteredMinutesOnDayAndActivity(day.minusDays(i), activity);
         }
         return result;
@@ -138,21 +138,11 @@ public class Employee {
 
     public int getTotalRegisteredMinutesOnActivity(ProjectActivity activity) {
         int result = 0;
-        List<RegisteredWork> empWorkDayQuery = this.registeredWork
-                .stream()
-                .filter(
-                        e -> (e.getEmployee().equals(this))
-                )
-                .collect(Collectors.toList());
 
-        for(RegisteredWork empWork : empWorkDayQuery) {
+        for(RegisteredWork empWork : this.registeredWork) {
             result += empWork.getMinutes();
         }
         return result;
-    }
-
-    public int getTotalRegisteredMinutesOnDayAndActivityPastWeek(ProjectActivity activity) {
-        return getTotalRegisteredMinutesOnDayAndActivityPastWeek(LocalDate.now(), activity);
     }
 
     public int getTotalRegisteredMinutesOnDayAndActivity(LocalDate day, ProjectActivity activity) {
