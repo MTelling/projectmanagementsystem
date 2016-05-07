@@ -17,7 +17,6 @@ import static org.junit.Assert.assertThat;
 
 public class TestExtractWorkReport  extends TestManageProject {
 
-
     ProjectActivity activity;
     YearWeek week37 = new YearWeek(2016, 37);
     YearWeek week42 = new YearWeek(2016, 42);

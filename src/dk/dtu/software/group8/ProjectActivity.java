@@ -79,11 +79,6 @@ public class ProjectActivity extends  Activity {
         return result;
     }
 
-
-/*    public int getTotalRegisteredMinutesPastWeek() {
-        return getTotalRegisteredMinutesPastWeek(LocalDate.now());
-    }*/
-
     public int getApproximatedHours() {
         return this.approximatedHours;
     }
