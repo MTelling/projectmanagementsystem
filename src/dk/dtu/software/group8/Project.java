@@ -51,9 +51,8 @@ public class Project {
         return newActivity;
     }
 
-    public boolean addEmployeeToActivity(ProjectActivity activity, Employee employee)
-            throws TooManyActivitiesException, EmployeeAlreadyAddedException {
-        return activity.addEmployee(employee);
+    public void addEmployeeToActivity(ProjectActivity activity, Employee employee) throws TooManyActivitiesException, EmployeeAlreadyAddedException {
+         activity.addEmployee(employee);
     }
 
     public String getId() {

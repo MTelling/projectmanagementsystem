@@ -52,9 +52,9 @@ public class PManagementSystem {
     	project.assignProjectManager(this.currentEmployee);
     }
 
-    public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee)
-            throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException {
-        return this.manageProject(project) && project.addEmployeeToActivity(activity, employee);
+    public void addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee) throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException {
+        if(this.manageProject(project))
+            project.addEmployeeToActivity(activity, employee);
     }
 
     public void changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
@@ -78,32 +78,31 @@ public class PManagementSystem {
         }
     }
     
-    public boolean manageProjectDates(Project project, LocalDate startDate, LocalDate endDate) throws NoAccessException, WrongDateException {
+    public void manageProjectDates(Project project, LocalDate startDate, LocalDate endDate) throws NoAccessException, WrongDateException {
     	if(this.manageProject(project)) {
-	    	if(startDate != null
+            if (startDate != null
                     && (startDate.isAfter(dateServer.getDate()) || startDate.isEqual(dateServer.getDate()))) {
                 project.setStartDate(startDate);
             } else {
                 throw new WrongDateException("Start Date is not allowed to be in the past!");
             }
-	    	
-	    	if(endDate != null && (endDate.isEqual(startDate) || endDate.isAfter(startDate))) {
+
+            if (endDate != null && (endDate.isEqual(startDate) || endDate.isAfter(startDate))) {
                 project.setEndDate(endDate);
             } else {
                 throw new WrongDateException("End Date is not allowed to be before Start Date!");
             }
-	    	return true;
-	    } else {
-	    	return false;
-	    }
+        }
     }
     
     public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
-    	if(this.manageProject(project)) {
-    		return project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate(), approximatedHours, project);
-    	} else {
-    		return null;
+    	ProjectActivity projectActivity = null;
+
+        if(this.manageProject(project)) {
+    		projectActivity = project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate().plusDays(6), approximatedHours, project);
     	}
+
+        return projectActivity;
     }
 
     public List<Employee> findAvailableEmployees(LocalDate startDate, LocalDate endDate, ProjectActivity activity) throws WrongDateException {
@@ -131,7 +130,6 @@ public class PManagementSystem {
 
     //TODO: Can we put this inside the project class?
     //TODO: Now an activity has it's project, this could be done simpler. Just remove the project parameter.
-    // (y)
     public boolean manageActivityDates(Project project, Activity activity, YearWeek startWeek, YearWeek endWeek) throws IncorrectAttributeException, NoAccessException, WrongDateException {
         if(this.manageProject(project)) {
             if(!project.getActivities().contains(activity)) {
@@ -149,7 +147,7 @@ public class PManagementSystem {
                 }
 
                 if(endWeek != null && (endWeek.equals(startWeek) || endWeek.isAfter(startWeek))) {
-                    activity.setEndDate(endWeek.toLocalDate());
+                    activity.setEndDate(endWeek.toLocalDate().plusDays(6));
                 } else {
                     throw new WrongDateException("End Week is not allowed to be before Start Week!");
                 }

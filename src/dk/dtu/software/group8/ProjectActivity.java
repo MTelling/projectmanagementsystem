@@ -45,7 +45,7 @@ public class ProjectActivity extends  Activity {
         return this.approximatedHours;
     }
 
-    public boolean addEmployee(Employee employee) throws TooManyActivitiesException, EmployeeAlreadyAddedException {
+    public void addEmployee(Employee employee) throws TooManyActivitiesException, EmployeeAlreadyAddedException {
         if (assignedEmployees.contains(employee)) {
             throw new EmployeeAlreadyAddedException("That employee has already been assigned to the activity.");
         }
@@ -56,9 +56,7 @@ public class ProjectActivity extends  Activity {
 
         if(employee.assignToActivity(this)) {
             assignedEmployees.add(employee);
-            return true;
         }
-        return false;
     }
 
     public boolean assignConsultantToActivity(Employee employee) throws InvalidEmployeeException {
