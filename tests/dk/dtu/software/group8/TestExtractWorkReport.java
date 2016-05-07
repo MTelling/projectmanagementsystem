@@ -24,10 +24,10 @@ public class TestExtractWorkReport  extends TestManageProject {
 
 
     @Before
-    public void setupActivity() throws IncorrectAttributeException, NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
+    public void setupActivity() throws IncorrectAttributeException, NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed, WrongDateException {
         activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
         assertThat(activity, is(not(nullValue())));
-        pms.addEmployeeToActivity(project, activity, pms.getCurrentEmployee());
+        pms.addEmployeeToActivity(activity, pms.getCurrentEmployee());
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
 
@@ -43,6 +43,8 @@ public class TestExtractWorkReport  extends TestManageProject {
 
         String file1 = new String(file1Bytes, StandardCharsets.UTF_8);
         String file2 = new String(file2Bytes, StandardCharsets.UTF_8);
+        file1 = file1.replaceAll("\\r\\n+|\\r+|\\n+|\\t+", "");
+        file2 = file2.replaceAll("\\r\\n+|\\r+|\\n+|\\t+", "");
 
         assertThat(file1,is(equalTo(file2)));
     }
@@ -61,6 +63,8 @@ public class TestExtractWorkReport  extends TestManageProject {
 
         String file1 = new String(file1Bytes, StandardCharsets.UTF_8);
         String file2 = new String(file2Bytes, StandardCharsets.UTF_8);
+        file1 = file1.replaceAll("\\r\\n+|\\r+|\\n+|\\t+", "");
+        file2 = file2.replaceAll("\\r\\n+|\\r+|\\n+|\\t+", "");
 
         assertThat(file1,is(equalTo(file2)));
     }
@@ -80,6 +84,8 @@ public class TestExtractWorkReport  extends TestManageProject {
 
         String file1 = new String(file1Bytes, StandardCharsets.UTF_8);
         String file2 = new String(file2Bytes, StandardCharsets.UTF_8);
+        file1 = file1.replaceAll("\\r\\n+|\\r+|\\n+|\\t+", "");
+        file2 = file2.replaceAll("\\r\\n+|\\r+|\\n+|\\t+", "");
 
         assertThat(file1,is(equalTo(file2)));
     }
