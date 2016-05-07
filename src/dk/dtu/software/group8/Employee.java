@@ -15,7 +15,7 @@ public class Employee {
     private String firstName;
     private String lastName;
 
-    private List<Activity> currentActivities;
+    private List<ProjectActivity> currentActivities;
     private List<Activity> currentConsultants;
 	private List<RegisteredWork> registeredWork = new ArrayList<>();
 	private List<Activity> personalActivities;
@@ -155,7 +155,7 @@ public class Employee {
         return empWorkDayQuery;
     }
 
-    public Optional<RegisteredWork> getRegisteredWorkOnDateAndActivity(ProjectActivity activity, LocalDate day) {
+    private Optional<RegisteredWork> getRegisteredWorkOnDateAndActivity(ProjectActivity activity, LocalDate day) {
         // Check if employee has already registered work for this activity and day
         List<RegisteredWork> empWorkDayQuery = getRegisteredWorkOnDate(day);
 
@@ -187,7 +187,7 @@ public class Employee {
 
 	public List<RegisteredWork> getRegisteredWork() { return this.registeredWork; }
 
-	public List<Activity> getCurrentActivities() {
+	public List<ProjectActivity> getCurrentActivities() {
         return currentActivities;
     }
 

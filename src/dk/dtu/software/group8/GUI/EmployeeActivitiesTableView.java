@@ -1,6 +1,7 @@
 package dk.dtu.software.group8.GUI;
 
 import dk.dtu.software.group8.Activity;
+import dk.dtu.software.group8.ProjectActivity;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,18 +15,18 @@ import java.util.List;
  */
 public class EmployeeActivitiesTableView extends TableView {
 
-    public EmployeeActivitiesTableView(List<Activity> activityList) {
+    public EmployeeActivitiesTableView(List<ProjectActivity> activityList) {
         //TODO: Should take the current activities from user from pms.
-        ObservableList<Activity> obsActivities = FXCollections.observableList(activityList);
+        ObservableList<ProjectActivity> obsActivities = FXCollections.observableList(activityList);
 
         //Set uneditable and nonclickable.
         this.setEditable(false);
         this.setSelectionModel(null);
 
         //Create table columns
-        TableColumn<Activity, String> nameCol = new TableColumn<>("Name");
-        TableColumn<Activity, String> startDateCol = new TableColumn<>("Start Week");
-        TableColumn<Activity, String> endDateCol = new TableColumn<>("End Week");
+        TableColumn<ProjectActivity, String> nameCol = new TableColumn<>("Name");
+        TableColumn<ProjectActivity, String> startDateCol = new TableColumn<>("Start Week");
+        TableColumn<ProjectActivity, String> endDateCol = new TableColumn<>("End Week");
         TableColumn[] columns = {nameCol, startDateCol, endDateCol};
 
         //Set settings for the columns.
@@ -42,8 +43,16 @@ public class EmployeeActivitiesTableView extends TableView {
         //Connect to model
         this.setItems(obsActivities);
         nameCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getActivityType()));
-        startDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getStartDate().toString()));
-        endDateCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getEndDate().toString()));
+
+        startDateCol.setCellValueFactory(data ->
+                new ReadOnlyStringWrapper(Integer.toString(data.getValue().getStartWeek())
+                                + "."
+                                + Integer.toString(data.getValue().getStartYear())));
+
+        endDateCol.setCellValueFactory(data ->
+                new ReadOnlyStringWrapper(Integer.toString(data.getValue().getEndWeek())
+                                + "."
+                                + Integer.toString(data.getValue().getEndYear())));
 
         //Add all columns to the table.
         this.getColumns().addAll(nameCol, startDateCol, endDateCol);

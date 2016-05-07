@@ -113,6 +113,8 @@ public class RegisterHoursPane extends StandardPane {
 
         activitiesListView.setItems(obsActivitiesOnDay);
 
+        activitiesListView.refresh();
+
         updateTotalMinutesOnDay(chosenDay);
 
     }

@@ -1,5 +1,7 @@
 package dk.dtu.software.group8.GUI;
 
+import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
+import dk.dtu.software.group8.Exceptions.NoAccessException;
 import dk.dtu.software.group8.PManagementSystem;
 import dk.dtu.software.group8.Project;
 import dk.dtu.software.group8.YearWeek;
@@ -87,9 +89,16 @@ public class CreateProjectActivityPane extends ControlPane {
 
             projectPane.refresh();
 
-        } catch (Exception e) {
+        } catch (NoAccessException | IncorrectAttributeException e) {
             Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
             error.showAndWait();
+        } catch (Exception e) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setHeaderText("Something went wrong!");
+            error.setContentText(e.getMessage());
+
+            error.showAndWait();
+
         }
     }
 
