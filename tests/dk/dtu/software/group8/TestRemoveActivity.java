@@ -14,7 +14,7 @@ public class TestRemoveActivity extends TestManageProject {
 
     @Test
     public void testRemoveProjectActivity() throws Exception {
-        ProjectActivity projectActivity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2016, 42), new YearWeek(2016, 45), 42);
+        ProjectActivity projectActivity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2016, 21), new YearWeek(2016, 22), 42);
         assertThat(project.getActivities(), hasItem(projectActivity));
 
         pms.removeActivityFromProject(project, projectActivity);
@@ -26,7 +26,7 @@ public class TestRemoveActivity extends TestManageProject {
         expectedEx.expect(NoAccessException.class);
         expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
-        ProjectActivity projectActivity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2016, 42), new YearWeek(2016, 45), 42);
+        ProjectActivity projectActivity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2016, 21), new YearWeek(2016, 22), 42);
         assertThat(project.getActivities(), hasItem(projectActivity));
 
         //Log in as different employee

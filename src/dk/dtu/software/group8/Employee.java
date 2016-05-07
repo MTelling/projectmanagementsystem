@@ -101,7 +101,6 @@ public class Employee {
 
 			if(empWorkQuery.isPresent()) {
 				int deltaMinutes = minutes - empWorkQuery.get().getMinutes();
-                System.out.println(deltaMinutes);
                 empWorkQuery.get().addWork(deltaMinutes);
 			}
 

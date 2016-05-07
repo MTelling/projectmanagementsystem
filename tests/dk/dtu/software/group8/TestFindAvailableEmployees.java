@@ -20,8 +20,8 @@ public class TestFindAvailableEmployees extends TestManageProject {
     ProjectActivity activity;
 
     @Before
-    public void setupActivity() throws IncorrectAttributeException, NoAccessException {
-        activity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2017, 37), new YearWeek(2017, 42), 42);
+    public void setupActivity() throws IncorrectAttributeException, NoAccessException, WrongDateException {
+        activity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2016, 37), new YearWeek(2016, 42), 42);
         assertThat(activity, instanceOf(ProjectActivity.class));
     }
 

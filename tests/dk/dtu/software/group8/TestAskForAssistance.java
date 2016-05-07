@@ -15,7 +15,7 @@ public class TestAskForAssistance extends TestManageProject {
 
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException,
-            TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
+            TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed, WrongDateException {
         activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
         assertThat(activity, is(not(nullValue())));
 

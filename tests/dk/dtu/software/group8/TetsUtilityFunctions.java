@@ -1,5 +1,8 @@
 package dk.dtu.software.group8;
 
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -11,9 +14,18 @@ import static org.junit.Assert.assertThat;
 
 public class TetsUtilityFunctions extends TestManageProject {
 
+
+    @Before
+    public void setupProjectDates() throws NoAccessException, WrongDateException {
+        //Set the project duration differently so we can do cleaner tests:
+        pms.manageProjectDates(project, new YearWeek(2016, 19).toLocalDate(), new YearWeek(2016,40).toLocalDate());
+
+    }
     @Test
     public void testGetEmployeeActivitiesOnDateDateIsStartDateForActivities() throws Exception {
         LocalDate date = LocalDate.parse("2016-05-09");
+
+        //Create activities
         ProjectActivity activityOnDateOne = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 25), 42);
         ProjectActivity activityOnDateTwo = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 19), new YearWeek(2016, 23), 42);
         ProjectActivity activityNotOnDateOne = pms.createActivityForProject(project, "Implementation", new YearWeek(2016, 24), new YearWeek(2016, 25), 42);

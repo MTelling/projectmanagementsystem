@@ -1,7 +1,9 @@
 package dk.dtu.software.group8;
 
+import com.sun.media.sound.InvalidDataException;
 import dk.dtu.software.group8.Exceptions.IncorrectAttributeException;
 import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,6 +11,7 @@ import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class TestCreateProjectActivity extends TestManageProject {
 	
@@ -75,7 +78,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 	}
 
 	@Test
-	public void testCreateProjectActivity() throws IncorrectAttributeException, NoAccessException{
+	public void testCreateProjectActivity() throws IncorrectAttributeException, NoAccessException, WrongDateException {
 		assertThat(project.getProjectManager(), is(pms.getCurrentEmployee()));
 		assertThat(project.getActivities().isEmpty(), is(true));
 
@@ -88,7 +91,7 @@ public class TestCreateProjectActivity extends TestManageProject {
 	}
 	
 	@Test
-	public void testCreateProjectActivityNotManager() throws IncorrectAttributeException, NoAccessException {
+	public void testCreateProjectActivityNotManager() throws IncorrectAttributeException, NoAccessException, WrongDateException {
 		expectedEx.expect(NoAccessException.class);
 		expectedEx.expectMessage("Current user is not Project Manager for this project.");
 
@@ -97,4 +100,40 @@ public class TestCreateProjectActivity extends TestManageProject {
 
 		pms.createActivityForProject(project, "Implementation", YearWeek.fromDate(week37), YearWeek.fromDate(week42), 42);
 	}
+
+	@Test
+    public void testCreateProjectActivityBeforeProject() throws NoAccessException, WrongDateException, IncorrectAttributeException {
+        expectedEx.expect(WrongDateException.class);
+        expectedEx.expectMessage("The given start week is before the start of the project.");
+
+        LocalDate newProjectStart = LocalDate.parse("2016-07-10");
+        LocalDate newProjectEnd = LocalDate.parse("2016-09-12");
+
+        pms.manageProjectDates(project, newProjectStart, newProjectEnd);
+
+        assertThat(project.getStartDate(), is(newProjectStart));
+        assertThat(project.getEndDate(), is(newProjectEnd));
+
+
+        YearWeek startWeek = YearWeek.fromDate(LocalDate.parse("2016-05-12"));
+        YearWeek endWeek = YearWeek.fromDate(LocalDate.parse("2016-08-15"));
+
+        assertThat(startWeek.isBefore(YearWeek.fromDate(project.getStartDate())), is(true));
+
+        pms.createActivityForProject(project, "Test", startWeek, endWeek, 40);
+
+    }
+
+    @Test
+    public void testCreateProjectActivityAfterProject() throws NoAccessException, IncorrectAttributeException, WrongDateException {
+        expectedEx.expect(WrongDateException.class);
+        expectedEx.expectMessage("The given end week exceeds the duration of the project.");
+
+        YearWeek startWeek = YearWeek.fromDate(LocalDate.parse("2016-05-12"));
+        YearWeek endWeek = YearWeek.fromDate(LocalDate.parse("2020-05-15"));
+
+        assertTrue(endWeek.isAfter(YearWeek.fromDate(project.getEndDate())));
+
+        pms.createActivityForProject(project, "Test", startWeek, endWeek, 40);
+    }
 }

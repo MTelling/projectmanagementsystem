@@ -50,7 +50,7 @@ public class TestManageProject {
 
         //Create a project
         LocalDate startDate = LocalDate.parse("2016-05-10");
-        LocalDate endDate = LocalDate.parse("2016-06-10");
+        LocalDate endDate = LocalDate.parse("2017-06-10");
         project = pms.createProject(startDate, endDate);
 
         //Check that project is really added

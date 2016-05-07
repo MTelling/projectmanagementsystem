@@ -10,12 +10,12 @@ import static org.junit.Assert.assertThat;
 public class TestAssignEmployeeToActivity extends TestManageProject {
 
     ProjectActivity activity;
-    YearWeek week37 = new YearWeek(2016, 37);
-    YearWeek week42 = new YearWeek(2016, 42);
+    YearWeek week21 = new YearWeek(2016, 21);
+    YearWeek week22 = new YearWeek(2016, 22);
 
     @Before
-    public void setupActivity() throws IncorrectAttributeException, NoAccessException{
-        activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
+    public void setupActivity() throws IncorrectAttributeException, NoAccessException, WrongDateException {
+        activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42);
         assertThat(activity, is(not(nullValue())));
     }
 
@@ -29,13 +29,13 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
 
     @Test //Correct username, employee unavailable
     public void testB() throws TooManyActivitiesException, NoAccessException,
-            IncorrectAttributeException, EmployeeAlreadyAddedException {
+            IncorrectAttributeException, EmployeeAlreadyAddedException, WrongDateException {
         expectedEx.expect(TooManyActivitiesException.class);
         expectedEx.expectMessage("Employee is assigned to too many activities in given period.");
 
         //Try to add the employee to 20 activities.
         for (int i = 0; i < 21; i++) {
-        	activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
+        	activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42);
             activity.addEmployee(pms.getCurrentEmployee());
         }
 

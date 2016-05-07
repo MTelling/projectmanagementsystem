@@ -101,10 +101,19 @@ public class PManagementSystem {
         }
     }
     
-    public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
+    public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException, WrongDateException {
     	ProjectActivity projectActivity = null;
 
         if(this.manageProject(project)) {
+            //Check that the start and end dates do not exceed the projects.
+            if (startWeek.isBefore(YearWeek.fromDate(project.getStartDate()))) {
+                throw new WrongDateException("The given start week is before the start of the project.");
+            }
+
+            if (endWeek.isAfter(YearWeek.fromDate(project.getEndDate()))) {
+                throw new WrongDateException("The given end week exceeds the duration of the project.");
+            }
+
     		projectActivity = project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate().plusDays(6), approximatedHours, project);
     	}
 
@@ -147,15 +156,14 @@ public class PManagementSystem {
                 throw new WrongDateException("End Week is not allowed to be before Start Week!");
             }
 
-            //TODO: This could be added, but makes a lot of other tests fail.
-            //Tager vi til sidst sammen.
-//                if (startWeek != null && startWeek.isBefore(YearWeek.fromDate(project.getStartDate()))) {
-//                    throw new WrongDateException("The given end week exceeds the duration of the project.");
-//                }
-//
-//                if (endWeek != null && endWeek.isAfter(YearWeek.fromDate(project.getEndDate()))) {
-//                    throw new WrongDateException("The given end week exceeds the duration of the project.");
-//                }
+            //Check that the start and end dates do not exceed the projects.
+            if (startWeek.isBefore(YearWeek.fromDate(activity.getProject().getStartDate()))) {
+                throw new WrongDateException("The given start week is before the start of the project.");
+            }
+
+            if (endWeek.isAfter(YearWeek.fromDate(activity.getProject().getEndDate()))) {
+                throw new WrongDateException("The given end week exceeds the duration of the project.");
+            }
         }
     }
     

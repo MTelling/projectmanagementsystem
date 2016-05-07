@@ -19,15 +19,15 @@ public class TestChangeActivityDates extends TestManageProject {
     ProjectActivity activity;
 
     @Before
-    public void setupActivity() throws IncorrectAttributeException, NoAccessException{
-        activity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2017, 37), new YearWeek(2017, 42), 42);
+    public void setupActivity() throws IncorrectAttributeException, NoAccessException, WrongDateException {
+        activity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2016, 21), new YearWeek(2016, 22), 42);
         assertThat(activity, instanceOf(ProjectActivity.class));
     }
 
     @Test
     public void testCorrectStartAndEnd() throws WrongDateException, IncorrectAttributeException, NoAccessException {
-        YearWeek newStart = new YearWeek(2016, 37);
-        YearWeek newEnd = new YearWeek(2016, 42);
+        YearWeek newStart = new YearWeek(2016, 19);
+        YearWeek newEnd = new YearWeek(2016, 21);
 
         pms.manageActivityDates(activity, newStart, newEnd);
 
@@ -37,8 +37,8 @@ public class TestChangeActivityDates extends TestManageProject {
 
     @Test
     public void testCorrectStartAndSameEnd() throws WrongDateException, IncorrectAttributeException, NoAccessException {
-        YearWeek newStart = new YearWeek(2016, 37);
-        YearWeek newEnd = new YearWeek(2016, 37);
+        YearWeek newStart = new YearWeek(2016, 19);
+        YearWeek newEnd = new YearWeek(2016, 19);
 
         pms.manageActivityDates(activity, newStart, newEnd);
 
@@ -100,7 +100,6 @@ public class TestChangeActivityDates extends TestManageProject {
     }
 
 
-    //TODO: Should we add these two extra tests?
     @Test
     public void testEndDateExceedsProject() throws WrongDateException, IncorrectAttributeException, NoAccessException {
         expectedEx.expect(WrongDateException.class);
@@ -125,8 +124,12 @@ public class TestChangeActivityDates extends TestManageProject {
 
         pms.manageProjectDates(project, newProjectStart, newProjectEnd);
 
+        assertThat(project.getStartDate(), is(newProjectStart));
+        assertThat(project.getEndDate(), is(newProjectEnd));
+
+
         YearWeek newStart = YearWeek.fromDate(LocalDate.parse("2016-05-12"));
-        YearWeek newEnd = YearWeek.fromDate(LocalDate.parse("2020-08-15"));
+        YearWeek newEnd = YearWeek.fromDate(LocalDate.parse("2016-08-15"));
 
         assertThat(newStart.isBefore(YearWeek.fromDate(project.getStartDate())), is(true));
 

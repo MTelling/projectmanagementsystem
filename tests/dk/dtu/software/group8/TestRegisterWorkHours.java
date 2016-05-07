@@ -25,8 +25,8 @@ public class TestRegisterWorkHours {
     LocalDate futureDate;
 
     //TODO: Add test for LocalDate after this period.
-    YearWeek week37 = new YearWeek(2016, 37);
-    YearWeek week42 = new YearWeek(2016, 42);
+    YearWeek week21 = new YearWeek(2016, 21);
+    YearWeek week22 = new YearWeek(2016, 22);
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -69,7 +69,7 @@ public class TestRegisterWorkHours {
     @Test
     public void testA() throws Exception {
 
-        activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42); // New projectActivity
+        activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
         pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee());
@@ -91,7 +91,7 @@ public class TestRegisterWorkHours {
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("You can not register work hours in the future.");
 
-        activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42); // New projectActivity
+        activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
         pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee());
@@ -107,7 +107,7 @@ public class TestRegisterWorkHours {
         expectedEx.expect(NoAccessException.class);
         expectedEx.expectMessage("Current user not assigned to activity.");
 
-        activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42); // New projectActivity
+        activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
         assertThat(activity.getEmployees(), not(hasItem(pms.getCurrentEmployee()))); // Test that employee is not assigned to activity
@@ -121,7 +121,7 @@ public class TestRegisterWorkHours {
         expectedEx.expect(TooManyHoursException.class);
         expectedEx.expectMessage("You can not work more than 24 hours in one day.");
 
-        activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42); // New projectActivity
+        activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
         pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee()); // Add employee to an activity
@@ -137,7 +137,7 @@ public class TestRegisterWorkHours {
         expectedEx.expect(TooManyHoursException.class);
         expectedEx.expectMessage("You can not work more than 24 hours in one day.");
 
-        activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42); // New projectActivity
+        activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
         pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee()); // Add employee to an activity
@@ -154,8 +154,8 @@ public class TestRegisterWorkHours {
         expectedEx.expect(TooManyHoursException.class);
         expectedEx.expectMessage("You can not work more than 24 hours in one day.");
 
-        activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42); // New projectActivity
-        ProjectActivity secondActivity = pms.createActivityForProject(project, "ScrumMeeting", week37, week42, 42); // New projectActivity
+        activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
+        ProjectActivity secondActivity = pms.createActivityForProject(project, "ScrumMeeting", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
         assertThat(secondActivity, is(not(nullValue()))); // Test that activity is created
 
@@ -173,7 +173,7 @@ public class TestRegisterWorkHours {
         expectedEx.expect(NegativeHoursException.class);
         expectedEx.expectMessage("You can not work negative hours.");
 
-        activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42); // New projectActivity
+        activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
         assertThat(activity, is(not(nullValue()))); // Test that activity is created
 
         pms.addEmployeeToActivity(project,activity,pms.getCurrentEmployee()); // Add employee to an activity
