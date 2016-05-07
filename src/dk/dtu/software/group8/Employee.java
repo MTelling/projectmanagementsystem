@@ -84,12 +84,9 @@ public class Employee {
 		return this.id;
 	}
 
-    public boolean assignConsultantToActivity(ProjectActivity projectActivity) throws InvalidEmployeeException {
+    public void assignConsultantToActivity(ProjectActivity projectActivity) throws InvalidEmployeeException {
         if (projectActivity.assignConsultantToActivity(this)) {
             currentConsultants.add(projectActivity);
-            return true;
-        } else {
-            return false;
         }
     }
 

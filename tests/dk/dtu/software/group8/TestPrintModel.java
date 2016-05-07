@@ -99,6 +99,17 @@ public class TestPrintModel {
         assertThat(empStr, is("Hubert Baumeister"));
     }
 
+    @Test
+    public void testPersonalActivityToString() throws IncorrectAttributeException, WrongDateException {
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2018-06-10");
+
+        PersonalActivity act = pms.createPersonalActivityForEmployee("Test",startDate,endDate,pms.getCurrentEmployee());
+
+        String personalActivityStr = act.toString();
+        assertThat(personalActivityStr, is("Test (2016-05-10 - 2018-06-10)"));
+    }
+
 
 
 }

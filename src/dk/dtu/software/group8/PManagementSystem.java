@@ -123,12 +123,11 @@ public class PManagementSystem {
         return availableEmployees;
     }
 
-    public void endProject(Project project) throws NoAccessException {
+    public void endProject(Project project) throws NoAccessException, WrongDateException {
     	if(this.manageProject(project)) {
-            try {
-                project.setEndDate(dateServer.getDate());
-            } catch (Exception e) {
-            }
+
+            project.setEndDate(dateServer.getDate());
+
         }
     }
 
@@ -200,13 +199,13 @@ public class PManagementSystem {
 
     }
 
-    public boolean addEmployeeToActivityAsConsultant(ProjectActivity activity, Employee employee) throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
+    public void addEmployeeToActivityAsConsultant(ProjectActivity activity, Employee employee) throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
         if(!activity.getEmployees().contains(this.currentEmployee)) {
             throw new NoAccessException("Current user is not assigned to this activity.");
         } else if (activity.getConsultants().contains(employee)) {
             throw new EmployeeAlreadyAddedException("Employee is already added as consultant.");
         } else {
-            return employee.assignConsultantToActivity(activity);
+            employee.assignConsultantToActivity(activity);
         }
     }
 

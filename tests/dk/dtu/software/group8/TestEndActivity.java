@@ -1,23 +1,23 @@
 package dk.dtu.software.group8;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+import dk.dtu.software.group8.Exceptions.NoAccessException;
+import dk.dtu.software.group8.Exceptions.WrongDateException;
 import org.junit.Test;
 
-import dk.dtu.software.group8.Exceptions.NoAccessException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class TestEndActivity extends TestManageProject {
 
     @Test
-    public void testEndProject() throws NoAccessException {
+    public void testEndProject() throws NoAccessException, WrongDateException {
         pms.endProject(project);
         assertThat(project.getEndDate(), is(pms.getDate()));
     }
 
     
     @Test
-    public void testEndProjectNotManager() throws NoAccessException {
+    public void testEndProjectNotManager() throws NoAccessException, WrongDateException {
         expectedEx.expect(NoAccessException.class);
         expectedEx.expectMessage("Current user is not Project Manager for this project.");
 

@@ -28,7 +28,8 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     }
 
     @Test //Correct username, employee unavailable
-    public void testB() throws TooManyActivitiesException, NoAccessException, IncorrectAttributeException, EmployeeAlreadyAddedException {
+    public void testB() throws TooManyActivitiesException, NoAccessException,
+            IncorrectAttributeException, EmployeeAlreadyAddedException {
         expectedEx.expect(TooManyActivitiesException.class);
         expectedEx.expectMessage("Employee is assigned to too many activities in given period.");
 
