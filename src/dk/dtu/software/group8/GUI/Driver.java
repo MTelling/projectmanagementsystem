@@ -20,7 +20,10 @@ public class Driver extends Application {
     private PrimaryStage primaryStage;
 
     public static void main(String[] args) {
+
+        //Set the date format to UK
         Locale.setDefault(Locale.UK);
+
         Application.launch(args);
 }
 

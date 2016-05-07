@@ -29,10 +29,10 @@ public class TestChangeActivityDates extends TestManageProject {
         YearWeek newStart = new YearWeek(2016, 37);
         YearWeek newEnd = new YearWeek(2016, 42);
 
-        pms.manageActivityDates(project, activity, newStart, newEnd);
+        pms.manageActivityDates(activity, newStart, newEnd);
 
         assertThat(activity.getStartDate(), is(newStart.toLocalDate()));
-        assertThat(activity.getEndDate(), is(newEnd.toLocalDate()));
+        assertThat(activity.getEndDate(), is(newEnd.toLocalDate().plusDays(6)));
     }
 
     @Test
@@ -40,10 +40,10 @@ public class TestChangeActivityDates extends TestManageProject {
         YearWeek newStart = new YearWeek(2016, 37);
         YearWeek newEnd = new YearWeek(2016, 37);
 
-        pms.manageActivityDates(project, activity, newStart, newEnd);
+        pms.manageActivityDates(activity, newStart, newEnd);
 
         assertThat(activity.getStartDate(), is(newStart.toLocalDate()));
-        assertThat(activity.getEndDate(), is(newEnd.toLocalDate()));
+        assertThat(activity.getEndDate(), is(newEnd.toLocalDate().plusDays(6)));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class TestChangeActivityDates extends TestManageProject {
         YearWeek newStart = new YearWeek(2016, 42);
         YearWeek newEnd = new YearWeek(2016, 37);
 
-        pms.manageActivityDates(project, activity, newStart, newEnd);
+        pms.manageActivityDates(activity, newStart, newEnd);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class TestChangeActivityDates extends TestManageProject {
         YearWeek newStart = new YearWeek(2015, 37);
         YearWeek newEnd = new YearWeek(2016, 42);
 
-        pms.manageActivityDates(project, activity, newStart, newEnd);
+        pms.manageActivityDates(activity, newStart, newEnd);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class TestChangeActivityDates extends TestManageProject {
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("Start Week is not allowed to be in the past!");
 
-        pms.manageActivityDates(project, activity, null, null);
+        pms.manageActivityDates(activity, null, null);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class TestChangeActivityDates extends TestManageProject {
         YearWeek newStart = new YearWeek(2016, 37);
         YearWeek newEnd = new YearWeek(2016, 42);
 
-        pms.manageActivityDates(project, activity, newStart, newEnd);
+        pms.manageActivityDates(activity, newStart, newEnd);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class TestChangeActivityDates extends TestManageProject {
         YearWeek newStart = YearWeek.fromDate(LocalDate.parse("2016-05-09"));
         YearWeek newEnd = YearWeek.fromDate(LocalDate.parse("2016-05-15"));
 
-        pms.manageActivityDates(project,activity, newStart, newEnd);
+        pms.manageActivityDates(activity, newStart, newEnd);
     }
 
 
@@ -111,7 +111,7 @@ public class TestChangeActivityDates extends TestManageProject {
 
         assertTrue(newEnd.isAfter(YearWeek.fromDate(project.getEndDate())));
 
-        pms.manageActivityDates(project, activity, newStart, newEnd);
+        pms.manageActivityDates(activity, newStart, newEnd);
 
     }
 
@@ -130,7 +130,7 @@ public class TestChangeActivityDates extends TestManageProject {
 
         assertThat(newStart.isBefore(YearWeek.fromDate(project.getStartDate())), is(true));
 
-        pms.manageActivityDates(project, activity, newStart, newEnd);
+        pms.manageActivityDates(activity, newStart, newEnd);
 
     }
 

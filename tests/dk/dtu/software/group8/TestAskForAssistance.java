@@ -15,7 +15,7 @@ public class TestAskForAssistance extends TestManageProject {
 
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException,
-            TooManyActivitiesException, EmployeeAlreadyAddedException {
+            TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
         activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
         assertThat(activity, is(not(nullValue())));
 
@@ -23,14 +23,14 @@ public class TestAskForAssistance extends TestManageProject {
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
 
-    @Test // Start and end time in the future
-    public void testA() throws NoAccessException, InvalidEmployeeException {
+    @Test // Add employee as consultant
+    public void testA() throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
         pms.addEmployeeToActivityAsConsultant(activity, pms.getEmployees().get(1));
         assertThat(activity.getConsultants(), hasItem(pms.getEmployees().get(1)));
     }
 
     @Test // Current user not assigned to activity
-    public void testB() throws NoAccessException, InvalidEmployeeException {
+    public void testB() throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
         expectedEx.expect(NoAccessException.class);
         expectedEx.expectMessage("Current user is not assigned to this activity.");
 
@@ -42,7 +42,7 @@ public class TestAskForAssistance extends TestManageProject {
 
     @Test // Employee already assigned to activity
     public void testC() throws NoAccessException, TooManyActivitiesException,
-            InvalidEmployeeException, EmployeeAlreadyAddedException {
+            InvalidEmployeeException, EmployeeAlreadyAddedException, NullNotAllowed {
         expectedEx.expect(InvalidEmployeeException.class);
         expectedEx.expectMessage("Employee already assigned to activity.");
 
@@ -50,5 +50,15 @@ public class TestAskForAssistance extends TestManageProject {
         assertThat(activity.getEmployees(), hasItem(pms.getEmployees().get(1)));
 
         pms.addEmployeeToActivityAsConsultant(activity, pms.getEmployees().get(1));
+    }
+
+
+    @Test
+    public void testD() throws Exception {
+        expectedEx.expect(EmployeeAlreadyAddedException.class);
+        expectedEx.expectMessage("Employee is already added as consultant.");
+
+        testA();
+        testA();
     }
 }

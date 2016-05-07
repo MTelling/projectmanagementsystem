@@ -9,6 +9,7 @@ public class OverviewPane extends StandardPane {
 
     private final EmployeeActivitiesTableView employeeActivitiesTableView;
     private final ListView personalActivitiesListView;
+    private final EmployeeOverviewPane employeeOverviewPane;
 
     private ObservableList obsPersonalActivities;
 
@@ -18,7 +19,7 @@ public class OverviewPane extends StandardPane {
         titlePane.setText("Welcome " + pms.getCurrentEmployee().getFirstName());
         employeeActivitiesTableView =
                 new EmployeeActivitiesTableView(pms.getCurrentEmployee().getCurrentActivities());
-        EmployeeOverviewPane employeeOverviewPane = new EmployeeOverviewPane(pms);
+        employeeOverviewPane = new EmployeeOverviewPane(pms);
 
         personalActivitiesListView = new ListView();
         obsPersonalActivities = FXCollections.observableList(pms.getCurrentEmployee().getPersonalActivities());
@@ -27,7 +28,7 @@ public class OverviewPane extends StandardPane {
         CreatePersonalActivityPane createPersonalActivityPane = new CreatePersonalActivityPane(pms, this);
 
 
-        addTitleToCenterContainer("Current project activities");
+        addTitleToCenterContainer("All project activities");
         addNewExpandingChildToCenterContainer(employeeActivitiesTableView);
         addTitleToCenterContainer("All personal activities");
         addNewExpandingChildToCenterContainer(personalActivitiesListView);
@@ -41,6 +42,13 @@ public class OverviewPane extends StandardPane {
     protected void close() {
         toBack();
     }
+
+    @Override
+    public void toFront() {
+        super.toFront();
+        employeeOverviewPane.update();
+    }
+
 
     public void refresh() {
 

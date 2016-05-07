@@ -5,10 +5,7 @@ import dk.dtu.software.group8.Exceptions.*;
 import javax.naming.InvalidNameException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PManagementSystem {
 
@@ -18,6 +15,9 @@ public class PManagementSystem {
     private List<Project> projects;
 
     public PManagementSystem() throws IOException {
+
+        Locale.setDefault(Locale.UK);
+
         dateServer = new DateServer();
 
         db = new DatabaseManager("Employees.txt");
@@ -52,46 +52,63 @@ public class PManagementSystem {
     	project.assignProjectManager(this.currentEmployee);
     }
 
-    public boolean addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee)
-            throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException {
-        return this.manageProject(project) && project.addEmployeeToActivity(activity, employee);
+    public void addEmployeeToActivity(Project project, ProjectActivity activity, Employee employee)
+            throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
+
+        if (employee == null) {
+            throw new NullNotAllowed("You need to choose an employee.");
+        }
+
+        if(this.manageProject(project))
+            project.addEmployeeToActivity(activity, employee);
     }
 
-    public boolean changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
-    	if(this.manageProject(project))  {
-    		project.setName(name);
-    		return true;
-    	} else {
-    		return false;
-    	}
+    public void changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
+    	if(this.manageProject(project)) {
+
+            Optional<Project> projectsQuery = projects
+                    .stream()
+                    .filter(p -> {
+                        if (p.getName() != null) {
+                            return p.getName().equals(name);
+                        } else {
+                            return false;
+                        }
+                    }).findAny();
+
+            if (!projectsQuery.isPresent()) {
+                project.setName(name);
+            } else { //If there is already a project with the same name throw an exception.
+                throw new InvalidNameException("Name is already assigned to another project.");
+            }
+        }
     }
     
-    public boolean manageProjectDates(Project project, LocalDate startDate, LocalDate endDate) throws NoAccessException, WrongDateException {
+    public void manageProjectDates(Project project, LocalDate startDate, LocalDate endDate) throws NoAccessException, WrongDateException {
     	if(this.manageProject(project)) {
-	    	if(startDate != null
+            if (startDate != null
                     && (startDate.isAfter(dateServer.getDate()) || startDate.isEqual(dateServer.getDate()))) {
                 project.setStartDate(startDate);
             } else {
                 throw new WrongDateException("Start Date is not allowed to be in the past!");
             }
-	    	
-	    	if(endDate != null && (endDate.isEqual(startDate) || endDate.isAfter(startDate))) {
+
+            if (endDate != null && (endDate.isEqual(startDate) || endDate.isAfter(startDate))) {
                 project.setEndDate(endDate);
             } else {
                 throw new WrongDateException("End Date is not allowed to be before Start Date!");
             }
-	    	return true;
-	    } else {
-	    	return false;
-	    }
+        }
     }
     
     public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException {
-    	if(this.manageProject(project)) {
-    		return project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate(), approximatedHours, project);
-    	} else {
-    		return null;
+    	ProjectActivity projectActivity = null;
+
+        if(this.manageProject(project)) {
+    		projectActivity = project.createActivity(activityType, startWeek.toLocalDate(), endWeek.toLocalDate().plusDays(6), approximatedHours, project);
     	}
+
+        return projectActivity;
     }
 
     public List<Employee> findAvailableEmployees(LocalDate startDate, LocalDate endDate, ProjectActivity activity) throws WrongDateException {
@@ -106,42 +123,32 @@ public class PManagementSystem {
         return availableEmployees;
     }
 
-    public boolean endProject(Project project) throws NoAccessException {
+    public void endProject(Project project) throws NoAccessException, WrongDateException {
     	if(this.manageProject(project)) {
-            try {
-                project.setEndDate(dateServer.getDate());
-            } catch (Exception e) { }
-    		return true;
-    	} else {
-    		return false;
-    	}
+
+            project.setEndDate(dateServer.getDate());
+
+        }
     }
 
     //TODO: Can we put this inside the project class?
     //TODO: Now an activity has it's project, this could be done simpler. Just remove the project parameter.
-    public boolean manageActivityDates(Project project, Activity activity, YearWeek startWeek, YearWeek endWeek) throws IncorrectAttributeException, NoAccessException, WrongDateException {
-        if(this.manageProject(project)) {
-            if(!project.getActivities().contains(activity)) {
-                throw new IncorrectAttributeException("Invalid Activity: Project does not contain supplied activity!");
+    public void manageActivityDates(ProjectActivity activity, YearWeek startWeek, YearWeek endWeek) throws IncorrectAttributeException, NoAccessException, WrongDateException {
+        if(this.manageProject(activity.getProject())) {
+            if(startWeek != null && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
+                activity.setStartDate(startWeek.toLocalDate());
             } else {
+                throw new WrongDateException("Start Week is not allowed to be in the past!");
+            }
 
+            if(endWeek != null && (endWeek.equals(startWeek) || endWeek.isAfter(startWeek))) {
+                activity.setEndDate(endWeek.toLocalDate().plusDays(6));
+            } else {
+                throw new WrongDateException("End Week is not allowed to be before Start Week!");
+            }
 
-
-
-                if(startWeek != null
-                        && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
-                    activity.setStartDate(startWeek.toLocalDate());
-                } else {
-                    throw new WrongDateException("Start Week is not allowed to be in the past!");
-                }
-
-                if(endWeek != null && (endWeek.equals(startWeek) || endWeek.isAfter(startWeek))) {
-                    activity.setEndDate(endWeek.toLocalDate());
-                } else {
-                    throw new WrongDateException("End Week is not allowed to be before Start Week!");
-                }
-
-                //TODO: This could be added, but makes a lot of other tests fail.
+            //TODO: This could be added, but makes a lot of other tests fail.
+            //Tager vi til sidst sammen.
 //                if (startWeek != null && startWeek.isBefore(YearWeek.fromDate(project.getStartDate()))) {
 //                    throw new WrongDateException("The given end week exceeds the duration of the project.");
 //                }
@@ -149,11 +156,7 @@ public class PManagementSystem {
 //                if (endWeek != null && endWeek.isAfter(YearWeek.fromDate(project.getEndDate()))) {
 //                    throw new WrongDateException("The given end week exceeds the duration of the project.");
 //                }
-
-                return true;
-            }
         }
-        return false;
     }
     
     private boolean manageProject(Project project) throws NoAccessException {
@@ -196,16 +199,13 @@ public class PManagementSystem {
 
     }
 
-    public boolean addEmployeeToActivityAsConsultant(ProjectActivity activity, Employee employee) throws NoAccessException, InvalidEmployeeException {
-        if(!this.userLoggedIn()) {
-            throw new NoAccessException("User is not logged in.");
-        } else if(!activity.getEmployees().contains(this.currentEmployee)) {
+    public void addEmployeeToActivityAsConsultant(ProjectActivity activity, Employee employee) throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
+        if(!activity.getEmployees().contains(this.currentEmployee)) {
             throw new NoAccessException("Current user is not assigned to this activity.");
-        } else if (!this.db.getEmployees().contains(employee)) {
-            //TODO: Would we ever get here? Maybe pass the employee as a name instead and let pms find the emp?
-            throw new InvalidEmployeeException("No employee with that name is in the system.");
+        } else if (activity.getConsultants().contains(employee)) {
+            throw new EmployeeAlreadyAddedException("Employee is already added as consultant.");
         } else {
-            return employee.assignConsultantToActivity(activity);
+            employee.assignConsultantToActivity(activity);
         }
     }
 
@@ -238,10 +238,12 @@ public class PManagementSystem {
     }
 
     public List<Activity> getEmployeeActivitiesOnDate(Employee emp, LocalDate date) {
+        List<Activity> activitiesOnDate = null;
+
         if(emp != null && date != null) {
-            return emp.getActivitiesOnDate(date);
+            activitiesOnDate = emp.getActivitiesOnDate(date);
         }
-        return null;
+        return activitiesOnDate;
     }
 
     public void changeActivityApproximatedHours(Project project, ProjectActivity activity, int hours) throws NoAccessException, NegativeHoursException {

@@ -19,7 +19,7 @@ public class Project {
     public Project(String id, LocalDate startDate, LocalDate endDate) throws WrongDateException {
         this.id = id;
         
-        this.activities = new ArrayList<ProjectActivity>();
+        this.activities = new ArrayList<>();
         
         setStartDate(startDate);
         setEndDate(endDate);
@@ -51,9 +51,8 @@ public class Project {
         return newActivity;
     }
 
-    public boolean addEmployeeToActivity(ProjectActivity activity, Employee employee)
-            throws TooManyActivitiesException, EmployeeAlreadyAddedException {
-        return activity.addEmployee(employee);
+    public void addEmployeeToActivity(ProjectActivity activity, Employee employee) throws TooManyActivitiesException, EmployeeAlreadyAddedException {
+         activity.addEmployee(employee);
     }
 
     public String getId() {

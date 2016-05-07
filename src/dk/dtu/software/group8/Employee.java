@@ -84,12 +84,9 @@ public class Employee {
 		return this.id;
 	}
 
-    public boolean assignConsultantToActivity(ProjectActivity projectActivity) throws InvalidEmployeeException {
+    public void assignConsultantToActivity(ProjectActivity projectActivity) throws InvalidEmployeeException {
         if (projectActivity.assignConsultantToActivity(this)) {
             currentConsultants.add(projectActivity);
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -104,14 +101,12 @@ public class Employee {
 
 			if(empWorkQuery.isPresent()) {
 				int deltaMinutes = minutes - empWorkQuery.get().getMinutes();
+                System.out.println(deltaMinutes);
+                empWorkQuery.get().addWork(deltaMinutes);
+			}
 
-				if(workRegisteredThisDay + deltaMinutes > 1440) {
-					throw new TooManyHoursException("You can not work more than 24 hours in one day.");
-				}
-
-				empWorkQuery.get().addWork(deltaMinutes);
-			} else {
-
+            //We do this because "else" didn't give a 100% code coverage. Very weird though.
+            if(!empWorkQuery.isPresent()) {
 				if(workRegisteredThisDay + minutes > 1440) {
 					throw new TooManyHoursException("You can not work more than 24 hours in one day.");
 				}

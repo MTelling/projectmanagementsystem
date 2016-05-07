@@ -12,18 +12,40 @@ import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Morten on 04/05/16.
  */
-public class TestPrintModel extends TestCreateProject {
+public class TestPrintModel {
 
-    //TODO: tests in here run the create project tests as well?
     private Project project;
 
+    PManagementSystem pms;
+    DatabaseManager db;
+
+
     @Before
-    public void setupProject() throws WrongDateException, InvalidNameException, IOException {
-        super.setup();
+    public void setup() throws InvalidNameException, IOException, WrongDateException {
+        pms = new PManagementSystem();
+        db =  new DatabaseManager("Employees.txt");
+
+        //Set current date to the may 9th 2016.
+        DateServer mockDateServer = mock(DateServer.class);
+        pms.setDateServer(mockDateServer);
+
+        LocalDate date = LocalDate.parse("2016-05-09");
+        when(pms.getDate()).thenReturn(date);
+
+        //Login a user
+        pms.signIn(db.getEmployees().get(0).getId());
+        assertTrue(pms.userLoggedIn());
+
+        //Check the project base is empty.
+        assertThat(pms.getProjects().isEmpty(), is(true));
+
         LocalDate startDate = LocalDate.parse("2016-05-10");
         LocalDate endDate = LocalDate.parse("2018-06-10");
 
@@ -39,6 +61,17 @@ public class TestPrintModel extends TestCreateProject {
         String projectStr = project.toString();
 
         assertThat(projectStr, is("160000\t - \tSoftwareEngineering (2016-05-10 - 2018-06-10)"));
+    }
+
+    @Test
+    public void testProjectNoNameToString() throws WrongDateException {
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2018-06-10");
+        Project noNameProject = new Project("160000", startDate, endDate);
+
+        String projectStr = noNameProject.toString();
+
+        assertThat(projectStr, is("160000\t - \tN/A (2016-05-10 - 2018-06-10)"));
     }
 
     @Test
@@ -64,6 +97,17 @@ public class TestPrintModel extends TestCreateProject {
         String empStr = pms.getCurrentEmployee().toString();
 
         assertThat(empStr, is("Hubert Baumeister"));
+    }
+
+    @Test
+    public void testPersonalActivityToString() throws IncorrectAttributeException, WrongDateException {
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2018-06-10");
+
+        PersonalActivity act = pms.createPersonalActivityForEmployee("Test",startDate,endDate,pms.getCurrentEmployee());
+
+        String personalActivityStr = act.toString();
+        assertThat(personalActivityStr, is("Test (2016-05-10 - 2018-06-10)"));
     }
 
 

@@ -1,6 +1,5 @@
 package dk.dtu.software.group8.GUI;
 
-import dk.dtu.software.group8.Activity;
 import dk.dtu.software.group8.PManagementSystem;
 import dk.dtu.software.group8.Project;
 import dk.dtu.software.group8.ProjectActivity;
