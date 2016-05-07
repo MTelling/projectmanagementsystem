@@ -7,6 +7,9 @@ import javafx.scene.control.*;
 
 import java.time.LocalDate;
 
+/**
+ * Created by Tobias
+ */
 public class CreatePersonalActivityPane extends ControlPane{
 
     private final TextField typeField;

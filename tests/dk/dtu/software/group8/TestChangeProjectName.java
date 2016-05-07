@@ -12,6 +12,9 @@ import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Created by Tobias
+ */
 public class TestChangeProjectName extends TestManageProject{
 
     /**

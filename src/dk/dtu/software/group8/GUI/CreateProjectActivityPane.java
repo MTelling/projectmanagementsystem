@@ -10,6 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+/**
+ * Created by Marcus
+ */
 public class CreateProjectActivityPane extends ControlPane {
 
     private final TextField startWeekField;

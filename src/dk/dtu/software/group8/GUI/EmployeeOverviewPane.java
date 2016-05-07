@@ -3,6 +3,9 @@ package dk.dtu.software.group8.GUI;
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.scene.control.Label;
 
+/**
+ * Created by Marcus
+ */
 public class EmployeeOverviewPane extends ControlPane {
 
     private Label empMonthHoursLblRight;

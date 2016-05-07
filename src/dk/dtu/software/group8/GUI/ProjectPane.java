@@ -13,6 +13,9 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
+/**
+ * Created by Marcus
+ */
 public class ProjectPane extends StandardPane {
 
     private ProjectActivityPane projectActivityPane;

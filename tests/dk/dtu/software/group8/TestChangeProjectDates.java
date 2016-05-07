@@ -9,6 +9,9 @@ import java.time.LocalDate;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Created by Morten
+ */
 public class TestChangeProjectDates extends TestManageProject{
 
     /**

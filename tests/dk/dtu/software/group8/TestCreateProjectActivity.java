@@ -13,6 +13,9 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Created by Tobias
+ */
 public class TestCreateProjectActivity extends TestManageProject {
 	
 	LocalDate week36, week37, week42;

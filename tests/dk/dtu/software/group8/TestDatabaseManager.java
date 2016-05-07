@@ -9,6 +9,9 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Created by Marcus
+ */
 public class TestDatabaseManager {
 
     private DatabaseManager db;

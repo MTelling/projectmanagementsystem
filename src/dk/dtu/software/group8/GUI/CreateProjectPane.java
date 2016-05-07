@@ -8,8 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
+/**
+ * Created by Morten
+ */
 public class CreateProjectPane extends ControlPane {
-
 
     private DatePicker startDatePicker;
     private DatePicker endDatePicker;

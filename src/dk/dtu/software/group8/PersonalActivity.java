@@ -6,6 +6,9 @@ import dk.dtu.software.group8.Exceptions.WrongDateException;
 
 import java.time.LocalDate;
 
+/**
+ * Created by Tobias
+ */
 public class PersonalActivity extends Activity {
 
     /**

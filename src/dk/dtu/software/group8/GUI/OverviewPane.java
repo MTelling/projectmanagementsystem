@@ -5,6 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 
+/**
+ * Created by Marcus
+ */
 public class OverviewPane extends StandardPane {
 
     private final EmployeeActivitiesTableView employeeActivitiesTableView;

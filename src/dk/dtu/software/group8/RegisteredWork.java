@@ -5,6 +5,9 @@ import dk.dtu.software.group8.Exceptions.TooManyHoursException;
 
 import java.time.LocalDate;
 
+/**
+ * Created by Marcus
+ */
 public class RegisteredWork {
     private Employee employee;
     private Activity activity;

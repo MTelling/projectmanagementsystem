@@ -8,6 +8,9 @@ import javafx.scene.control.*;
 
 import java.util.Optional;
 
+/**
+ * Created by Marcus
+ */
 public class ManageProjectPane extends ControlPane {
 
     private DatePicker endDatePicker;

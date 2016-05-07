@@ -11,6 +11,9 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Created by Morten
+ */
 public class TetsUtilityFunctions extends TestManageProject {
 
     /**
@@ -20,7 +23,6 @@ public class TetsUtilityFunctions extends TestManageProject {
     public void setupProjectDates() throws NoAccessException, WrongDateException {
         //Set the project duration differently so we can do cleaner tests:
         pms.manageProjectDates(project, new YearWeek(2016, 19).toLocalDate(), new YearWeek(2016,40).toLocalDate());
-
     }
 
     /**

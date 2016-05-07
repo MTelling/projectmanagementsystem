@@ -6,6 +6,9 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Tobias
+ */
 public class MenuPane extends VBox {
 
     private PrimaryStage primaryStage;

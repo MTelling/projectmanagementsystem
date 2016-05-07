@@ -15,6 +15,9 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Created by Marcus
+ */
 public class TestRegisterWorkHours {
 
     PManagementSystem pms;

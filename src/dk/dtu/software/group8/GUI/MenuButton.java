@@ -8,6 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+/**
+ * Created by Morten
+ */
 public class MenuButton extends VBox {
 
     private final int BUTTON_SIZE = 64;

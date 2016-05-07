@@ -18,6 +18,9 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Created by Tobias
+ */
 public class TestProjectManagerAssignment {
 	
 	PManagementSystem pms;

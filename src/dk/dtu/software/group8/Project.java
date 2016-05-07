@@ -8,7 +8,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Created by Morten
+ */
 public class Project {
 
     private String id, name;

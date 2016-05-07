@@ -9,6 +9,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Created by Marcus
+ */
 public abstract class StandardPane extends BorderPane {
 
     protected VBox rightContainer;

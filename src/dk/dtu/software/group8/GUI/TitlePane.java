@@ -3,6 +3,9 @@ package dk.dtu.software.group8.GUI;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+/**
+ * Created by Morten
+ */
 public class TitlePane extends StackPane {
 
     private Text title;

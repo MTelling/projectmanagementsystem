@@ -17,6 +17,9 @@ import javafx.scene.layout.HBox;
 
 import java.time.LocalDate;
 
+/**
+ * Created by Tobias
+ */
 public class RegisterHoursPane extends StandardPane {
 
     private final ListView activitiesListView;

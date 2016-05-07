@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 
+/**
+ * Created by Tobias
+ */
 public class YearWeek {
 
     private int week, year;

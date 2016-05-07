@@ -13,6 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Created by Morten
+ */
 public class LoginStage extends Stage {
 
     private PManagementSystem pms;

@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 
+/**
+ * Created by Morten
+ */
 public class PrimaryStage extends Stage{
 
     private ProjectActivityPane projectActivityPane;

@@ -15,6 +15,9 @@ import java.time.LocalDate;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Created by Tobias
+ */
 public class TestExtractWorkReport  extends TestManageProject {
 
     ProjectActivity activity;

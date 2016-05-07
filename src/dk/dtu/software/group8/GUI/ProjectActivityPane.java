@@ -11,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 
+/**
+ * Created by Tobias
+ */
 public class ProjectActivityPane extends StandardPane {
 
     private ListView consultantsListView;

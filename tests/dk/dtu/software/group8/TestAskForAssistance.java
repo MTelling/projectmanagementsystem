@@ -7,6 +7,9 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Created by Morten
+ */
 public class TestAskForAssistance extends TestManageProject {
 
     ProjectActivity activity;

@@ -10,6 +10,9 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Created by Morten
+ */
 public class TestRemoveActivity extends TestManageProject {
 
     /**

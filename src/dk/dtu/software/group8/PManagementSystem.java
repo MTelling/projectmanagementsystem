@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Created by Marcus
+ */
 public class PManagementSystem {
 
     private DatabaseManager db;

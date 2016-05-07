@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+/**
+ * Created by Morten
+ */
 public class ControlHoursPane extends ControlPane {
 
     private Label totalMinutesField;

@@ -14,6 +14,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Created by Marcus
+ */
 public class TestChangeActivityDates extends TestManageProject {
 
     ProjectActivity activity;

@@ -2,6 +2,9 @@ package dk.dtu.software.group8;
 
 import java.time.LocalDate;
 
+/**
+ * Created by Tobias
+ */
 public abstract class Activity {
 
     protected String activityType;

@@ -15,6 +15,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Created by Marcus
+ */
 public class TestFindAvailableEmployees extends TestManageProject {
 
     ProjectActivity activity;

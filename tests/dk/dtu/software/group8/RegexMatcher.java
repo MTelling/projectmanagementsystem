@@ -3,6 +3,9 @@ package dk.dtu.software.group8;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 
+/**
+ * Created by Marcus
+ */
 public class RegexMatcher extends BaseMatcher<String>{
     private final String regex;
 

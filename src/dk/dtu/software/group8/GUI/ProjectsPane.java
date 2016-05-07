@@ -7,6 +7,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Created by Morten
+ */
 public class ProjectsPane extends StandardPane {
 
     private ProjectPane projectPane;
