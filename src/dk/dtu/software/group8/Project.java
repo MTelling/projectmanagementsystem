@@ -77,10 +77,6 @@ public class Project {
         return activities;
     }
 
-    public String extractReport() {
-        return null;
-    }
-
     public String toString() {
         String name = this.getName();
 

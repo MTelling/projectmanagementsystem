@@ -6,13 +6,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 /**
  * Created by Morten on 25/04/16.
  */
 public class PrimaryStage extends Stage{
 
-    private final int WIDTH = 1200;
-    private final int HEIGHT = 800;
     private ProjectActivityPane projectActivityPane;
     private PManagementSystem pms;
     private StackPane mainPane;
@@ -55,8 +55,13 @@ public class PrimaryStage extends Stage{
         root.setLeft(menuPane);
         root.setCenter(mainPane);
 
+        //Calculate needed screensize.
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth() * 0.8;
+        double height = screenSize.getWidth() * 0.5;
+
         //Make the scene.
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root, width, height);
 
         //Connect scene to stylesheet
         scene.getStylesheets().add(this.getClass().getResource("layout.css").toExternalForm());
@@ -67,7 +72,6 @@ public class PrimaryStage extends Stage{
         this.centerOnScreen();
         this.sizeToScene();
     }
-
 
     public void present(String sceneId) {
         if (sceneId.equals("Projects")) {
