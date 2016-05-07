@@ -8,9 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
-/**
- * Created by Morten on 02/05/16.
- */
 public class CreateProjectPane extends ControlPane {
 
 
@@ -18,6 +15,9 @@ public class CreateProjectPane extends ControlPane {
     private DatePicker endDatePicker;
     private ProjectsPane projectsPane;
 
+    /**
+     * Created by Tobias
+     */
     public CreateProjectPane(PManagementSystem pms, ProjectsPane projectsPane) {
         super(pms, "Create Project");
         this.projectsPane = projectsPane;
@@ -54,6 +54,9 @@ public class CreateProjectPane extends ControlPane {
         createProjectBtn.setOnAction(e -> createProject());
     }
 
+    /**
+     * Created by Marcus
+     */
     private void createProject() {
         try {
 

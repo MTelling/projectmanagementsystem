@@ -3,16 +3,15 @@ package dk.dtu.software.group8.GUI;
 import dk.dtu.software.group8.PManagementSystem;
 import javafx.scene.control.Label;
 
-/**
- * Created by Morten on 30/04/16.
- */
 public class EmployeeOverviewPane extends ControlPane {
-
 
     private Label empMonthHoursLblRight;
     private Label empTotalHoursLblRight;
     private Label empActivityCountLblRight;
 
+    /**
+     * Created by Morten
+     */
     public EmployeeOverviewPane(PManagementSystem pms) {
         super(pms, "Overview");
 
@@ -39,6 +38,9 @@ public class EmployeeOverviewPane extends ControlPane {
 
     }
 
+    /**
+     * Created by Tobias
+     */
     public void update() {
         empActivityCountLblRight.setText(Integer.toString(pms.getCurrentEmployee().getProjectActivities().size()));
     }

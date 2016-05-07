@@ -1,3 +1,7 @@
+    /**
+     * Created by Morten
+     */
+
 
 /* ------------------------------------------------------------------------------------
 MENU
@@ -105,8 +109,6 @@ GENERAL
     -fx-font-size: 16;
 }
 
-
-
 /* Set focus color for all panes and etc. to transparent */
 .OverviewPane,
 .ProjectsPane,
@@ -128,12 +130,6 @@ GENERAL
 .ActivityPane {
     -fx-background-color: #f4f4f4;
     -fx-padding: 5;
-}
-/* ------------------------------------------------------------------------------------
-Projects Pane
---------------------------------------------------------------------------------------*/
-
-.ProjectsPane {
 }
 
 /* ------------------------------------------------------------------------------------
@@ -193,4 +189,3 @@ Activity Pane
 .StandardPane .RightContainer {
     -fx-spacing: 10;
 }
-

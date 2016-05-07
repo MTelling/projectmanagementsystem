@@ -6,10 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-
-/**
- * Created by Morten on 02/05/16.
- */
 public class ControlHoursPane extends ControlPane {
 
     private Label totalMinutesField;
@@ -18,6 +14,9 @@ public class ControlHoursPane extends ControlPane {
     private Label totalHoursField;
     private RegisterHoursPane registerHoursPane;
 
+    /**
+     * Created by Marcus
+     */
     public ControlHoursPane(PManagementSystem pms, RegisterHoursPane registerHoursPane) {
         super(pms, "Change/Edit Hours");
         this.registerHoursPane = registerHoursPane;
@@ -52,6 +51,9 @@ public class ControlHoursPane extends ControlPane {
 
     }
 
+    /**
+     * Created by Morten
+     */
     public void setTotalMinutesOnDay(int minutes) {
         String[] time = minutesToHoursAndMinutes(minutes);
 
@@ -59,6 +61,9 @@ public class ControlHoursPane extends ControlPane {
         totalMinutesField.setText(time[1]);
     }
 
+    /**
+     * Created by Tobias
+     */
     public void setTotalMinutesOnActivity(int minutes) {
         String[] time = minutesToHoursAndMinutes(minutes);
 
@@ -66,6 +71,9 @@ public class ControlHoursPane extends ControlPane {
         setMinutesField.setText(time[1]);
     }
 
+    /**
+     * Created by Marcus
+     */
     private String[] minutesToHoursAndMinutes(int minutes) {
         String hours = Integer.toString(minutes / 60);
         String min = Integer.toString(minutes % 60);
@@ -73,6 +81,9 @@ public class ControlHoursPane extends ControlPane {
         return new String[] {hours, min};
     }
 
+    /**
+     * Created by Morten
+     */
     private void updateTimeOnActivity() {
         String[] time = new String[2];
         time[0] = setHoursField.getText();

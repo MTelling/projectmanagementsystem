@@ -9,9 +9,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-/**
- * Created by Morten on 03/05/16.
- */
 public abstract class StandardPane extends BorderPane {
 
     protected VBox rightContainer;
@@ -20,7 +17,9 @@ public abstract class StandardPane extends BorderPane {
     protected PManagementSystem pms;
     protected TitlePane centerTitle;
 
-
+    /**
+     * Created by Marcus
+     */
     public StandardPane(PManagementSystem pms, boolean isCloseable) {
 
         this.pms = pms;
@@ -29,7 +28,6 @@ public abstract class StandardPane extends BorderPane {
 
         //Set window properties.
         titlePane = new TitlePane("N/A", TitleFontSize.LARGE);
-
 
         if (isCloseable) {
             //Create the exit button
@@ -53,21 +51,26 @@ public abstract class StandardPane extends BorderPane {
         this.setTop(titlePane);
         this.setCenter(centerContainer);
         this.setRight(rightContainer);
-
     }
 
+    /**
+     * Created by Morten
+     */
     protected void addTitleToCenterContainer(String title) {
-
         centerTitle = new TitlePane(title, TitleFontSize.MEDIUM);
         centerContainer.getChildren().add(centerTitle);
-
     }
 
+    /**
+     * Created by Tobias
+     */
     protected void addNewExpandingChildToCenterContainer(Node node) {
         centerContainer.getChildren().add(node);
         VBox.setVgrow(node, Priority.ALWAYS);
     }
 
+    /**
+     * Created by Marcus
+     */
     protected abstract void close();
-
 }

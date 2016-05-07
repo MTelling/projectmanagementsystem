@@ -8,6 +8,9 @@ import java.time.LocalDate;
 
 public class PersonalActivity extends Activity {
 
+    /**
+     * Created by Marcus
+     */
     public PersonalActivity(String activityType, LocalDate startDate, LocalDate endDate) throws IncorrectAttributeException, WrongDateException {
         if(!activityType.matches("[a-zA-Z ]{3,}")) {
             throw new IncorrectAttributeException("The supplied activity type is not a correct activity type!");
@@ -21,7 +24,9 @@ public class PersonalActivity extends Activity {
         this.endTime = endDate;
     }
 
-
+    /**
+     * Created by Morten
+     */
     @Override
     public String toString() {
         return activityType + " (" + getStartDate() + " - " + getEndDate() + ")";

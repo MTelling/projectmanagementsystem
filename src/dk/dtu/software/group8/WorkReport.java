@@ -18,6 +18,9 @@ public class WorkReport {
     private String projectName;
     private String fileName;
 
+    /**
+     * Created by Marcus
+     */
     public WorkReport(PManagementSystem pms, Project project) throws IOException {
         this.pms = pms;
         this.project = project;
@@ -29,6 +32,9 @@ public class WorkReport {
         fileName = projectName + pms.getDate().toString();
     }
 
+    /**
+     * Created by Morten
+     */
     private static String subForData(String str, String[] tags, Map<String, String> data) {
         //Split string by linebreaks
         //TODO: Mac users might have issues with this, as their line terminator might be different
@@ -67,10 +73,16 @@ public class WorkReport {
         return result;
     }
 
+    /**
+     * Created by Tobias
+     */
     public String getFileName() {
         return this.fileName;
     }
 
+    /**
+     * Created by Marcus
+     */
     public void make() throws IOException {
         //All data is collected
         //Begin file processing
@@ -171,10 +183,16 @@ public class WorkReport {
         for(int i = 0; i < project.getActivities().size(); i++) {
             ProjectActivity activity = project.getActivities().get(i);
             Map<String, String> activityData = new HashMap<>();
+            String approxHours = ""+activity.getApproximatedHours();
+            String hoursTotal = (activity.getTotalRegisteredMinutes() / 60) + ":"
+                    + (activity.getTotalRegisteredMinutes() % 60);
+            String hoursWeek = (activity.getTotalRegisteredMinutesPastWeek(pms.getDate()) / 60) + ":"
+                    + (activity.getTotalRegisteredMinutesPastWeek(pms.getDate()) % 60);
+
             activityData.put("ACTIVITY_NAME", activity.getActivityType());
-            activityData.put("ACTIVITY_EXP_HOURS", "" + activity.getApproximatedHours());
-            activityData.put("ACTIVITY_HOURS_SPENT", "" + (activity.getTotalRegisteredMinutes() / 60));
-            activityData.put("ACTIVITY_HOURS_WEEK", "" + (activity.getTotalRegisteredMinutesPastWeek(pms.getDate()) / 60));
+            activityData.put("ACTIVITY_EXP_HOURS", "" + approxHours);
+            activityData.put("ACTIVITY_HOURS_SPENT", "" + hoursTotal);
+            activityData.put("ACTIVITY_HOURS_WEEK", "" + hoursWeek);
             activityData.put("ACTIVITY_ID", "" + i);
 
             writer.println(subForData(activityPart1, tags, activityData));
@@ -198,6 +216,9 @@ public class WorkReport {
         writer.close();
     }
 
+    /**
+     * Created by Morten
+     */
     private Map<String, String> createEmployeeHashMap(Employee employee, ProjectActivity activity) {
         Map<String, String> employeeData = new HashMap<>();
         String empName = employee.getFirstName() + " " + employee.getLastName();

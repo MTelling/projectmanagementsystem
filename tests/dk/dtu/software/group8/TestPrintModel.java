@@ -16,9 +16,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by Morten on 04/05/16.
- */
 public class TestPrintModel {
 
     private Project project;
@@ -26,7 +23,9 @@ public class TestPrintModel {
     PManagementSystem pms;
     DatabaseManager db;
 
-
+    /**
+     * Created by Morten
+     */
     @Before
     public void setup() throws InvalidNameException, IOException, WrongDateException {
         pms = new PManagementSystem();
@@ -55,6 +54,9 @@ public class TestPrintModel {
         project.setName("SoftwareEngineering");
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testProjectToString() throws WrongDateException {
 
@@ -63,6 +65,9 @@ public class TestPrintModel {
         assertThat(projectStr, is("160000\t - \tSoftwareEngineering (2016-05-10 - 2018-06-10)"));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testProjectNoNameToString() throws WrongDateException {
         LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -74,6 +79,9 @@ public class TestPrintModel {
         assertThat(projectStr, is("160000\t - \tN/A (2016-05-10 - 2018-06-10)"));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testProjectActivityToString() throws WrongDateException, NoAccessException, IncorrectAttributeException {
 
@@ -92,6 +100,9 @@ public class TestPrintModel {
         assertThat(activityStr, is ("Implementation (week 37.2016 - week 40.2016) from project: SoftwareEngineering"));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testEmployeeToString() {
         String empStr = pms.getCurrentEmployee().toString();
@@ -99,6 +110,9 @@ public class TestPrintModel {
         assertThat(empStr, is("Hubert Baumeister"));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testPersonalActivityToString() throws IncorrectAttributeException, WrongDateException {
         LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -109,7 +123,4 @@ public class TestPrintModel {
         String personalActivityStr = act.toString();
         assertThat(personalActivityStr, is("Test (2016-05-10 - 2018-06-10)"));
     }
-
-
-
 }

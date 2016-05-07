@@ -11,9 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 
-/**
- * Created by Morten on 02/05/16.
- */
 public class ProjectActivityPane extends StandardPane {
 
     private ListView consultantsListView;
@@ -28,7 +25,9 @@ public class ProjectActivityPane extends StandardPane {
     private ObservableList<Employee> obsAvailableEmployees;
     private ManageActivityPane manageActivityPane;
 
-
+    /**
+     * Created by Tobias
+     */
     public ProjectActivityPane(PManagementSystem pms) {
         super(pms, true);
         setupRight = false;
@@ -36,24 +35,27 @@ public class ProjectActivityPane extends StandardPane {
         assignedEmpListView = new ListView();
         consultantsListView = new ListView();
 
-
         addTitleToCenterContainer("Employees");
         addNewExpandingChildToCenterContainer(assignedEmpListView);
         addTitleToCenterContainer("Consultants");
         addNewExpandingChildToCenterContainer(consultantsListView);
-
     }
 
+    /**
+     * Created by Marcus
+     */
     @Override
     protected void close() {
         projectPane.refresh();
         this.toBack();
     }
 
+    /**
+     * Created by Morten
+     */
     private void setupRightContainer() {
         //This is the pane that can manage the projectActivity.
         manageActivityPane = new ManageActivityPane(pms, projectActivity);
-
 
         //Create the tools for adding an employee to the activity
         TitlePane addEmployeeTitle = new TitlePane("Add employee to activity", TitleFontSize.MEDIUM);
@@ -66,7 +68,6 @@ public class ProjectActivityPane extends StandardPane {
         Button addEmployeeBtn = new Button("Add employee");
         Button addEmployeeAsConsultantBtn = new Button("Add employee as consultant");
 
-
         addEmployeeBtn.setOnAction(e -> addEmployeeToActivity());
         addEmployeeAsConsultantBtn.setOnAction(e -> addEmployeeToActivityAsConsultant());
 
@@ -75,6 +76,9 @@ public class ProjectActivityPane extends StandardPane {
                 addEmployeeBtn, addEmployeeAsConsultantBtn);
     }
 
+    /**
+     * Created by Tobias
+     */
     private void addEmployeeToActivity() {
         Employee emp = employeeComboBox.getValue();
         try {
@@ -89,6 +93,9 @@ public class ProjectActivityPane extends StandardPane {
 
     }
 
+    /**
+     * Created by Marcus
+     */
     private void addEmployeeToActivityAsConsultant() {
         Employee emp = employeeComboBox.getValue();
 
@@ -105,6 +112,9 @@ public class ProjectActivityPane extends StandardPane {
 
     }
 
+    /**
+     * Created by Morten
+     */
     public void setProjectActivity(ProjectActivity projectActivity) {
         this.projectActivity = projectActivity;
 
@@ -127,6 +137,9 @@ public class ProjectActivityPane extends StandardPane {
         refresh();
     }
 
+    /**
+     * Created by Tobias
+     */
     public void refresh() {
 
         //Set everything
@@ -138,16 +151,17 @@ public class ProjectActivityPane extends StandardPane {
         obsConsultants = FXCollections.observableList(projectActivity.getConsultants());
         consultantsListView.setItems(obsConsultants);
 
-
         //Refresh everything.
         assignedEmpListView.refresh();
         consultantsListView.refresh();
         manageActivityPane.refresh();
 
         updateAvailableEmployeeList();
-
     }
 
+    /**
+     * Created by Marcus
+     */
     private void updateAvailableEmployeeList() {
         try {
             obsAvailableEmployees = FXCollections.observableList(
@@ -161,8 +175,10 @@ public class ProjectActivityPane extends StandardPane {
         employeeComboBox.setItems(obsAvailableEmployees);
     }
 
+    /**
+     * Created by Morten
+     */
     public void setProjectPane(ProjectPane projectPane) {
         this.projectPane = projectPane;
     }
-
 }

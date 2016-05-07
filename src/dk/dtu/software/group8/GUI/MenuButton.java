@@ -8,15 +8,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-/**
- * Created by Morten on 27/04/16.
- */
 public class MenuButton extends VBox {
 
     private final int BUTTON_SIZE = 64;
 
     private String name;
 
+    /**
+     * Created by Marcus
+     */
     public MenuButton(String name, String iconPath) {
 
         this.setId("");
@@ -42,6 +42,9 @@ public class MenuButton extends VBox {
 
     }
 
+    /**
+     * Created by Morten
+     */
     private void addHoverEffect() {
         this.setOnMouseEntered(e -> {
             if (!this.getId().equals("active")) {
@@ -58,9 +61,10 @@ public class MenuButton extends VBox {
         });
     }
 
+    /**
+     * Created by Tobias
+     */
     public String getName() {
         return name;
     }
-
-
 }

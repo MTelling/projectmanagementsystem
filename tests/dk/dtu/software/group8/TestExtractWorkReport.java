@@ -21,7 +21,9 @@ public class TestExtractWorkReport  extends TestManageProject {
     YearWeek week37 = new YearWeek(2016, 37);
     YearWeek week42 = new YearWeek(2016, 42);
 
-
+    /**
+     * Created by Marcus
+     */
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed, WrongDateException {
         activity = pms.createActivityForProject(project, "Implementation", week37, week42, 42);
@@ -30,6 +32,9 @@ public class TestExtractWorkReport  extends TestManageProject {
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void extractReport() throws IOException {
         WorkReport DankReport = new WorkReport(pms, project);
@@ -48,6 +53,9 @@ public class TestExtractWorkReport  extends TestManageProject {
         assertThat(file1,is(equalTo(file2)));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void extractReportWithConsultants() throws InvalidEmployeeException, IOException {
         activity.assignConsultantToActivity(pms.getEmployees().get(2));
@@ -68,11 +76,14 @@ public class TestExtractWorkReport  extends TestManageProject {
         assertThat(file1,is(equalTo(file2)));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void extractReportWithProjectName() throws TooManyActivitiesException, EmployeeAlreadyAddedException, InvalidEmployeeException, InvalidNameException, IOException {
         activity.assignConsultantToActivity(pms.getEmployees().get(2));
         activity.addEmployee(pms.getEmployees().get(3));
-        project.setName("PisseMegetSur");
+        project.setName("Software Engineering");
 
         WorkReport DankReport = new WorkReport(pms, project);
         DankReport.make();

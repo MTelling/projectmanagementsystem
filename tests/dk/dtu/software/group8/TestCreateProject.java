@@ -24,6 +24,9 @@ public class TestCreateProject {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
+    /**
+     * Created by Tobias
+     */
 	@Before
 	public void setup() throws IOException {
 		pms = new PManagementSystem();
@@ -44,8 +47,9 @@ public class TestCreateProject {
         assertThat(pms.getProjects().isEmpty(), is(true));
 	}
 
-
-
+    /**
+     * Created by Marcus
+     */
 	@Test //Correct start and end.
 	public void createProjectA() throws WrongDateException, NoAccessException {
         LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -65,7 +69,9 @@ public class TestCreateProject {
 		assertThat(pms.getProjects().get(0).getId(), RegexMatcher.matches("^[0-9]{1,6}$"));
 	}
 
-
+    /**
+     * Created by Morten
+     */
     @Test //Correct start and end.
     public void createProjectB() throws WrongDateException, NoAccessException {
     	LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -85,6 +91,9 @@ public class TestCreateProject {
 		assertThat(pms.getProjects().get(0).getId(), RegexMatcher.matches("^[0-9]{1,6}$"));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test //End date before start.
     public void createProjectC() throws WrongDateException, NoAccessException {
         //Check correct exception
@@ -99,6 +108,9 @@ public class TestCreateProject {
         assertThat(project, is(nullValue()));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test //Start date in the past, correct end date
     public void createProjectD() throws WrongDateException, NoAccessException {
         //Check correct exception
@@ -113,6 +125,9 @@ public class TestCreateProject {
         assertThat(project, is(nullValue()));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test //Incorrect start date, incorrect end date. (Both in past)
     public void createProjectE() throws WrongDateException, NoAccessException {
         //Check correct exception
@@ -127,6 +142,9 @@ public class TestCreateProject {
         assertThat(project, is(nullValue()));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test //No dates.
     public void createProjectF() throws WrongDateException, NoAccessException {
 

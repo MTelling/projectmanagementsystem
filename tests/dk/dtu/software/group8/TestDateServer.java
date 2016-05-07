@@ -8,10 +8,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by Morten on 04/05/16.
+ * Created by Marcus
  */
 public class TestDateServer {
-
 
     @Test
     public void testDateServerGivesToday() {

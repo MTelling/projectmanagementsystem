@@ -25,6 +25,9 @@ public class TestCreatePersonalActivity {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
+    /**
+     * Created by Morten
+     */
     @Before
     public void setup() throws IOException {
         pms = new PManagementSystem();
@@ -43,6 +46,9 @@ public class TestCreatePersonalActivity {
         assertThat(pms.userLoggedIn(), is(true));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testAllValid() throws Exception {
         assertThat(emp.getPersonalActivities().isEmpty(), is(true));
@@ -57,6 +63,9 @@ public class TestCreatePersonalActivity {
         assertThat(emp.getPersonalActivities(), hasItem(personalActivity));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testInvalidActivityType() throws Exception{
         expectedEx.expect(IncorrectAttributeException.class);
@@ -68,6 +77,9 @@ public class TestCreatePersonalActivity {
         pms.createPersonalActivityForEmployee(activityType, startDate, endDate, emp);
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testStartDateInPast() throws Exception{
         expectedEx.expect(WrongDateException.class);
@@ -80,6 +92,9 @@ public class TestCreatePersonalActivity {
         pms.createPersonalActivityForEmployee(activityType, startDate, endDate, emp);
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testEndDateBeforeStartDate() throws Exception{
         expectedEx.expect(WrongDateException.class);
@@ -92,6 +107,9 @@ public class TestCreatePersonalActivity {
         pms.createPersonalActivityForEmployee(activityType, startDate, endDate, emp);
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testBothDatesInPast() throws Exception{
         expectedEx.expect(WrongDateException.class);
@@ -104,6 +122,9 @@ public class TestCreatePersonalActivity {
         pms.createPersonalActivityForEmployee(activityType, startDate, endDate, emp);
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testTimeperiodOccupiedByOtherPA() throws Exception {
         expectedEx.expect(WrongDateException.class);

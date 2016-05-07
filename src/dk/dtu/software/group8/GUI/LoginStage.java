@@ -13,9 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * Created by Morten on 25/04/16.
- */
 public class LoginStage extends Stage {
 
     private PManagementSystem pms;
@@ -24,6 +21,9 @@ public class LoginStage extends Stage {
     private TextField userNameInput;
     private Label wrongLoginLabel;
 
+    /**
+     * Created by Tobias
+     */
     public LoginStage(Driver driver, PManagementSystem pms) {
         final int HEIGHT = 150;
         final int WIDTH = 400;
@@ -42,9 +42,11 @@ public class LoginStage extends Stage {
         this.setResizable(false);
         this.centerOnScreen();
         this.sizeToScene();
-
     }
 
+    /**
+     * Created by Marcus
+     */
     private GridPane loginPane() {
         GridPane loginPane = new GridPane();
 
@@ -88,6 +90,9 @@ public class LoginStage extends Stage {
         return loginPane;
     }
 
+    /**
+     * Created by Morten
+     */
     private void login(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
             login();
@@ -96,6 +101,9 @@ public class LoginStage extends Stage {
         }
     }
 
+    /**
+     * Created by Tobias
+     */
     private void login() {
         if (pms.signIn(userNameInput.getText())) {
 

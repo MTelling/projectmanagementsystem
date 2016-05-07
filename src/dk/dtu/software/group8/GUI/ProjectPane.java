@@ -19,7 +19,9 @@ public class ProjectPane extends StandardPane {
     private ProjectsPane projectsPane;
     private ObservableList<ProjectActivity> obsActivities;
 
-
+    /**
+     * Created by Tobias
+     */
     public ProjectPane(ProjectActivityPane projectActivityPane, PManagementSystem pms) {
         super(pms, true);
 
@@ -35,11 +37,11 @@ public class ProjectPane extends StandardPane {
 
         addTitleToCenterContainer("Activities");
         addNewExpandingChildToCenterContainer(activitiesListView);
-
     }
 
-
-
+    /**
+     * Created by Marcus
+     */
     public void setProject(Project project) {
 
         this.project = project;
@@ -47,15 +49,19 @@ public class ProjectPane extends StandardPane {
         createProjectActivityPane.setProject(project);
 
         refresh();
-
     }
 
+    /**
+     * Created by Morten
+     */
     public void show() {
         update();
         this.toFront();
     }
 
-
+    /**
+     * Created by Tobias
+     */
     private void update() {
         this.titlePane.setText("Project Id: " + project.getId());
         this.manageProjectPane.setProject(project);
@@ -63,11 +69,17 @@ public class ProjectPane extends StandardPane {
         refresh();
     }
 
+    /**
+     * Created by Marcus
+     */
     protected void close() {
         this.toBack();
         projectsPane.refresh();
     }
 
+    /**
+     * Created by Morten
+     */
     private void manageActivity(MouseEvent e) {
         if (e.getClickCount() == 2) {
             ProjectActivity projectActivity = (ProjectActivity) activitiesListView.getSelectionModel().getSelectedItem();
@@ -79,11 +91,16 @@ public class ProjectPane extends StandardPane {
         }
     }
 
-
+    /**
+     * Created by Tobias
+     */
     public void setProjectsPane(ProjectsPane projectsPane) {
         this.projectsPane = projectsPane;
     }
 
+    /**
+     * Created by Marcus
+     */
     public void refresh() {
         obsActivities = FXCollections.observableList(project.getActivities());
         activitiesListView.setItems(obsActivities);

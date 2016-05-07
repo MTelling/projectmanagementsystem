@@ -14,12 +14,18 @@ public class TestSignIn {
     PManagementSystem pms;
     DatabaseManager db;
 
+    /**
+     * Created by Tobias
+     */
     @Before
     public void setup() throws IOException {
         pms = new PManagementSystem();
         db = new DatabaseManager("Employees.txt");
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void signInSuccess() {
         String iD = db.getEmployees().get(0).getId();
@@ -29,6 +35,9 @@ public class TestSignIn {
         assertThat(pms.getCurrentEmployee().getId(), is(iD));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void signInNoSuchUser() {
         String iD = "john";
@@ -36,6 +45,5 @@ public class TestSignIn {
         assertThat(pms.getCurrentEmployee(), is(nullValue()));
         assertThat(pms.signIn(iD), is(false));
         assertThat(pms.getCurrentEmployee(), is(nullValue()));
-
     }
 }

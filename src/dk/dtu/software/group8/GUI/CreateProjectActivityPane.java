@@ -10,10 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-
-/**
- * Created by Morten on 02/05/16.
- */
 public class CreateProjectActivityPane extends ControlPane {
 
     private final TextField startWeekField;
@@ -25,6 +21,9 @@ public class CreateProjectActivityPane extends ControlPane {
     private ProjectPane projectPane;
     private Project project;
 
+    /**
+     * Created by Tobias
+     */
     public CreateProjectActivityPane(PManagementSystem pms, ProjectPane projectPane) {
         super(pms, "Create Activity");
         this.projectPane = projectPane;
@@ -72,6 +71,9 @@ public class CreateProjectActivityPane extends ControlPane {
         this.addButton(createBtn);
     }
 
+    /**
+     * Created by Marcus
+     */
     private void createActivity() {
         try {
             YearWeek startWeek = new YearWeek(Integer.parseInt(startYearField.getText()),
@@ -102,6 +104,9 @@ public class CreateProjectActivityPane extends ControlPane {
         }
     }
 
+    /**
+     * Created by Morten
+     */
     public void setProject(Project project) {
         this.project = project;
     }

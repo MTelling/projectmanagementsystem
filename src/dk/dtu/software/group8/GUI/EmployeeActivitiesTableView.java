@@ -11,7 +11,7 @@ import javafx.scene.control.TableView;
 import java.util.List;
 
 /**
- * Created by Morten on 30/04/16.
+ * Created by Marcus
  */
 public class EmployeeActivitiesTableView extends TableView {
 
@@ -55,8 +55,5 @@ public class EmployeeActivitiesTableView extends TableView {
 
         //Add all columns to the table.
         this.getColumns().addAll(nameCol, startDateCol, endDateCol);
-
     }
-
-
 }

@@ -18,6 +18,9 @@ public class ProjectActivity extends  Activity {
 
     private Project project;
 
+    /**
+     * Created by Tobias
+     */
     public ProjectActivity(String activityType, LocalDate startDate, LocalDate endDate, int approximatedHours, Project project) throws IncorrectAttributeException {
 
    	    this.project = project;
@@ -42,6 +45,9 @@ public class ProjectActivity extends  Activity {
         this.assignedConsultants = new ArrayList<>();
     }
 
+    /**
+     * Created by Marcus
+     */
     public List<RegisteredWork> getRegisteredWorkOnDate(LocalDate day) {
         List<RegisteredWork> empWorkDayQuery = this.registeredWork
                 .stream()
@@ -53,6 +59,9 @@ public class ProjectActivity extends  Activity {
         return empWorkDayQuery;
     }
 
+    /**
+     * Created by Morten
+     */
     public int getTotalRegisteredMinutesOnDay(LocalDate day) {
         List<RegisteredWork> empWorkDayQuery = getRegisteredWorkOnDate(day);
         int workRegisteredThisDay = 0;
@@ -63,6 +72,9 @@ public class ProjectActivity extends  Activity {
         return workRegisteredThisDay;
     }
 
+    /**
+     * Created by Tobias
+     */
     public int getTotalRegisteredMinutesPastWeek(LocalDate day) {
         int result = 0;
         for(int i = 0; i < 7; i++) {
@@ -71,6 +83,9 @@ public class ProjectActivity extends  Activity {
         return result;
     }
 
+    /**
+     * Created by Marcus
+     */
     public int getTotalRegisteredMinutes() {
         int result = 0;
         for(RegisteredWork work : this.registeredWork) {
@@ -79,10 +94,16 @@ public class ProjectActivity extends  Activity {
         return result;
     }
 
+    /**
+     * Created by Morten
+     */
     public int getApproximatedHours() {
         return this.approximatedHours;
     }
 
+    /**
+     * Created by Tobias
+     */
     public void addEmployee(Employee employee) throws TooManyActivitiesException, EmployeeAlreadyAddedException {
         if (assignedEmployees.contains(employee)) {
             throw new EmployeeAlreadyAddedException("That employee has already been assigned to the activity.");
@@ -97,6 +118,9 @@ public class ProjectActivity extends  Activity {
         }
     }
 
+    /**
+     * Created by Marcus
+     */
     public boolean assignConsultantToActivity(Employee employee) throws InvalidEmployeeException {
         if(this.getEmployees().contains(employee)) {
             throw new InvalidEmployeeException("Employee already assigned to activity.");
@@ -106,6 +130,9 @@ public class ProjectActivity extends  Activity {
         }
     }
 
+    /**
+     * Created by Morten
+     */
     public void registerWork(RegisteredWork registeredWork) throws TooManyHoursException, NegativeHoursException {
         // Check if employee has already registered work for this activity and day
         Optional<RegisteredWork> empWorkQuery = this.registeredWork
@@ -120,38 +147,69 @@ public class ProjectActivity extends  Activity {
         }
     }
 
+    /**
+     * Created by Tobias
+     */
     public List<Employee> getEmployees() {
         return this.assignedEmployees;
     }
+
+    /**
+     * Created by Marcus
+     */
     public List<Employee> getConsultants() { return this.assignedConsultants; }
 
+    /**
+     * Created by Morten
+     */
     public List<RegisteredWork> getRegisteredWork() { return this.registeredWork; }
 
+    /**
+     * Created by Tobias
+     */
     public Project getProject() {
         return project;
     }
 
+    /**
+     * Created by Marcus
+     */
     public int getStartWeek() {
         return YearWeek.fromDate(this.getStartDate()).getWeek();
     }
 
+    /**
+     * Created by Morten
+     */
     public int getStartYear() {
         return YearWeek.fromDate(this.getStartDate()).getYear();
     }
 
+    /**
+     * Created by Tobias
+     */
     public int getEndWeek() {
         return YearWeek.fromDate(this.getEndDate()).getWeek();
     }
 
+    /**
+     * Created by Marcus
+     */
     public int getEndYear() {
         return YearWeek.fromDate(this.getEndDate()).getYear();
     }
 
+    /**
+     * Created by Morten
+     */
     public void changeApproximatedHours(int hours) throws NegativeHoursException {
         if(hours < 0) throw new NegativeHoursException("Approximated hours can not be negative!");
         else this.approximatedHours = hours;
     }
 
+    /**
+     * Created by Tobias
+     */
     @Override
     public String toString() {
         return this.activityType

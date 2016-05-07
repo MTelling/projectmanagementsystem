@@ -11,6 +11,9 @@ public class RegisteredWork {
     private LocalDate day;
     private int minutes;
 
+    /**
+     * Created by Marcus
+     */
     public RegisteredWork (Employee employee, Activity activity, LocalDate day, int minutes) throws TooManyHoursException, NegativeHoursException {
         this.employee = employee;
         this.activity = activity;
@@ -19,6 +22,9 @@ public class RegisteredWork {
         this.addWork(minutes);
     }
 
+    /**
+     * Created by Morten
+     */
     public boolean matches(Employee employee, Activity activity, LocalDate day) {
         return
                 this.employee.equals(employee)
@@ -26,6 +32,9 @@ public class RegisteredWork {
                 && this.day.equals(day);
     }
 
+    /**
+     * Created by Tobias
+     */
     public void addWork(int minutes) throws TooManyHoursException, NegativeHoursException {
         if(this.minutes + minutes > 1440) { //More than 24 hours in one day
             throw new TooManyHoursException("You can not work more than 24 hours in one day.");
@@ -36,14 +45,23 @@ public class RegisteredWork {
         }
     }
 
+    /**
+     * Created by Marcus
+     */
     public LocalDate getDay() {
         return this.day;
     }
 
+    /**
+     * Created by Morten
+     */
     public int getMinutes() {
         return this.minutes;
     }
 
+    /**
+     * Created by Tobias
+     */
     public Employee getEmployee() {
         return this.employee;
     }

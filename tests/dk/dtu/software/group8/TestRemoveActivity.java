@@ -12,6 +12,9 @@ import static org.junit.Assert.assertThat;
 
 public class TestRemoveActivity extends TestManageProject {
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testRemoveProjectActivity() throws Exception {
         ProjectActivity projectActivity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2016, 21), new YearWeek(2016, 22), 42);
@@ -21,6 +24,9 @@ public class TestRemoveActivity extends TestManageProject {
         assertThat(project.getActivities(), not(hasItem(projectActivity)));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testRemoveProjectActivityNotProjectManager() throws Exception {
         expectedEx.expect(NoAccessException.class);
@@ -36,6 +42,9 @@ public class TestRemoveActivity extends TestManageProject {
         assertThat(project.getActivities(), hasItem(projectActivity));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testRemoveProjectActivityNotInProject() throws Exception {
         expectedEx.expect(InvalidActivityException.class);
@@ -45,6 +54,9 @@ public class TestRemoveActivity extends TestManageProject {
         pms.removeActivityFromProject(projectActivity);
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testRemovePersonalActivity() throws Exception {
         PersonalActivity personalActivity = pms.createPersonalActivityForEmployee("Vaction", LocalDate.parse("2016-07-21"), LocalDate.parse("2016-07-28"), emp);
@@ -54,6 +66,9 @@ public class TestRemoveActivity extends TestManageProject {
         assertThat(emp.getPersonalActivities(), not(hasItem(personalActivity)));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testRemovePersonalActivityNotAssignedActivity() throws Exception {
         expectedEx.expect(InvalidActivityException.class);
@@ -62,5 +77,4 @@ public class TestRemoveActivity extends TestManageProject {
         PersonalActivity personalActivity = new PersonalActivity("Vaction", LocalDate.parse("2016-07-21"), LocalDate.parse("2016-07-28"));
         pms.removePersonalActivity(personalActivity);
     }
-
 }

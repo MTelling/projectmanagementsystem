@@ -8,10 +8,6 @@ import javafx.scene.control.*;
 
 import java.util.Optional;
 
-
-/**
- * Created by Morten on 02/05/16.
- */
 public class ManageProjectPane extends ControlPane {
 
     private DatePicker endDatePicker;
@@ -22,6 +18,9 @@ public class ManageProjectPane extends ControlPane {
 
     private TextField nameField;
 
+    /**
+     * Created by Morten
+     */
     public ManageProjectPane(PManagementSystem pms) {
         super(pms, "N/A");
         //Create the labels.
@@ -64,6 +63,9 @@ public class ManageProjectPane extends ControlPane {
 
     }
 
+    /**
+     * Created by Tobias
+     */
     private void update() {
         nameField.setText(project.getName());
 
@@ -85,6 +87,9 @@ public class ManageProjectPane extends ControlPane {
         }
     }
 
+    /**
+     * Created by Marcus
+     */
     public void setProject(Project project) {
         this.project = project;
 
@@ -93,7 +98,9 @@ public class ManageProjectPane extends ControlPane {
         update();
     }
 
-
+    /**
+     * Created by Morten
+     */
     private void save() {
         try {
 
@@ -141,6 +148,9 @@ public class ManageProjectPane extends ControlPane {
         update();
     }
 
+    /**
+     * Created by Tobias
+     */
     private void setProjectManager(){
         try {
             pms.assignManagerToProject(project);
@@ -150,9 +160,5 @@ public class ManageProjectPane extends ControlPane {
         }
 
         update();
-
     }
-
-
-
 }

@@ -13,12 +13,18 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
     YearWeek week21 = new YearWeek(2016, 21);
     YearWeek week22 = new YearWeek(2016, 22);
 
+    /**
+     * Created by Morten
+     */
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException, WrongDateException {
         activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42);
         assertThat(activity, is(not(nullValue())));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test //Correct username, employee is available
     public void testA() throws NoAccessException, TooManyActivitiesException,
             EmployeeAlreadyAddedException, NullNotAllowed {
@@ -27,6 +33,9 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test //Correct username, employee unavailable
     public void testB() throws TooManyActivitiesException, NoAccessException,
             IncorrectAttributeException, EmployeeAlreadyAddedException, WrongDateException {
@@ -38,9 +47,11 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         	activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42);
             activity.addEmployee(pms.getCurrentEmployee());
         }
-
     }
 
+    /**
+     * Created by Morten
+     */
     @Test //Incorrect username
     public void testC() throws InvalidEmployeeException {
         expectedEx.expect(InvalidEmployeeException.class);
@@ -51,6 +62,9 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         Employee emp = pms.getEmployeeFromId(empName);
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test //Not project manager, but otherwise correct.
     public void testD() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
         expectedEx.expect(NoAccessException.class);
@@ -63,7 +77,9 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         testA();
     }
 
-
+    /**
+     * Created by Marcus
+     */
     @Test //Add the same employee twice
     public void testE() throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
         expectedEx.expect(EmployeeAlreadyAddedException.class);
@@ -74,7 +90,9 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         testA();
     }
 
-
+    /**
+     * Created by Morten
+     */
     @Test
     public void testAddEmpAsEmployeeIfAlreadyAssignedAsConsultant() throws Exception {
         Employee emp = pms.getEmployeeFromId("toli");
@@ -96,6 +114,9 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         assertThat(activity.getConsultants(), not(hasItem(emp)));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testAddNull() throws TooManyActivitiesException, NoAccessException,
             EmployeeAlreadyAddedException, NullNotAllowed {
@@ -103,9 +124,5 @@ public class TestAssignEmployeeToActivity extends TestManageProject {
         expectedEx.expectMessage("You need to choose an employee.");
 
         pms.addEmployeeToActivity(activity, null);
-
     }
-
-
-
 }

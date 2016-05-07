@@ -10,15 +10,23 @@ public class DatabaseManager {
 
     public List<Employee> employees;
 
+    /**
+     * Created by Marcus
+     */
     public DatabaseManager(String fileName) throws IOException {
         loadEmployees(fileName);
     }
 
+    /**
+     * Created by Morten
+     */
 	public List<Employee> getEmployees() {
         return employees;
 	}
 
-
+    /**
+     * Created by Tobias
+     */
     public void loadEmployees(String fileName) throws IOException {
         employees = new ArrayList<>();
 
@@ -32,5 +40,4 @@ public class DatabaseManager {
             employees.add(new Employee(employeeCreds[0], employeeCreds[1], employeeCreds[2]));
         }
     }
-	
 }

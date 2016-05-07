@@ -7,14 +7,14 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
-/**
- * Created by Morten on 25/04/16.
- */
 public class ProjectsPane extends StandardPane {
 
     private ProjectPane projectPane;
     private ListView projectListView;
 
+    /**
+     * Created by Morten
+     */
     public ProjectsPane(ProjectPane projectPane, PManagementSystem pms) {
         super(pms, false);
 
@@ -32,19 +32,23 @@ public class ProjectsPane extends StandardPane {
 
         CreateProjectPane createProjectPane = new CreateProjectPane(pms, this);
 
-
         //Add all elements to the pane.
         rightContainer.getChildren().add(createProjectPane);
         addNewExpandingChildToCenterContainer(projectListView);
-
     }
 
+    /**
+     * Created by Tobias
+     */
     public void refresh() {
         ObservableList<Project> obsProjects = FXCollections.observableList(pms.getProjects());
         projectListView.setItems(obsProjects);
         projectListView.refresh();
     }
 
+    /**
+     * Created by Marcus
+     */
     private void openProject(MouseEvent e) {
         if (e.getClickCount() == 2) {
             projectPane.setProject((Project)projectListView.getSelectionModel().getSelectedItem());
@@ -52,6 +56,9 @@ public class ProjectsPane extends StandardPane {
         }
     }
 
+    /**
+     * Created by Morten
+     */
     @Override
     protected void close() {
         this.toBack();

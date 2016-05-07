@@ -17,17 +17,16 @@ import javafx.scene.layout.HBox;
 
 import java.time.LocalDate;
 
-/**
- * Created by Morten on 25/04/16.
- */
 public class RegisterHoursPane extends StandardPane {
-
 
     private final ListView activitiesListView;
     private ControlHoursPane controlHoursPane;
     private ObservableList<Activity> obsActivitiesOnDay;
     private final DatePicker datePicker;
 
+    /**
+     * Created by Tobias
+     */
     public RegisterHoursPane(PManagementSystem pms) {
         super(pms, false);
 
@@ -61,23 +60,26 @@ public class RegisterHoursPane extends StandardPane {
         //Add listener for selection.
         activitiesListView.getSelectionModel().selectedItemProperty().addListener(e -> setShownActivity());
 
-
         //Add all children to the center and right container.
         centerContainer.getChildren().add(datePickContainer);
         addNewExpandingChildToCenterContainer(activitiesListView);
         rightContainer.getChildren().add(controlHoursPane);
 
         updateDate();
-
     }
 
-
+    /**
+     * Created by Marcus
+     */
     @Override
     public void toFront() {
         super.toFront();
         updateDate();
     }
 
+    /**
+     * Created by Morten
+     */
     private void updateDate() {
 
         LocalDate chosenDay = datePicker.getValue();
@@ -90,9 +92,11 @@ public class RegisterHoursPane extends StandardPane {
         activitiesListView.refresh();
 
         updateTotalMinutesOnDay(chosenDay);
-
     }
 
+    /**
+     * Created by Tobias
+     */
     private void setShownActivity() {
 
         ProjectActivity projectActivity = (ProjectActivity) activitiesListView.getSelectionModel().getSelectedItem();
@@ -103,15 +107,19 @@ public class RegisterHoursPane extends StandardPane {
 
 
         controlHoursPane.setTotalMinutesOnActivity(totalMinutesOnDayAndActivity);
-
     }
 
-
+    /**
+     * Created by Marcus
+     */
     @Override
     protected void close() {
         toBack();
     }
 
+    /**
+     * Created by Morten
+     */
     public void registerTimeOnActivity(String[] time) {
         ProjectActivity projectActivity = (ProjectActivity) activitiesListView.getSelectionModel().getSelectedItem();
         LocalDate chosenDay = datePicker.getValue();
@@ -133,8 +141,10 @@ public class RegisterHoursPane extends StandardPane {
         updateTotalMinutesOnDay(chosenDay);
     }
 
+    /**
+     * Created by Tobias
+     */
     private void updateTotalMinutesOnDay(LocalDate day) {
         controlHoursPane.setTotalMinutesOnDay(pms.getCurrentEmployee().getTotalRegisteredMinutesOnDay(day));
-
     }
 }

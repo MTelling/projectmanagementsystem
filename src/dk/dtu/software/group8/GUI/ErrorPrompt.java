@@ -4,7 +4,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 
 /**
- * Created by Morten on 03/05/16.
+ * Created by Marcus
  */
 public class ErrorPrompt extends Alert {
 
@@ -17,7 +17,5 @@ public class ErrorPrompt extends Alert {
         this.setContentText(msg);
 
         this.initModality(Modality.APPLICATION_MODAL);
-
-
     }
 }

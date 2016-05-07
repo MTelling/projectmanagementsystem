@@ -18,6 +18,9 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Created by Marcus
+ */
 public class TestManageProject {
 
     PManagementSystem pms;
@@ -59,6 +62,4 @@ public class TestManageProject {
         //Assign current employee as project manager..
         pms.assignManagerToProject(project);
     }
-
-
 }

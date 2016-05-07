@@ -13,6 +13,9 @@ import static org.junit.Assert.assertThat;
 
 public class TetsUtilityFunctions extends TestManageProject {
 
+    /**
+     * Created by Morten
+     */
     @Before
     public void setupProjectDates() throws NoAccessException, WrongDateException {
         //Set the project duration differently so we can do cleaner tests:
@@ -20,6 +23,9 @@ public class TetsUtilityFunctions extends TestManageProject {
 
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testGetWorkedMinutes() throws NoAccessException, IncorrectAttributeException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed, TooManyHoursException, NegativeHoursException, WrongDateException {
         LocalDate date = LocalDate.parse("2016-05-09");
@@ -42,6 +48,9 @@ public class TetsUtilityFunctions extends TestManageProject {
 
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testGetEmployeeActivitiesOnDateDateIsStartDateForActivities() throws Exception {
         LocalDate date = LocalDate.parse("2016-05-09");
@@ -59,6 +68,9 @@ public class TetsUtilityFunctions extends TestManageProject {
         assertThat(activitiesOnDate, hasItems(activityOnDateOne, activityOnDateTwo));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testGetEmployeeActivitiesOnDateDateIsEndDateForActivities() throws Exception {
 
@@ -80,6 +92,9 @@ public class TetsUtilityFunctions extends TestManageProject {
         assertThat(activitiesOnDate, hasItems(activityOnDateOne, activityOnDateTwo));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testGetEmployeeActivitiesOnDateEmpty() {
         LocalDate date = LocalDate.parse("2016-05-11");
@@ -88,6 +103,9 @@ public class TetsUtilityFunctions extends TestManageProject {
         assertThat(activitiesOnDate.isEmpty(), is(true));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testGetRegisteredWorkOnDate() throws Exception {
         LocalDate date = LocalDate.parse("2016-05-09");
@@ -109,6 +127,9 @@ public class TetsUtilityFunctions extends TestManageProject {
         assertThat(registeredWorkOnDate, is(equalTo(actualRegisteredWork)));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testGetTotalRegisteredWorkOnDay() throws Exception {
         LocalDate date = LocalDate.parse("2016-05-09");
@@ -129,6 +150,9 @@ public class TetsUtilityFunctions extends TestManageProject {
         assertThat(totalRegisteredMinutes, is(equalTo(actualRegisteredMinutes)));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testGetTotalRegisteredWorkOnDayAndActivity() throws Exception {
         LocalDate date = LocalDate.parse("2016-05-09");

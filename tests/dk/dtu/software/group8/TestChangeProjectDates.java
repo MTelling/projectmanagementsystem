@@ -11,7 +11,9 @@ import static org.junit.Assert.assertThat;
 
 public class TestChangeProjectDates extends TestManageProject{
 
-
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testCorrectStartAndEnd() throws WrongDateException, NoAccessException{
     	LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -23,6 +25,9 @@ public class TestChangeProjectDates extends TestManageProject{
         assertThat(project.getEndDate(), is(endDate));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testCorrectStartAndSameEnd() throws WrongDateException, NoAccessException{
     	LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -34,6 +39,9 @@ public class TestChangeProjectDates extends TestManageProject{
         assertThat(project.getEndDate(), is(endDate));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testCorrectStartIncorrectEnd() throws WrongDateException, NoAccessException {
         expectedEx.expect(WrongDateException.class);
@@ -45,6 +53,9 @@ public class TestChangeProjectDates extends TestManageProject{
         pms.manageProjectDates(project, startDate, endDate);
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testIncorrectStartCorrectEnd() throws WrongDateException, NoAccessException {
         expectedEx.expect(WrongDateException.class);
@@ -56,6 +67,9 @@ public class TestChangeProjectDates extends TestManageProject{
         pms.manageProjectDates(project, startDate, endDate);
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testIncorrectStartIncorrectEnd() throws WrongDateException, NoAccessException {
         expectedEx.expect(WrongDateException.class);
@@ -67,6 +81,9 @@ public class TestChangeProjectDates extends TestManageProject{
         pms.manageProjectDates(project, startDate, endDate);
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testNoEndOrStart() throws WrongDateException, NoAccessException {
         //Check correct exception
@@ -76,6 +93,9 @@ public class TestChangeProjectDates extends TestManageProject{
         pms.manageProjectDates(project, null, null);
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testNotManager() throws WrongDateException, NoAccessException {
         expectedEx.expect(NoAccessException.class);
@@ -91,6 +111,9 @@ public class TestChangeProjectDates extends TestManageProject{
         pms.manageProjectDates(project, startDate, endDate);
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testStartDateSetToToday() throws WrongDateException, NoAccessException {
 
@@ -101,8 +124,5 @@ public class TestChangeProjectDates extends TestManageProject{
 
         assertThat(project.getStartDate(), is(startDate));
         assertThat(project.getEndDate(), is(endDate));
-
-
     }
-
 }

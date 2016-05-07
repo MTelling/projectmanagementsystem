@@ -6,14 +6,14 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Morten on 25/04/16.
- */
 public class MenuPane extends VBox {
 
     private PrimaryStage primaryStage;
     private List<MenuButton> menuButtons;
 
+    /**
+     * Created by Marcus
+     */
     public MenuPane(PrimaryStage primaryStage) {
 
         this.primaryStage = primaryStage;
@@ -45,6 +45,9 @@ public class MenuPane extends VBox {
 
     }
 
+    /**
+     * Created by Morten
+     */
     private void addClickListener(MenuButton menuButton) {
         menuButton.setOnMouseClicked(e -> {
             for (MenuButton menuBtn: menuButtons) {
@@ -57,6 +60,4 @@ public class MenuPane extends VBox {
             }
         });
     }
-
-
 }

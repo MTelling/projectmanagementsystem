@@ -20,6 +20,9 @@ public class Employee {
 	private List<RegisteredWork> registeredWork = new ArrayList<>();
 	private List<Activity> personalActivities;
 
+    /**
+     * Created by Morten
+     */
 	public Employee(String id, String firstName, String lastName) {
 		this.setId(id);
         this.firstName = firstName;
@@ -29,6 +32,9 @@ public class Employee {
 		this.personalActivities = new LinkedList<>();
 	}
 
+    /**
+     * Created by Tobias
+     */
 	public boolean assignToActivity(ProjectActivity projectActivity) throws TooManyActivitiesException {
 		if (projectActivities.size() < 20) {
 			projectActivities.add(projectActivity);
@@ -38,6 +44,9 @@ public class Employee {
 		}
 	}
 
+    /**
+     * Created by Marcus
+     */
     public PersonalActivity createPersonalActivity(String activityType, LocalDate startDate, LocalDate endDate) throws WrongDateException, IncorrectAttributeException {
         boolean isOccupied = false;
         for (Activity a: personalActivities) {
@@ -54,6 +63,9 @@ public class Employee {
         return pa;
     }
 
+    /**
+     * Created by Morten
+     */
 	public boolean isAvailable(LocalDate startDate, LocalDate endDate, ProjectActivity activity) {
 		if(this.projectActivities.contains(activity))
             return false;
@@ -72,24 +84,39 @@ public class Employee {
         }
 	}
 
+    /**
+     * Created by Tobias
+     */
 	public List<Activity> getPersonalActivities() {
 		return this.personalActivities;
 	}
 
+    /**
+     * Created by Marcus
+     */
 	public void setId(String id) {
 		this.id = id;
 	}
 
+    /**
+     * Created by Morten
+     */
 	public String getId() {
 		return this.id;
 	}
 
+    /**
+     * Created by Tobias
+     */
     public void assignConsultantToActivity(ProjectActivity projectActivity) throws InvalidEmployeeException {
         if (projectActivity.assignConsultantToActivity(this)) {
             consultingActivities.add(projectActivity);
         }
     }
 
+    /**
+     * Created by Marcus
+     */
 	public void registerWorkHours(ProjectActivity activity, int minutes, LocalDate day) throws NoAccessException, TooManyHoursException, NegativeHoursException {
 		if(!projectActivities.contains(activity)) { // Test if employee is assigned to activity
 			throw new NoAccessException("Current user not assigned to activity.");
@@ -117,6 +144,9 @@ public class Employee {
 		}
 	}
 
+    /**
+     * Created by Morten
+     */
     public int getTotalRegisteredMinutesOnDay(LocalDate day) {
         List<RegisteredWork> empWorkDayQuery = getRegisteredWorkOnDate(day);
         int workRegisteredThisDay = 0;
@@ -127,6 +157,9 @@ public class Employee {
         return workRegisteredThisDay;
     }
 
+    /**
+     * Created by Tobias
+     */
     public int getTotalRegisteredMinutesOnDayAndActivityPastWeek(LocalDate day, ProjectActivity activity) {
         int result = 0;
         for(int i = 0; i < 7; i++) {
@@ -135,6 +168,9 @@ public class Employee {
         return result;
     }
 
+    /**
+     * Created by Marcus
+     */
     public int getTotalRegisteredMinutesOnActivity(ProjectActivity activity) {
         int result = 0;
 
@@ -144,6 +180,9 @@ public class Employee {
         return result;
     }
 
+    /**
+     * Created by Morten
+     */
     public int getTotalRegisteredMinutesOnDayAndActivity(LocalDate day, ProjectActivity activity) {
         Optional<RegisteredWork> empWorkQuery = getRegisteredWorkOnDateAndActivity(activity, day);
         int totalMinutes = 0;
@@ -155,6 +194,9 @@ public class Employee {
         return totalMinutes;
     }
 
+    /**
+     * Created by Tobias
+     */
     public List<RegisteredWork> getRegisteredWorkOnDate(LocalDate day) {
         List<RegisteredWork> empWorkDayQuery = this.registeredWork
                 .stream()
@@ -166,6 +208,9 @@ public class Employee {
         return empWorkDayQuery;
     }
 
+    /**
+     * Created by Marcus
+     */
     private Optional<RegisteredWork> getRegisteredWorkOnDateAndActivity(ProjectActivity activity, LocalDate day) {
         // Check if employee has already registered work for this activity and day
         List<RegisteredWork> empWorkDayQuery = getRegisteredWorkOnDate(day);
@@ -180,7 +225,9 @@ public class Employee {
         return empWorkQuery;
     }
 
-
+    /**
+     * Created by Morten
+     */
 	public boolean matches(Employee employee) {
 		return
 				this.getId().equals(employee.getId())
@@ -188,28 +235,49 @@ public class Employee {
 				&& this.getLastName().equals(employee.getLastName());
 	}
 
+    /**
+     * Created by Tobias
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Created by Marcus
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Created by Morten
+     */
 	public List<RegisteredWork> getRegisteredWork() { return this.registeredWork; }
 
+    /**
+     * Created by Tobias
+     */
 	public List<ProjectActivity> getProjectActivities() {
         return projectActivities;
     }
 
+    /**
+     * Created by Marcus
+     */
 	public String toString() {
 		return firstName + " " + lastName;
 	}
 
+    /**
+     * Created by Morten
+     */
 	public List<Activity> getActivitiesOnDate(LocalDate date) {
 		return this.getProjectActivities().stream().filter(pa -> pa.isTimePeriodInActivityDuration(date, date)).collect(Collectors.toList());
 	}
 
+    /**
+     * Created by Tobias
+     */
     public void removePersonalActivity(PersonalActivity personalActivity) throws InvalidActivityException {
         if(!this.getPersonalActivities().contains(personalActivity))
             throw new InvalidActivityException("The activity does not belong to you!");

@@ -30,6 +30,9 @@ public class TestRegisterWorkHours {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
+    /**
+     * Created by Morten
+     */
     @Before
     public void setup() throws WrongDateException, NoAccessException,
             AlreadyAssignedProjectManagerException, IOException {
@@ -64,6 +67,9 @@ public class TestRegisterWorkHours {
         assertThat(project.getProjectManager().matches(db.getEmployees().get(0)), is(true));
     }
 
+    /**
+     * Created by Tobias
+     */
     //Date in the past, employee assigned to activity, hours less than 24
     @Test
     public void testA() throws Exception {
@@ -83,7 +89,9 @@ public class TestRegisterWorkHours {
         assertThat(activity.getRegisteredWork().get(0), is(equalTo(pms.getCurrentEmployee().getRegisteredWork().get(0))));
     }
 
-
+    /**
+     * Created by Marcus
+     */
    // Date in the future, employee assigned to activity, hours less than 24
     @Test
     public void testB() throws Exception {
@@ -100,6 +108,9 @@ public class TestRegisterWorkHours {
         pms.registerWorkHours(activity, 120, futureDate);
     }
 
+    /**
+     * Created by Morten
+     */
    // Date in the past, employee not assigned to activity, hours less than 24
     @Test
     public void testC() throws Exception {
@@ -114,6 +125,9 @@ public class TestRegisterWorkHours {
         pms.registerWorkHours(activity, 120, pastDate);
     }
 
+    /**
+     * Created by Tobias
+     */
     // Date in the past, employee assigned to activity, hours exceeds 24
     @Test
     public void testD() throws Exception {
@@ -129,6 +143,9 @@ public class TestRegisterWorkHours {
         pms.registerWorkHours(activity, 25*60, pastDate);
     }
 
+    /**
+     * Created by Marcus
+     */
     //Date in the past, employee assigned to activity, hours less than 24
     //same activity new hours exceeds 24
     @Test
@@ -146,6 +163,9 @@ public class TestRegisterWorkHours {
         pms.registerWorkHours(activity, 25*60, pastDate);
     }
 
+    /**
+     * Created by Morten
+     */
     // Date in the past, employee assigned, hours less than 24
     // other activity exceeds 24 - entered hours
     @Test
@@ -166,6 +186,9 @@ public class TestRegisterWorkHours {
         pms.registerWorkHours(secondActivity, 13*60, pastDate);
     }
 
+    /**
+     * Created by Tobias
+     */
     //Date in the past, employee assigned to activity, hours less than 0
     @Test
     public void testG() throws Exception {
@@ -186,8 +209,5 @@ public class TestRegisterWorkHours {
         assertThat(activity.getRegisteredWork().get(0), is(equalTo(pms.getCurrentEmployee().getRegisteredWork().get(0))));
 
         pms.registerWorkHours(activity, (-6)*60, pastDate);
-
     }
-
 }
-

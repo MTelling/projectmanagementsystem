@@ -16,7 +16,10 @@ import static org.junit.Assert.assertTrue;
 public class TestCreateProjectActivity extends TestManageProject {
 	
 	LocalDate week36, week37, week42;
-	
+
+	/**
+	 * Created by Marcus
+	 */
 	@Before
 	public void setUpWeeks() {
 
@@ -24,7 +27,10 @@ public class TestCreateProjectActivity extends TestManageProject {
 		week37 = new YearWeek(2016, 37).toLocalDate();
 		week42 = new YearWeek(2016, 42).toLocalDate();
 	}
-	
+
+	/**
+	 * Created by Morten
+	 */
 	@Test
 	public void testCreateNewProjectActivitySuccess() throws IncorrectAttributeException {
 		String activityType = "Implementation";
@@ -41,6 +47,9 @@ public class TestCreateProjectActivity extends TestManageProject {
 		assertThat(projectActivity.getApproximatedHours(), is(approximatedHours));
 	}
 
+	/**
+	 * Created by Tobias
+	 */
 	@Test
 	public void testCreateNewProjectActivityIncorrectActivityType() throws IncorrectAttributeException {
 		expectedEx.expect(IncorrectAttributeException.class);
@@ -53,6 +62,9 @@ public class TestCreateProjectActivity extends TestManageProject {
 		assertThat(projectActivity, is(nullValue()));
 	}
 
+	/**
+	 * Created by Marcus
+	 */
 	@Test
 	public void testCreateNewProjectActivityIncorrectTimePeriod() throws IncorrectAttributeException {
 		expectedEx.expect(IncorrectAttributeException.class);
@@ -65,6 +77,9 @@ public class TestCreateProjectActivity extends TestManageProject {
 		assertThat(projectActivity, is(nullValue()));
 	}
 
+	/**
+	 * Created by Morten
+	 */
 	@Test
 	public void testCreateNewProjectActivityIncorrectAproximatedTime() throws IncorrectAttributeException {
 		expectedEx.expect(IncorrectAttributeException.class);
@@ -77,6 +92,9 @@ public class TestCreateProjectActivity extends TestManageProject {
 		assertThat(projectActivity, is(nullValue()));
 	}
 
+	/**
+	 * Created by Tobias
+	 */
 	@Test
 	public void testCreateProjectActivity() throws IncorrectAttributeException, NoAccessException, WrongDateException {
 		assertThat(project.getProjectManager(), is(pms.getCurrentEmployee()));
@@ -89,7 +107,10 @@ public class TestCreateProjectActivity extends TestManageProject {
 		assertThat(projectActivity, instanceOf(ProjectActivity.class));
 		assertThat(project.getActivities().size(), is(numOfActivities + 1));
 	}
-	
+
+	/**
+	 * Created by Marcus
+	 */
 	@Test
 	public void testCreateProjectActivityNotManager() throws IncorrectAttributeException, NoAccessException, WrongDateException {
 		expectedEx.expect(NoAccessException.class);
@@ -101,6 +122,9 @@ public class TestCreateProjectActivity extends TestManageProject {
 		pms.createActivityForProject(project, "Implementation", YearWeek.fromDate(week37), YearWeek.fromDate(week42), 42);
 	}
 
+	/**
+	 * Created by Morten
+	 */
 	@Test
     public void testCreateProjectActivityBeforeProject() throws NoAccessException, WrongDateException, IncorrectAttributeException {
         expectedEx.expect(WrongDateException.class);
@@ -114,16 +138,17 @@ public class TestCreateProjectActivity extends TestManageProject {
         assertThat(project.getStartDate(), is(newProjectStart));
         assertThat(project.getEndDate(), is(newProjectEnd));
 
-
         YearWeek startWeek = YearWeek.fromDate(LocalDate.parse("2016-05-12"));
         YearWeek endWeek = YearWeek.fromDate(LocalDate.parse("2016-08-15"));
 
         assertThat(startWeek.isBefore(YearWeek.fromDate(project.getStartDate())), is(true));
 
         pms.createActivityForProject(project, "Test", startWeek, endWeek, 40);
-
     }
 
+	/**
+	 * Created by Tobias
+	 */
     @Test
     public void testCreateProjectActivityAfterProject() throws NoAccessException, IncorrectAttributeException, WrongDateException {
         expectedEx.expect(WrongDateException.class);

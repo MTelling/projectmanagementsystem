@@ -27,6 +27,9 @@ public class TestProjectManagerAssignment {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
+    /**
+     * Created by Morten
+     */
     @Before
     public void setup() throws WrongDateException, NoAccessException, IOException {
         pms = new PManagementSystem();
@@ -55,6 +58,9 @@ public class TestProjectManagerAssignment {
         assertThat(pms.getProjects().size(), is(1));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testIsEmployee() throws InvalidEmployeeException, AlreadyAssignedProjectManagerException {
         String empId = db.getEmployees().get(0).getId();
@@ -64,6 +70,9 @@ public class TestProjectManagerAssignment {
         assertThat(project.getProjectManager(), is(emp));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testProjectHasManager() throws AlreadyAssignedProjectManagerException, InvalidEmployeeException{
         expectedEx.expect(AlreadyAssignedProjectManagerException.class);

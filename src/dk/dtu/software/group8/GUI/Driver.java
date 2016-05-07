@@ -19,6 +19,9 @@ public class Driver extends Application {
     private PManagementSystem pms;
     private PrimaryStage primaryStage;
 
+    /**
+     * Created by Morten
+     */
     public static void main(String[] args) {
 
         //Set the date format to UK
@@ -27,6 +30,9 @@ public class Driver extends Application {
         Application.launch(args);
 }
 
+    /**
+     * Created by Tobias
+     */
     public void start(Stage loginStage) {
 
         //Create an instance of the pms
@@ -47,6 +53,9 @@ public class Driver extends Application {
         loginStage.show();
     }
 
+    /**
+     * Created by Marcus
+     */
     public void startPrimaryStage() {
 
         demo();
@@ -56,6 +65,9 @@ public class Driver extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Created by Morten
+     */
     private void beforeDemo() {
 
         try {
@@ -95,6 +107,9 @@ public class Driver extends Application {
         }
     }
 
+    /**
+     * Created by Tobias
+     */
     private void demo() {
         Project project = null;
         try {
@@ -121,14 +136,10 @@ public class Driver extends Application {
 
                 pms.addEmployeeToActivity(activity, pms.getCurrentEmployee());
 
-
             } catch (Exception e) {
                 Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
                 error.showAndWait();
             }
         }
-
     }
-
-
 }

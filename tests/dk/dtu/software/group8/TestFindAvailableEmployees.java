@@ -19,12 +19,18 @@ public class TestFindAvailableEmployees extends TestManageProject {
 
     ProjectActivity activity;
 
+    /**
+     * Created by Morten
+     */
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException, WrongDateException {
         activity = pms.createActivityForProject(project, "Unit Testing", new YearWeek(2016, 37), new YearWeek(2016, 42), 42);
         assertThat(activity, instanceOf(ProjectActivity.class));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testFindAvailableEmployees() throws Exception {
         LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -34,6 +40,9 @@ public class TestFindAvailableEmployees extends TestManageProject {
         assertThat(availableEmployees, equalTo(pms.getEmployees()));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testEmployeeWith1Activity() throws Exception {
         LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -49,6 +58,9 @@ public class TestFindAvailableEmployees extends TestManageProject {
         assertThat(availableEmployees, equalTo(pms.getEmployees()));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testEmployeeWith20Activities() throws Exception {
         LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -69,6 +81,9 @@ public class TestFindAvailableEmployees extends TestManageProject {
         assertThat(availableEmployees, equalTo(actualAvailableEmployees));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testEmployeeWithPersonalActivity() throws Exception {
         LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -86,6 +101,9 @@ public class TestFindAvailableEmployees extends TestManageProject {
         assertThat(availableEmployees, equalTo(actualAvailableEmployees));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testEmployeeAlreadyInActivity() throws Exception {
         LocalDate startDate = LocalDate.parse("2016-05-10");
@@ -103,6 +121,9 @@ public class TestFindAvailableEmployees extends TestManageProject {
         assertThat(availableEmployees, equalTo(actualAvailableEmployees));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testStartDateInThePast() throws Exception {
         expectedEx.expect(WrongDateException.class);
@@ -114,6 +135,9 @@ public class TestFindAvailableEmployees extends TestManageProject {
         pms.findAvailableEmployees(startDate, endDate, activity);
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testEndDateIsBeforeStartDate() throws Exception {
         expectedEx.expect(WrongDateException.class);
@@ -124,5 +148,4 @@ public class TestFindAvailableEmployees extends TestManageProject {
 
         pms.findAvailableEmployees(startDate, endDate, activity);
     }
-
 }

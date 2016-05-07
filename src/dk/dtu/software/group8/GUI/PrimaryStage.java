@@ -6,9 +6,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-/**
- * Created by Morten on 25/04/16.
- */
 public class PrimaryStage extends Stage{
 
     private final int WIDTH = 1200;
@@ -22,7 +19,9 @@ public class PrimaryStage extends Stage{
     private ProjectPane projectPane;
     private RegisterHoursPane registerHoursPane;
 
-
+    /**
+     * Created by Marcus
+     */
     public PrimaryStage(PManagementSystem pms) {
 
         this.pms = pms;
@@ -68,7 +67,9 @@ public class PrimaryStage extends Stage{
         this.sizeToScene();
     }
 
-
+    /**
+     * Created by Morten
+     */
     public void present(String sceneId) {
         if (sceneId.equals("Projects")) {
             projectsPane.toFront();

@@ -14,6 +14,9 @@ public class PManagementSystem {
 	private Employee currentEmployee;
     private List<Project> projects;
 
+    /**
+     * Created by Tobias
+     */
     public PManagementSystem() throws IOException {
 
         Locale.setDefault(Locale.UK);
@@ -25,6 +28,9 @@ public class PManagementSystem {
         projects = new LinkedList<>();
     }
 
+    /**
+     * Created by Marcus
+     */
     public Project createProject(LocalDate startDate, LocalDate endDate) throws WrongDateException {
         if(startDate == null || endDate == null) {
             throw new WrongDateException("Missing date(s)!");
@@ -43,7 +49,10 @@ public class PManagementSystem {
 
         return newProject;
     }
-    
+
+    /**
+     * Created by Morten
+     */
     public void assignManagerToProject(Project project) throws AlreadyAssignedProjectManagerException{
     	if(project.getProjectManager() != null) {
     		throw new AlreadyAssignedProjectManagerException("The project already has a Project Manager.");
@@ -52,6 +61,9 @@ public class PManagementSystem {
     	project.assignProjectManager(this.currentEmployee);
     }
 
+    /**
+     * Created by Tobias
+     */
     public void addEmployeeToActivity(ProjectActivity activity, Employee employee)
             throws NoAccessException, TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed {
 
@@ -65,6 +77,9 @@ public class PManagementSystem {
             project.addEmployeeToActivity(activity, employee);
     }
 
+    /**
+     * Created by Marcus
+     */
     public void changeNameOfProject(Project project, String name) throws NoAccessException, InvalidNameException {
     	if(this.manageProject(project)) {
 
@@ -85,7 +100,10 @@ public class PManagementSystem {
             }
         }
     }
-    
+
+    /**
+     * Created by Morten
+     */
     public void manageProjectDates(Project project, LocalDate startDate, LocalDate endDate) throws NoAccessException, WrongDateException {
     	if(this.manageProject(project)) {
             if (startDate != null
@@ -102,7 +120,10 @@ public class PManagementSystem {
             }
         }
     }
-    
+
+    /**
+     * Created by Tobias
+     */
     public ProjectActivity createActivityForProject(Project project, String activityType, YearWeek startWeek, YearWeek endWeek, int approximatedHours) throws NoAccessException, IncorrectAttributeException, WrongDateException {
     	ProjectActivity projectActivity = null;
 
@@ -122,6 +143,9 @@ public class PManagementSystem {
         return projectActivity;
     }
 
+    /**
+     * Created by Marcus
+     */
     public List<Employee> findAvailableEmployees(LocalDate startDate, LocalDate endDate, ProjectActivity activity) throws WrongDateException {
         if(startDate.isBefore(dateServer.getDate()) || endDate.isBefore(startDate)) {
             throw new WrongDateException("Time period is invalid!");
@@ -134,6 +158,9 @@ public class PManagementSystem {
         return availableEmployees;
     }
 
+    /**
+     * Created by Morten
+     */
     public void endProject(Project project) throws NoAccessException, WrongDateException {
     	if(this.manageProject(project)) {
 
@@ -142,6 +169,9 @@ public class PManagementSystem {
         }
     }
 
+    /**
+     * Created by Tobias
+     */
     public void manageActivityDates(ProjectActivity activity, YearWeek startWeek, YearWeek endWeek) throws IncorrectAttributeException, NoAccessException, WrongDateException {
         if(this.manageProject(activity.getProject())) {
             if(startWeek != null && startWeek.isAfter(YearWeek.fromDate(dateServer.getDate()))) {
@@ -166,7 +196,10 @@ public class PManagementSystem {
             }
         }
     }
-    
+
+    /**
+     * Created by Marcus
+     */
     private boolean manageProject(Project project) throws NoAccessException {
     	if(project.getProjectManager() == null || !project.getProjectManager().equals(this.currentEmployee)) {
     		throw new NoAccessException("Current user is not Project Manager for this project.");
@@ -175,14 +208,23 @@ public class PManagementSystem {
     	return true;
     }
 
+    /**
+     * Created by Morten
+     */
     public PersonalActivity createPersonalActivityForEmployee(String activityType, LocalDate startDate, LocalDate endDate, Employee emp) throws WrongDateException, IncorrectAttributeException {
         return emp.createPersonalActivity(activityType, startDate, endDate);
     }
 
+    /**
+     * Created by Tobias
+     */
     public Employee getCurrentEmployee() {
 		return this.currentEmployee;
 	}
 
+    /**
+     * Created by Marcus
+     */
     public Employee getEmployeeFromId(String iD) throws InvalidEmployeeException {
         Optional<Employee> emp = db.getEmployees().stream().filter(e -> e.getId().equals(iD)).findFirst();
 
@@ -193,6 +235,9 @@ public class PManagementSystem {
         }
     }
 
+    /**
+     * Created by Morten
+     */
     public boolean signIn(String iD) {
         Optional<Employee> emp = db.getEmployees().stream().filter(e -> e.getId().equals(iD)).findFirst();
 
@@ -205,6 +250,9 @@ public class PManagementSystem {
 
     }
 
+    /**
+     * Created by Tobias
+     */
     public void addEmployeeToActivityAsConsultant(ProjectActivity activity, Employee employee) throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
         if(!activity.getEmployees().contains(this.currentEmployee)) {
             throw new NoAccessException("Current user is not assigned to this activity.");
@@ -215,26 +263,44 @@ public class PManagementSystem {
         }
     }
 
+    /**
+     * Created by Marcus
+     */
     public LocalDate getDate() {
         return dateServer.getDate();
     }
 
+    /**
+     * Created by Morten
+     */
     public List<Employee> getEmployees() {
         return this.db.getEmployees();
     }
 
+    /**
+     * Created by Tobias
+     */
     public void setDateServer(DateServer dateServer) {
         this.dateServer = dateServer;
     }
 
+    /**
+     * Created by Marcus
+     */
     public boolean userLoggedIn() {
         return currentEmployee != null;
     }
 
+    /**
+     * Created by Morten
+     */
     public List<Project> getProjects() {
         return projects;
     }
 
+    /**
+     * Created by Tobias
+     */
     public void registerWorkHours(ProjectActivity activity, int minutes, LocalDate day) throws TooManyHoursException, NegativeHoursException, NoAccessException, WrongDateException {
         if(day.isAfter(this.getDate())) {
             throw new WrongDateException("You can not register work hours in the future.");
@@ -243,6 +309,9 @@ public class PManagementSystem {
         }
     }
 
+    /**
+     * Created by Marcus
+     */
     public List<Activity> getEmployeeActivitiesOnDate(Employee emp, LocalDate date) {
         List<Activity> activitiesOnDate = null;
 
@@ -252,16 +321,25 @@ public class PManagementSystem {
         return activitiesOnDate;
     }
 
+    /**
+     * Created by Morten
+     */
     public void changeActivityApproximatedHours(ProjectActivity projectActivity, int hours) throws NoAccessException, NegativeHoursException {
         if(this.manageProject(projectActivity.getProject()))
             projectActivity.changeApproximatedHours(hours);
     }
 
+    /**
+     * Created by Tobias
+     */
     public void removeActivityFromProject(ProjectActivity projectActivity) throws NoAccessException, InvalidActivityException {
         if(this.manageProject(projectActivity.getProject()))
             projectActivity.getProject().removeActivity(projectActivity);
     }
 
+    /**
+     * Created by Marcus
+     */
     public void removePersonalActivity(PersonalActivity personalActivity) throws InvalidActivityException {
         this.getCurrentEmployee().removePersonalActivity(personalActivity);
     }

@@ -14,6 +14,9 @@ import static org.junit.Assert.assertThat;
 
 public class TestChangeProjectName extends TestManageProject{
 
+    /**
+     * Created by Tobias
+     */
     @Test //Test for string
     public void testChangeNameA() throws InvalidNameException, NoAccessException {
         String name = "Anders";
@@ -22,6 +25,9 @@ public class TestChangeProjectName extends TestManageProject{
         assertThat(project.getName(), is(name));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test //Test for Integer
     public void testChangeNameB() throws InvalidNameException, NoAccessException {
         String name = "42";
@@ -30,6 +36,9 @@ public class TestChangeProjectName extends TestManageProject{
         assertThat(project.getName(), is(name));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test //Test for float/special char.
     public void testChangeNameC() throws InvalidNameException, NoAccessException {
         expectedEx.expect(InvalidNameException.class);
@@ -40,6 +49,9 @@ public class TestChangeProjectName extends TestManageProject{
         pms.changeNameOfProject(project, name);
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test //Test for special char.
     public void testChangeNameD() throws InvalidNameException, NoAccessException {
         expectedEx.expect(InvalidNameException.class);
@@ -50,6 +62,9 @@ public class TestChangeProjectName extends TestManageProject{
         pms.changeNameOfProject(project, name);
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test //Test for null
     public void testChangeNameE() throws InvalidNameException, NoAccessException {
         expectedEx.expect(InvalidNameException.class);
@@ -60,6 +75,9 @@ public class TestChangeProjectName extends TestManageProject{
         pms.changeNameOfProject(project, name);
     }
 
+    /**
+     * Created by Morten
+     */
     @Test //Test for duplicate name
     public void testChangeNameF() throws NoAccessException, InvalidNameException, WrongDateException, AlreadyAssignedProjectManagerException {
         expectedEx.expect(InvalidNameException.class);
@@ -78,6 +96,9 @@ public class TestChangeProjectName extends TestManageProject{
         pms.changeNameOfProject(project, name);
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test //User is not project manager.
     public void testChangeNameG() throws NoAccessException, InvalidNameException {
         expectedEx.expect(NoAccessException.class);
@@ -91,8 +112,10 @@ public class TestChangeProjectName extends TestManageProject{
         pms.changeNameOfProject(project, "Test");
     }
 
-
-    @Test //Test for too long name
+    /**
+     * Created by Marcus
+     */
+    @Test //Test for too long a name
     public void testChangeNameH() throws InvalidNameException, NoAccessException {
         expectedEx.expect(InvalidNameException.class);
         expectedEx.expectMessage("Name can only be 30 characters long.");

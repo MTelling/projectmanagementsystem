@@ -13,6 +13,9 @@ public class TestAskForAssistance extends TestManageProject {
     YearWeek week37 = new YearWeek(2016, 37);
     YearWeek week42 = new YearWeek(2016, 42);
 
+    /**
+     * Created by Tobias
+     */
     @Before
     public void setupActivity() throws IncorrectAttributeException, NoAccessException,
             TooManyActivitiesException, EmployeeAlreadyAddedException, NullNotAllowed, WrongDateException {
@@ -23,12 +26,18 @@ public class TestAskForAssistance extends TestManageProject {
         assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee()));
     }
 
+    /**
+     * Created by Marcus
+     */
     @Test // Add employee as consultant
     public void testA() throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
         pms.addEmployeeToActivityAsConsultant(activity, pms.getEmployees().get(1));
         assertThat(activity.getConsultants(), hasItem(pms.getEmployees().get(1)));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test // Current user not assigned to activity
     public void testB() throws NoAccessException, InvalidEmployeeException, EmployeeAlreadyAddedException {
         expectedEx.expect(NoAccessException.class);
@@ -40,6 +49,9 @@ public class TestAskForAssistance extends TestManageProject {
         pms.addEmployeeToActivityAsConsultant(activity, pms.getEmployees().get(2));
     }
 
+    /**
+     * Created by Tobias
+     */
     @Test // Employee already assigned to activity
     public void testC() throws NoAccessException, TooManyActivitiesException,
             InvalidEmployeeException, EmployeeAlreadyAddedException, NullNotAllowed {
@@ -52,7 +64,9 @@ public class TestAskForAssistance extends TestManageProject {
         pms.addEmployeeToActivityAsConsultant(activity, pms.getEmployees().get(1));
     }
 
-
+    /**
+     * Created by Marcus
+     */
     @Test
     public void testD() throws Exception {
         expectedEx.expect(EmployeeAlreadyAddedException.class);

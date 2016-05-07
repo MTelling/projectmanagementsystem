@@ -12,11 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-/**
- * Created by Morten on 02/05/16.
- */
 public class ManageActivityPane extends ControlPane {
-
 
     private final TextField startWeekField;
     private final TextField startYearField;
@@ -26,6 +22,9 @@ public class ManageActivityPane extends ControlPane {
     private TextField expectedHoursField;
     private ProjectActivity activity;
 
+    /**
+     * Created by Marcus
+     */
     public ManageActivityPane(PManagementSystem pms, ProjectActivity activity) {
         super(pms, "Manage Activity");
         this.activity = activity;
@@ -71,12 +70,16 @@ public class ManageActivityPane extends ControlPane {
         this.addButton(saveBtn);
     }
 
-
+    /**
+     * Created by Morten
+     */
     public void setActivity(ProjectActivity activity) {
         this.activity = activity;
     }
 
-
+    /**
+     * Created by Tobias
+     */
     private void saveActivity() {
 
         try {
@@ -87,7 +90,6 @@ public class ManageActivityPane extends ControlPane {
                     Integer.parseInt(endWeekField.getText()));
 
             pms.manageActivityDates(activity, startWeek, endWeek);
-
 
         } catch (IncorrectAttributeException | NoAccessException | WrongDateException e) {
             Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
@@ -110,9 +112,11 @@ public class ManageActivityPane extends ControlPane {
                     "You can only type numbers as expected hours!");
             error.showAndWait();
         }
-
     }
 
+    /**
+     * Created by Marcus
+     */
     public void refresh() {
         expectedHoursField.setText(Integer.toString(activity.getApproximatedHours()));
         startWeekField.setText(Integer.toString(activity.getStartWeek()));
@@ -122,7 +126,5 @@ public class ManageActivityPane extends ControlPane {
         endYearField.setText(Integer.toString(activity.getEndYear()));
 
         typeField.setText(activity.getActivityType());
-
     }
-
 }

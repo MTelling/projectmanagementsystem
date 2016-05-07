@@ -9,17 +9,15 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
-
-/**
- * Created by Morten on 14/04/16.
- */
 public class TestDatabaseManager {
-
 
     private DatabaseManager db;
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
+    /**
+     * Created by Marcus
+     */
     @Test
     public void TestStandardDB() throws IOException {
 
@@ -29,6 +27,9 @@ public class TestDatabaseManager {
         assertThat(db.getEmployees().get(0), instanceOf(Employee.class));
     }
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void TestExampleDB() throws IOException{
         db = new DatabaseManager("EmployeesTest.txt");
@@ -39,12 +40,13 @@ public class TestDatabaseManager {
         assertThat(db.getEmployees().size(), is(5));
     }
 
-
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testWrongDB() throws IOException{
         expectedEx.expect(IOException.class);
 
         db = new DatabaseManager("NotThere.txt");
     }
-
 }

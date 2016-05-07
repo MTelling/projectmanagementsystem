@@ -4,7 +4,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 
 /**
- * Created by Morten on 03/05/16.
+ * Created by Morten
  */
 public class SuccessPrompt extends Alert {
 

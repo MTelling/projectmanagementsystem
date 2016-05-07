@@ -9,13 +9,18 @@ import static org.junit.Assert.assertThat;
 
 public class TestEndActivity extends TestManageProject {
 
+    /**
+     * Created by Morten
+     */
     @Test
     public void testEndProject() throws NoAccessException, WrongDateException {
         pms.endProject(project);
         assertThat(project.getEndDate(), is(pms.getDate()));
     }
 
-    
+    /**
+     * Created by Tobias
+     */
     @Test
     public void testEndProjectNotManager() throws NoAccessException, WrongDateException {
         expectedEx.expect(NoAccessException.class);
@@ -28,5 +33,4 @@ public class TestEndActivity extends TestManageProject {
         //Test Again. Now without project manager signed in.
         testEndProject();
     }
-
 }

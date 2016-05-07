@@ -13,6 +13,9 @@ public class OverviewPane extends StandardPane {
 
     private ObservableList obsPersonalActivities;
 
+    /**
+     * Created by Tobias
+     */
     public OverviewPane(PManagementSystem pms) {
         super(pms, false);
 
@@ -37,23 +40,29 @@ public class OverviewPane extends StandardPane {
 
     }
 
-
+    /**
+     * Created by Marcus
+     */
     @Override
     protected void close() {
         toBack();
     }
 
+    /**
+     * Created by Morten
+     */
     @Override
     public void toFront() {
         super.toFront();
         employeeOverviewPane.update();
     }
 
-
+    /**
+     * Created by Tobias
+     */
     public void refresh() {
         obsPersonalActivities = FXCollections.observableList(pms.getCurrentEmployee().getPersonalActivities());
         personalActivitiesListView.setItems(obsPersonalActivities);
-
 
         employeeActivitiesTableView.refresh();
         personalActivitiesListView.refresh();

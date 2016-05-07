@@ -7,9 +7,6 @@ import javafx.scene.control.*;
 
 import java.time.LocalDate;
 
-/**
- * Created by Morten on 06/05/16.
- */
 public class CreatePersonalActivityPane extends ControlPane{
 
     private final TextField typeField;
@@ -17,7 +14,9 @@ public class CreatePersonalActivityPane extends ControlPane{
     private final DatePicker endDatePicker;
     private final OverviewPane overviewPane;
 
-
+    /**
+     * Created by Marcus
+     */
     public CreatePersonalActivityPane(PManagementSystem pms, OverviewPane overviewPane) {
         super(pms, "Create Personal Activity");
         this.overviewPane = overviewPane;
@@ -50,6 +49,9 @@ public class CreatePersonalActivityPane extends ControlPane{
         this.addButton(createBtn);
     }
 
+    /**
+     * Created by Morten
+     */
     private void createActivity() {
 
         String type = typeField.getText();
@@ -69,6 +71,5 @@ public class CreatePersonalActivityPane extends ControlPane{
             Alert error = new ErrorPrompt(Alert.AlertType.INFORMATION, e.getMessage());
             error.showAndWait();
         }
-
     }
 }
