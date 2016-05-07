@@ -37,8 +37,8 @@ public class ProjectActivity extends  Activity {
 
         this.approximatedHours = approximatedHours;
 
-        this.assignedEmployees = new ArrayList<Employee>();
-        assignedConsultants = new ArrayList<Employee>();
+        this.assignedEmployees = new ArrayList<>();
+        this.assignedConsultants = new ArrayList<>();
     }
 
     public int getApproximatedHours() {
