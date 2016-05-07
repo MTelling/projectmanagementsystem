@@ -84,10 +84,7 @@ public class ManageActivityPane extends ControlPane {
             YearWeek endWeek = new YearWeek(Integer.parseInt(endYearField.getText()),
                     Integer.parseInt(endWeekField.getText()));
 
-            pms.manageActivityDates(activity.getProject(),
-                    activity,
-                    startWeek,
-                    endWeek);
+            pms.manageActivityDates(activity, startWeek, endWeek);
 
 
         } catch (IncorrectAttributeException | NoAccessException | WrongDateException e) {
