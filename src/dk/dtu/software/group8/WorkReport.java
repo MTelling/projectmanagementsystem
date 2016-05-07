@@ -181,29 +181,13 @@ public class WorkReport {
 
             //Write data for each employee on activity
             for (Employee employee : activity.getEmployees()) {
-                Map<String, String> employeeData = new HashMap<>();
-                String empName = employee.getFirstName() + " " + employee.getLastName();
-                String empWorkThisWeek = "" + employee.getTotalRegisteredMinutesOnDayAndActivityPastWeek(pms.getDate(),activity);
-                String empWorkTotal = "" + employee.getTotalRegisteredMinutesOnActivity(activity);
-                employeeData.put("EMPLOYEE_NAME", empName);
-                employeeData.put("EMP_HOURS_WEEK", empWorkThisWeek);
-                employeeData.put("EMP_TOTAL_HOURS", empWorkTotal);
-
-                writer.println(subForData(employeePart, tags, employeeData));
+                writer.println(subForData(employeePart, tags, createEmployeeHashMap(employee,activity)));
             }
 
             //Write data for each consultant on activity
             //TODO: This is the exact same as employee above
             for (Employee employee : activity.getConsultants()) {
-                Map<String, String> employeeData = new HashMap<>();
-                String empName = employee.getFirstName() + " " + employee.getLastName();
-                String empWorkThisWeek = "" + employee.getTotalRegisteredMinutesOnDayAndActivityPastWeek(pms.getDate(),activity);
-                String empWorkTotal = "" + employee.getTotalRegisteredMinutesOnActivity(activity);
-                employeeData.put("EMPLOYEE_NAME", empName);
-                employeeData.put("EMP_HOURS_WEEK", empWorkThisWeek);
-                employeeData.put("EMP_TOTAL_HOURS", empWorkTotal);
-
-                writer.println(subForData(employeePart, tags, employeeData));
+                writer.println(subForData(employeePart, tags, createEmployeeHashMap(employee,activity)));
             }
 
             writer.println(activityPart2);
@@ -212,5 +196,19 @@ public class WorkReport {
 
         writer.println(post);
         writer.close();
+    }
+
+    private Map<String, String> createEmployeeHashMap(Employee employee, ProjectActivity activity) {
+        Map<String, String> employeeData = new HashMap<>();
+        String empName = employee.getFirstName() + " " + employee.getLastName();
+        String empWorkThisWeek = (employee.getTotalRegisteredMinutesOnDayAndActivityPastWeek(pms.getDate(),activity) / 60)
+                + ":" + (employee.getTotalRegisteredMinutesOnDayAndActivityPastWeek(pms.getDate(),activity) % 60);
+        String empWorkTotal = (employee.getTotalRegisteredMinutesOnActivity(activity) / 60)
+                + ":" + (employee.getTotalRegisteredMinutesOnActivity(activity) % 60);
+        employeeData.put("EMPLOYEE_NAME", empName);
+        employeeData.put("EMP_HOURS_WEEK", empWorkThisWeek);
+        employeeData.put("EMP_TOTAL_HOURS", empWorkTotal);
+
+        return employeeData;
     }
 }
