@@ -40,6 +40,6 @@ public class EmployeeOverviewPane extends ControlPane {
     }
 
     public void update() {
-        empActivityCountLblRight.setText(Integer.toString(pms.getCurrentEmployee().getCurrentActivities().size()));
+        empActivityCountLblRight.setText(Integer.toString(pms.getCurrentEmployee().getProjectActivities().size()));
     }
 }

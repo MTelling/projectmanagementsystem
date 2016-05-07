@@ -27,6 +27,7 @@ public class ProjectsPane extends StandardPane {
         projectListView = new ListView();
         ObservableList<Project> obsProjects = FXCollections.observableList(pms.getProjects());
         projectListView.setItems(obsProjects);
+
         projectListView.setOnMouseClicked(e -> openProject(e));
 
         CreateProjectPane createProjectPane = new CreateProjectPane(pms, this);
@@ -39,6 +40,8 @@ public class ProjectsPane extends StandardPane {
     }
 
     public void refresh() {
+        ObservableList<Project> obsProjects = FXCollections.observableList(pms.getProjects());
+        projectListView.setItems(obsProjects);
         projectListView.refresh();
     }
 

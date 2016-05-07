@@ -15,8 +15,8 @@ public class Employee {
     private String firstName;
     private String lastName;
 
-    private List<ProjectActivity> currentActivities;
-    private List<Activity> currentConsultants;
+    private List<ProjectActivity> projectActivities;
+    private List<Activity> consultingActivities;
 	private List<RegisteredWork> registeredWork = new ArrayList<>();
 	private List<Activity> personalActivities;
 
@@ -24,14 +24,14 @@ public class Employee {
 		this.setId(id);
         this.firstName = firstName;
         this.lastName = lastName;
-		this.currentActivities = new LinkedList<>();
-        this.currentConsultants = new LinkedList<>();
+		this.projectActivities = new LinkedList<>();
+        this.consultingActivities = new LinkedList<>();
 		this.personalActivities = new LinkedList<>();
 	}
 
 	public boolean assignToActivity(ProjectActivity projectActivity) throws TooManyActivitiesException {
-		if (currentActivities.size() < 20) {
-			currentActivities.add(projectActivity);
+		if (projectActivities.size() < 20) {
+			projectActivities.add(projectActivity);
 			return true;
 		} else {
 			throw new TooManyActivitiesException("Employee is assigned to too many activities in given period.");
@@ -55,7 +55,7 @@ public class Employee {
     }
 
 	public boolean isAvailable(LocalDate startDate, LocalDate endDate, ProjectActivity activity) {
-		if(this.currentActivities.contains(activity))
+		if(this.projectActivities.contains(activity))
             return false;
 
         Optional<Activity> personalQuery = this.personalActivities.stream()
@@ -65,7 +65,7 @@ public class Employee {
         if(personalQuery.isPresent()) {
             return false;
         } else {
-            List<Activity> projectQuery = this.currentActivities.stream()
+            List<Activity> projectQuery = this.projectActivities.stream()
                     .filter(pa -> pa.isTimePeriodInActivityDuration(startDate, endDate))
                     .collect(Collectors.toList());
             return projectQuery.size() < 20;
@@ -86,12 +86,12 @@ public class Employee {
 
     public void assignConsultantToActivity(ProjectActivity projectActivity) throws InvalidEmployeeException {
         if (projectActivity.assignConsultantToActivity(this)) {
-            currentConsultants.add(projectActivity);
+            consultingActivities.add(projectActivity);
         }
     }
 
 	public void registerWorkHours(ProjectActivity activity, int minutes, LocalDate day) throws NoAccessException, TooManyHoursException, NegativeHoursException {
-		if(!currentActivities.contains(activity)) { // Test if employee is assigned to activity
+		if(!projectActivities.contains(activity)) { // Test if employee is assigned to activity
 			throw new NoAccessException("Current user not assigned to activity.");
 		} else {
 
@@ -179,8 +179,8 @@ public class Employee {
 
 	public List<RegisteredWork> getRegisteredWork() { return this.registeredWork; }
 
-	public List<ProjectActivity> getCurrentActivities() {
-        return currentActivities;
+	public List<ProjectActivity> getProjectActivities() {
+        return projectActivities;
     }
 
 	public String toString() {
@@ -188,7 +188,7 @@ public class Employee {
 	}
 
 	public List<Activity> getActivitiesOnDate(LocalDate date) {
-		return this.getCurrentActivities().stream().filter(pa -> pa.isTimePeriodInActivityDuration(date, date)).collect(Collectors.toList());
+		return this.getProjectActivities().stream().filter(pa -> pa.isTimePeriodInActivityDuration(date, date)).collect(Collectors.toList());
 	}
 
     public void removePersonalActivity(PersonalActivity personalActivity) throws InvalidActivityException {

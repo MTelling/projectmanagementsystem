@@ -18,7 +18,7 @@ public class OverviewPane extends StandardPane {
 
         titlePane.setText("Welcome " + pms.getCurrentEmployee().getFirstName());
         employeeActivitiesTableView =
-                new EmployeeActivitiesTableView(pms.getCurrentEmployee().getCurrentActivities());
+                new EmployeeActivitiesTableView(pms.getCurrentEmployee().getProjectActivities());
         employeeOverviewPane = new EmployeeOverviewPane(pms);
 
         personalActivitiesListView = new ListView();

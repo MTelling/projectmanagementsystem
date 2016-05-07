@@ -49,8 +49,7 @@ public class ProjectPane extends StandardPane {
 
         createProjectActivityPane.setProject(project);
 
-        obsActivities = FXCollections.observableList(project.getActivities());
-        activitiesListView.setItems(obsActivities);
+        refresh();
 
     }
 

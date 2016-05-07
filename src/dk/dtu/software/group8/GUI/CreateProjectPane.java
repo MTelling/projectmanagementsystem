@@ -60,9 +60,10 @@ public class CreateProjectPane extends ControlPane {
             pms.createProject(startDatePicker.getValue(), endDatePicker.getValue());
 
             Alert success = new SuccessPrompt();
-            success.showAndWait();
 
             projectsPane.refresh();
+            success.showAndWait();
+
 
         } catch (WrongDateException e) {
 
