@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * Created by Morten
- */
+
 public class Employee {
 	
 	private String id;
@@ -178,7 +176,9 @@ public class Employee {
         int result = 0;
 
         for(RegisteredWork empWork : this.registeredWork) {
-            result += empWork.getMinutes();
+            if(empWork.getActivity().equals(activity)) {
+                result += empWork.getMinutes();
+            }
         }
         return result;
     }

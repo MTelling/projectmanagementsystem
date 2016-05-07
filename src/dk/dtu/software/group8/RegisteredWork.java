@@ -68,4 +68,9 @@ public class RegisteredWork {
     public Employee getEmployee() {
         return this.employee;
     }
+
+    /**
+     * Created by Marcus
+     */
+    public Activity getActivity() { return this.activity; }
 }
