@@ -14,9 +14,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Locale;
 
-/**
- * Created by Morten on 25/04/16.
- */
 public class Driver extends Application {
 
     private PManagementSystem pms;
@@ -25,7 +22,7 @@ public class Driver extends Application {
     public static void main(String[] args) {
         Locale.setDefault(Locale.UK);
         Application.launch(args);
-    }
+}
 
     public void start(Stage loginStage) {
 

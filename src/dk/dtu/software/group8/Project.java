@@ -14,12 +14,12 @@ public class Project {
     private String id, name;
     private LocalDate startDate, endDate;
     private Employee projectManager;
-    private List<Activity> activities;
+    private List<ProjectActivity> activities;
 
     public Project(String id, LocalDate startDate, LocalDate endDate) throws WrongDateException {
         this.id = id;
         
-        this.activities = new ArrayList<Activity>();
+        this.activities = new ArrayList<ProjectActivity>();
         
         setStartDate(startDate);
         setEndDate(endDate);
@@ -74,7 +74,7 @@ public class Project {
 
     public String getName() { return this.name; }
 
-    public List<Activity> getActivities() {
+    public List<ProjectActivity> getActivities() {
         return activities;
     }
 
