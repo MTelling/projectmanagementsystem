@@ -5,10 +5,7 @@ import dk.dtu.software.group8.Exceptions.*;
 import javax.naming.InvalidNameException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PManagementSystem {
 
@@ -18,6 +15,9 @@ public class PManagementSystem {
     private List<Project> projects;
 
     public PManagementSystem() throws IOException {
+
+        Locale.setDefault(Locale.UK);
+        
         dateServer = new DateServer();
 
         db = new DatabaseManager("Employees.txt");

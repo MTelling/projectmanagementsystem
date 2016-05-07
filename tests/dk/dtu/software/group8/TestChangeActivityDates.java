@@ -32,7 +32,7 @@ public class TestChangeActivityDates extends TestManageProject {
         pms.manageActivityDates(project, activity, newStart, newEnd);
 
         assertThat(activity.getStartDate(), is(newStart.toLocalDate()));
-        assertThat(activity.getEndDate(), is(newEnd.toLocalDate()));
+        assertThat(activity.getEndDate(), is(newEnd.toLocalDate().plusDays(6)));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class TestChangeActivityDates extends TestManageProject {
         pms.manageActivityDates(project, activity, newStart, newEnd);
 
         assertThat(activity.getStartDate(), is(newStart.toLocalDate()));
-        assertThat(activity.getEndDate(), is(newEnd.toLocalDate()));
+        assertThat(activity.getEndDate(), is(newEnd.toLocalDate().plusDays(6)));
     }
 
     @Test
