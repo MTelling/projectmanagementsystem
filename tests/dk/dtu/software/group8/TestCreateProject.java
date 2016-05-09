@@ -54,7 +54,7 @@ public class TestCreateProject {
      * Created by Marcus
      */
 	@Test //Correct start and end.
-	public void createProjectA() throws WrongDateException, NoAccessException {
+	public void testCreateProjectA() throws WrongDateException, NoAccessException {
         LocalDate startDate = LocalDate.parse("2016-05-10");
         LocalDate endDate = LocalDate.parse("2016-06-10");
         
@@ -76,7 +76,7 @@ public class TestCreateProject {
      * Created by Morten
      */
     @Test //Correct start and end.
-    public void createProjectB() throws WrongDateException, NoAccessException {
+    public void testCreateProjectB() throws WrongDateException, NoAccessException {
     	LocalDate startDate = LocalDate.parse("2016-05-10");
         LocalDate endDate = LocalDate.parse("2016-06-10");
 
@@ -98,7 +98,7 @@ public class TestCreateProject {
      * Created by Tobias
      */
     @Test //End date before start.
-    public void createProjectC() throws WrongDateException, NoAccessException {
+    public void testCreateProjectC() throws WrongDateException, NoAccessException {
         //Check correct exception
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("End Date is not allowed to be before Start Date!");
@@ -115,7 +115,7 @@ public class TestCreateProject {
      * Created by Marcus
      */
     @Test //Start date in the past, correct end date
-    public void createProjectD() throws WrongDateException, NoAccessException {
+    public void testCreateProjectD() throws WrongDateException, NoAccessException {
         //Check correct exception
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("Start Date is not allowed to be in the past!");
@@ -132,7 +132,7 @@ public class TestCreateProject {
      * Created by Morten
      */
     @Test //Incorrect start date, incorrect end date. (Both in past)
-    public void createProjectE() throws WrongDateException, NoAccessException {
+    public void testCreateProjectE() throws WrongDateException, NoAccessException {
         //Check correct exception
         expectedEx.expect(WrongDateException.class);
         expectedEx.expectMessage("Start Date is not allowed to be in the past!");
@@ -149,7 +149,7 @@ public class TestCreateProject {
      * Created by Tobias
      */
     @Test //No dates.
-    public void createProjectF() throws WrongDateException, NoAccessException {
+    public void testCreateProjectF() throws WrongDateException, NoAccessException {
 
         //Check correct exception
         expectedEx.expect(WrongDateException.class);
@@ -157,6 +157,38 @@ public class TestCreateProject {
 
         //Create the project with no dates.
         Project project = pms.createProject(null, null);
+        assertThat(project, is(nullValue()));
+    }
+    
+    /**
+     * Created by Marcus
+     */
+    @Test
+    public void testCreateProjectG() throws Exception {
+    	//Check correct exception
+        expectedEx.expect(WrongDateException.class);
+        expectedEx.expectMessage("Missing date(s)!");
+        LocalDate startDate = LocalDate.parse("2016-05-11");
+        
+      //Create the project with no dates.
+        Project project = pms.createProject(startDate, null);
+        assertThat(project, is(nullValue()));
+
+    }
+    
+    /**
+     * Created by Morten
+     */
+    @Test
+    public void testCreateProjectH() throws Exception {
+    	
+    	//Check correct exception
+        expectedEx.expect(WrongDateException.class);
+        expectedEx.expectMessage("Missing date(s)!");
+    	LocalDate endDate = LocalDate.parse("2016-05-10");
+        
+      //Create the project with no dates.
+        Project project = pms.createProject(null, endDate);
         assertThat(project, is(nullValue()));
     }
 }

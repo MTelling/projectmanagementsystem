@@ -124,12 +124,11 @@ public class ProjectActivity extends  Activity {
     /**
      * Created by Marcus
      */
-    public boolean assignConsultantToActivity(Employee employee) throws InvalidEmployeeException {
+    public void assignConsultantToActivity(Employee employee) throws InvalidEmployeeException {
         if(this.getEmployees().contains(employee)) {
             throw new InvalidEmployeeException("Employee already assigned to activity.");
         } else {
             assignedConsultants.add(employee);
-            return true;
         }
     }
 

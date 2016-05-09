@@ -143,4 +143,22 @@ public class TestCreatePersonalActivity {
 
         pms.createPersonalActivityForEmployee("Courses", LocalDate.parse("2016-05-11"), LocalDate.parse("2016-05-28"), emp);
     }
+    
+    /**
+     * Created by Morten
+     */
+    @Test
+    public void testTimeperiodNotOccupiedByOtherPA() throws Exception {
+        String activityType = "Vacation";
+        LocalDate startDate = LocalDate.parse("2016-05-10");
+        LocalDate endDate = LocalDate.parse("2016-05-31");
+
+        PersonalActivity personalActivity1 = pms.createPersonalActivityForEmployee(activityType, startDate, endDate, emp);
+
+        assertThat(emp.getPersonalActivities(), hasItem(personalActivity1));
+
+        PersonalActivity personalActivity2 = pms.createPersonalActivityForEmployee("Courses", LocalDate.parse("2017-05-11"), LocalDate.parse("2017-05-28"), emp);
+        
+        assertThat(emp.getPersonalActivities(), hasItem(personalActivity2));
+    }
 }

@@ -164,4 +164,17 @@ public class TestCreateProjectActivity extends TestManageProject {
 
         pms.createActivityForProject(project, "Test", startWeek, endWeek, 40);
     }
+    
+    /**
+     * Created by Morten
+     */
+    @Test
+    public void testCreateProjectActivityNoManager() throws Exception {
+    	expectedEx.expect(NoAccessException.class);
+    	expectedEx.expectMessage("Current user is not Project Manager for this project.");
+    	
+    	Project p = pms.createProject(week37, week42);
+    	
+    	pms.createActivityForProject(p, "Implementation", new YearWeek(38,2016), new YearWeek(40,2016), 0);
+    }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="GlassImage">
+    <archive path="/Users/Morten/git/ProjectManagementSystem/GlassImage.jar" />
+    <archive path="/Users/Morten/git/ProjectManagementSystem/GlassRobot.jar" />
+    <archive path="/Users/Morten/git/ProjectManagementSystem/JemmyAWTInput.jar" />
+    <archive path="/Users/Morten/git/ProjectManagementSystem/JemmyCore.jar" />
+    <archive path="/Users/Morten/git/ProjectManagementSystem/JemmyFX.jar" />
+  </library>
+  <library name="GlassRobot">
+    <archive path="/Users/Morten/git/ProjectManagementSystem/GlassRobot.jar" />
+  </library>
+  <library name="JemmyAWTInput">
+    <archive path="/Users/Morten/git/ProjectManagementSystem/JemmyAWTInput.jar" />
+  </library>
+  <library name="JemmyCore">
+    <archive path="/Users/Morten/git/ProjectManagementSystem/JemmyCore.jar" />
+  </library>
+  <library name="JemmyFX">
+    <archive path="/Users/Morten/git/ProjectManagementSystem/JemmyFX.jar" />
+  </library>
+  <library name="hamcrest-core-1.3">
+    <archive path="/Users/Morten/git/ProjectManagementSystem/hamcrest-core-1.3.jar" />
+  </library>
+  <library name="junit-4.12">
+    <archive path="/Users/Morten/git/ProjectManagementSystem/junit-4.12.jar" />
+  </library>
+  <library name="mockito-all-1.8.5">
+    <archive path="/Users/Morten/git/ProjectManagementSystem/mockito-all-1.8.5.jar" />
+  </library>
+</eclipse-userlibraries>
+

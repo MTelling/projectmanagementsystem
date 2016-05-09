@@ -67,7 +67,7 @@ public class TestRegisterWorkHours {
 
         pms.assignManagerToProject(project);
 
-        assertThat(project.getProjectManager().matches(db.getEmployees().get(0)), is(true));
+        assertThat(project.getProjectManager(), equalTo(pms.getCurrentEmployee()));
     }
 
     /**
@@ -212,5 +212,22 @@ public class TestRegisterWorkHours {
         assertThat(activity.getRegisteredWork().get(0), is(equalTo(pms.getCurrentEmployee().getRegisteredWork().get(0))));
 
         pms.registerWorkHours(activity, (-6)*60, pastDate);
+    }
+    
+    /**
+     * Created by Tobias
+     */
+    @Test
+    public void testH() throws Exception {
+        activity = pms.createActivityForProject(project, "Implementation", week21, week22, 42); // New projectActivity
+        assertThat(activity, is(not(nullValue()))); // Test that activity is created
+
+        pms.addEmployeeToActivity(activity,pms.getCurrentEmployee()); // Add employee to an activity
+        assertThat(activity.getEmployees(), hasItem(pms.getCurrentEmployee())); // Test that employee is assigned to activity
+
+        pms.registerWorkHours(activity, 5*60, pastDate);
+        pms.registerWorkHours(activity, 2*60, pastDate);
+        
+        assertThat(activity.getRegisteredWork().get(0).getMinutes(), is(2*60) );
     }
 }

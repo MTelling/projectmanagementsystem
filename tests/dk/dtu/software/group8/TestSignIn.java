@@ -49,4 +49,9 @@ public class TestSignIn {
         assertThat(pms.signIn(iD), is(false));
         assertThat(pms.getCurrentEmployee(), is(nullValue()));
     }
+    
+    @Test
+    public void noUserLoggedIn() {
+    	assertThat(pms.userLoggedIn(), is(false));
+    }
 }

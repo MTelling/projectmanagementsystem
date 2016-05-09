@@ -51,8 +51,9 @@ public class Employee {
     public PersonalActivity createPersonalActivity(String activityType, LocalDate startDate, LocalDate endDate) throws WrongDateException, IncorrectAttributeException {
         boolean isOccupied = false;
         for (Activity a: personalActivities) {
-            if(a.isTimePeriodInActivityDuration(startDate, endDate))
+            if(a.isTimePeriodInActivityDuration(startDate, endDate)) {
                 isOccupied = true;
+            }
         }
 
         if(isOccupied) {
@@ -110,9 +111,8 @@ public class Employee {
      * Created by Tobias
      */
     public void assignConsultantToActivity(ProjectActivity projectActivity) throws InvalidEmployeeException {
-        if (projectActivity.assignConsultantToActivity(this)) {
+        	projectActivity.assignConsultantToActivity(this);
             consultingActivities.add(projectActivity);
-        }
     }
 
     /**
@@ -130,10 +130,7 @@ public class Employee {
 			if(empWorkQuery.isPresent()) {
 				int deltaMinutes = minutes - empWorkQuery.get().getMinutes();
                 empWorkQuery.get().addWork(deltaMinutes);
-			}
-
-            //We do this because "else" didn't give a 100% code coverage. Very weird though.
-            if(!empWorkQuery.isPresent()) {
+			} else {
 				if(workRegisteredThisDay + minutes > 1440) {
 					throw new TooManyHoursException("You can not work more than 24 hours in one day.");
 				}
@@ -228,15 +225,8 @@ public class Employee {
         return empWorkQuery;
     }
 
-    /**
-     * Created by Morten
-     */
-	public boolean matches(Employee employee) {
-		return
-				this.getId().equals(employee.getId())
-				&& this.getFirstName().equals(employee.getFirstName())
-				&& this.getLastName().equals(employee.getLastName());
-	}
+  
+	
 
     /**
      * Created by Tobias

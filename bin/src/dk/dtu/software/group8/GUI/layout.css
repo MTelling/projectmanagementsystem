@@ -1,0 +1,196 @@
+
+/* ------------------------------------------------------------------------------------
+MENU
+--------------------------------------------------------------------------------------*/
+
+.MenuPane {
+    -fx-background-color: rgb(87,185,236);
+    -fx-spacing: 60;
+}
+
+.MenuButton {
+    -fx-padding: 4, 4, 4, 4;
+    -fx-spacing: 2;
+}
+
+#active, #hover {
+    -fx-background-color: rgba(255,255,255,0.4);
+}
+
+
+/* ------------------------------------------------------------------------------------
+LOGIN
+--------------------------------------------------------------------------------------*/
+
+.LoginPane {
+    -fx-padding: 15, 10, 15, 10;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+.HBoxForLoginBtn {
+    -fx-spacing: 10;
+}
+
+.WelcomeText {
+    -fx-font-size: 15;
+}
+
+.WrongLoginLabel {
+    -fx-text-fill: red;
+}
+
+
+/* ------------------------------------------------------------------------------------
+OVERVIEW PANE
+--------------------------------------------------------------------------------------*/
+.OverviewPane {
+}
+
+.OverviewTitlePane {
+    -fx-padding: 10, 10, 10, 10;
+}
+
+.OverviewTitle {
+    -fx-font-size: 20;
+}
+
+
+/* ------------------------------------------------------------------------------------
+EMPLOYEE ACTIVITIES OVERVIEW
+--------------------------------------------------------------------------------------*/
+
+
+/*This part removes the ability to scroll left/right */
+.table-view *.scroll-bar:horizontal *.increment-button,
+.table-view *.scroll-bar:horizontal *.decrement-button {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.table-view *.scroll-bar:horizontal *.increment-arrow,
+.table-view *.scroll-bar:horizontal *.decrement-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-shape: null;
+}
+
+/* ------------------------------------------------------------------------------------
+EMPLOYEE OVERVIEW
+--------------------------------------------------------------------------------------*/
+
+.EmployeeOverview {
+    -fx-vgap: 10;
+    -fx-hgap: 20;
+    -fx-padding: 10,10,10,10;
+}
+
+/* ------------------------------------------------------------------------------------
+GENERAL
+--------------------------------------------------------------------------------------*/
+
+.TitlePane {
+    -fx-padding: 5;
+}
+
+.TitlePaneLargeText {
+    -fx-font-size: 24;
+}
+
+.TitlePaneMediumText {
+    -fx-font-size: 16;
+}
+
+
+
+/* Set focus color for all panes and etc. to transparent */
+.OverviewPane,
+.ProjectsPane,
+.ProjectPane,
+.StandardPane,
+.ActivityPane,
+.TitlePane,
+.list-view,
+.RegisterHoursPane {
+    -fx-focus-color: transparent;
+}
+
+/* Set the background color for all panes */
+.OverviewPane,
+.ProjectsPane,
+.RegisterHoursPane,
+.ProjectPane,
+.StandardPane,
+.ActivityPane {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 5;
+}
+/* ------------------------------------------------------------------------------------
+Projects Pane
+--------------------------------------------------------------------------------------*/
+
+.ProjectsPane {
+}
+
+/* ------------------------------------------------------------------------------------
+Manage Item Pane
+--------------------------------------------------------------------------------------*/
+.ManageProjectPane {
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+    -fx-padding: 5;
+}
+
+.ManageProjectPane .label {
+    -fx-font-size: 16;
+}
+
+.BtnPane {
+    -fx-padding: 10;
+    -fx-spacing: 20;
+}
+
+/* ------------------------------------------------------------------------------------
+Manage Project Pane
+--------------------------------------------------------------------------------------*/
+
+.ExitBtnPane {
+    -fx-padding: 7;
+}
+
+/* ------------------------------------------------------------------------------------
+Control Pane
+--------------------------------------------------------------------------------------*/
+.ControlPane {
+    -fx-padding: 5;
+}
+
+.ControlPaneGrid {
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+/* ------------------------------------------------------------------------------------
+Register Hours Pane
+--------------------------------------------------------------------------------------*/
+
+.RegisterHoursPane .CenterContainer {
+    -fx-spacing: 10;
+}
+
+.Container .label {
+    -fx-font-size: 18;
+}
+
+/* ------------------------------------------------------------------------------------
+Activity Pane
+--------------------------------------------------------------------------------------*/
+
+.StandardPane .RightContainer {
+    -fx-spacing: 10;
+}
+
